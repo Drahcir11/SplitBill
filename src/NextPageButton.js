@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import './index.css';
+import './NextButton.css';
 
 const NextButton = ({ buttonName, to }) => {
   return(

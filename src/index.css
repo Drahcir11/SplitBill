@@ -24,35 +24,6 @@ input {
   color: #fff;
 }
 
-.next-button button {
-  margin-top: 15px;
-  font-family: monospace;
-  font-size: smaller;
-  padding: 5px 10px;
-  background-color: transparent; /* Transparent background */
-  border: 1.5px solid #ff66ff; /* Green border */
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
-  color: #ff66ff;
-  
-}
-
-.next-button button:hover {
-  background-color: #ff66ff; /* Green background on hover */
-  color: #ffffff; /* White text color on hover */
-}
-
-.next-button button:focus {
-  outline: #5d5d5d;
-  /* Add any focus styles here if desired */
-}
-
-.next-button button:focus {
-  outline: #5d5d5d;
-  /* Add any focus styles here if desired */
-}
-
 ul {
   text-align: left;
   padding: 0;
