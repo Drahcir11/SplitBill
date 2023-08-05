@@ -1,24 +1,71 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import ItemsList from './ItemsList';
+import FriendsList from './FriendsList';
+import ItemSelection from './ItemSelection';
+import EachOwed from './EachOwed';
+import NavBar from './NavBar';
+import './App.css'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
+
+/*
+
+  ALL COMMENTS SHOULD NOT EXCEED LENGTH OF 100                                                     ¬
+
+*/
+
+/*
+  Declaring a function consist of this structure
+  "
+    function {NameOfFunction} {
+
+      return(
+
+      );
+
+    }
+
+    export default {NameOfFunction}
+  "
+
+*/
 function App() {
+
+  /* 
+    Declare bills and items variables with the "useState" to enable the use of states.
+    The use of "useState" allows to read or get the variables with "bills" or "items".
+    The use of "useState" also allows to write or set the variables with "setBills"
+    or "setItems".
+    The useState initial values are set as an empty array.
+  */
+  const [bills, setBills] = useState([]);
+  const [items, setItems] = useState([]);
+  const [friends,setFriends] = useState([]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    /*
+      Router tag here is to link all the different react components.
+      It takes in a custom path and the element.
+      Path is the directory to be linked to a specific react component.
+      Element is to be given the react component with its input arguments. 
+
+      Nav links are used to link the directories with buttons.
+    */
+<div className='container'>
+    <div className='nav-app'>
+      <NavBar />
     </div>
+      <Router>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<FriendsList friends={friends} setFriends={setFriends} />} />
+            <Route path="/item" element={<ItemsList items={items} setItems={setItems} />} />
+            <Route path="/itemSelection" element={<ItemSelection bills={bills} setBills={setBills} items={items} setItems={setItems} friends={friends} setFriends={setFriends}/>} />
+            <Route path="/eachOwed" element={<EachOwed items={items} setItems={setItems} friends={friends} setFriends={setFriends}/>} />
+          </Routes>
+        </div>
+      </Router>
+   </div>
   );
 }
 

@@ -1,0 +1,17 @@
+.add-button button {
+    font-family: monospace;
+    font-size: smaller;
+    padding: 2px 2px;
+    background-color: transparent; /* Transparent background */
+    border: 1.5px solid #ff66ff; /* Green border */
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    color: #ff66ff;
+  
+  }
+  
+  .add-button button:hover {
+    background-color: #ff66ff; /* Green background on hover */
+    color: #ffffff; /* White text color on hover */
+  }

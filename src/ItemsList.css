@@ -1,0 +1,35 @@
+.item-list h1 {
+    text-align: center;
+  }
+
+.item-list {
+    /* border : 2px solid yellow; */
+    width: 100vh;
+    height : 100vh;
+    padding:  0%;
+    /* border: 1px solid #ccc; */
+    display : flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #3231328a;
+
+}
+
+.item-list input{
+    /* border : 2px solid white; */
+    border : none;
+    border-radius : 5px;
+  }
+
+.input-price {
+    width : 35px;
+}
+
+.input-price input{
+    appearance: textfield;
+}
+
+.input-item {
+    width : 100px;
+    margin-right: 5px;
+}
