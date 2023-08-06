@@ -1,4 +1,4 @@
-.add-button button {
+.edit-button button {
     font-family: monospace;
     font-size: smaller;
     padding: 3px 5px;
@@ -11,7 +11,7 @@
   
   }
   
-  .add-button button:hover {
+  .edit-button button:hover {
     background-color: #ff66ff; /* Green background on hover */
     color: #ffffff; /* White text color on hover */
   }

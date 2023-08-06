@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import NextButton from '../NextPageButton';
 import AddButton from '../Button/AddButton';
+import EditButton from '../Button/EditButton';
 import Friends from './Friends';
 import './FriendsList.css'
 import EditFriends from './EditFriends'
