@@ -4,12 +4,12 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 
-function Friends({friend, index, deleteTodo}) {
+function Friends({friend, index, deleteTodo, editFriend}) {
     return (  
         <div className="friends">
             <p>{friend.name}</p>
             <div className='friends-icon'>
-                <FontAwesomeIcon icon={faPenToSquare} />
+                <FontAwesomeIcon icon={faPenToSquare} onClick={() => editFriend(index)}/>
                 <FontAwesomeIcon icon={faTrash} onClick={() => deleteTodo(friend)}/>
             </div>
         </div>

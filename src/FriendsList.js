@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import NextButton from './NextPageButton';
-import AddButton from './AddButton';
+import AddButton from './Button/AddButton';
 import Friends from './FriendsList/Friends';
 import './FriendsList.css'
+import EditFriends from './FriendsList/EditFriends'
 
 function FriendsList({ friends, setFriends }) {
   const [friendName, setFriendName] = useState('');
@@ -10,12 +11,29 @@ function FriendsList({ friends, setFriends }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     setFriendName('');
-    setFriends([...friends,{ name:friendName, items:[],total: 0}]);
+    setFriends([...friends,{ name:friendName, items:[],total: 0, isEdit: false}]);
     setFriendName('');
   };
 
 
-  const deleteTodo = (friend) => setFriends(friends.filter((friendval) => friendval.name !== friend.name));
+  const deleteTodo = (friend) => {
+    setFriends(friends.filter((friendval) => friendval.name !== friend.name));
+  };
+  
+  const editFriend = (id) => {
+    setFriends(
+      friends.map((friend,index) =>
+        index === id ? { ...friend, isEdit: !friend.isEdit } : friend
+      )
+    );
+  };
+
+  const editFriendList = (name, id) => {
+    setFriends(
+      friends.map((friend, index) =>
+        index === id ? { ...friend, name, isEdit: !friend.isEdit } : friend
+      ));
+  };
 
   return (
     <>
@@ -33,10 +51,14 @@ function FriendsList({ friends, setFriends }) {
         </form>
         <div className='name-list'>
           <ol>
-            {friends.map((friend, index) => (
-
-              <Friends friend={friend} index={index} deleteTodo={deleteTodo}/>
-            ))}
+            {friends.map((friend, index) => {
+                if(friend.isEdit){
+                  return <EditFriends friend={friend} index={index} deleteTodo={deleteTodo} editFriend={editFriendList} />
+                } else {
+                  return <Friends friend={friend} index={index} deleteTodo={deleteTodo} editFriend={editFriend}/>
+                }
+              }
+            )}
           </ol>
         </div>
         <div className='button-container'>
