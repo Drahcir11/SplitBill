@@ -14,13 +14,6 @@ function EditFriends({friend, index, deleteTodo, editFriend}) {
             <input type="text" value={value} onChange={(e) => setValue(e.target.value)} className="todo-input" placeholder={friend.name} />
             <button type="submit" className='todo-btn'>Update Task</button>
         </form>
-        // <div className="edit-friends">
-        //     <p>{friend.name}</p>
-        //     <div className='edit-friends-icon'>
-        //         <FontAwesomeIcon icon={faPenToSquare} />
-        //         <FontAwesomeIcon icon={faTrash} onClick={() => deleteTodo(friend)}/>
-        //     </div>
-        // </div>
     );
 }
 
