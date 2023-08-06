@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ItemsList from './ItemsList';
-import FriendsList from './FriendsList';
+import FriendsList from './FriendsList/FriendsList';
 import ItemSelection from './ItemSelection';
 import EachOwed from './EachOwed';
 import NavBar from './NavBar';
