@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
 import NextButton from '../NextPageButton';
 import AddButton from '../Button/AddButton';
-import EditButton from '../Button/EditButton';
 import Friends from './Friends';
 import './FriendsList.css'
 import EditFriends from './EditFriends'
+import { isValidInput, noWhiteSpace } from '../ErrorHandling';
 
 function FriendsList({ friends, setFriends }) {
   const [friendName, setFriendName] = useState('');
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault();    
+    if (!noWhiteSpace(friendName)){
+      return;
+    }
     setFriendName('');
     setFriends([...friends,{ name:friendName, items:[],total: 0, isEdit: false}]);
     setFriendName('');
   };
-
-
+  
   const deleteTodo = (friend) => {
     setFriends(friends.filter((friendval) => friendval.name !== friend.name));
   };
@@ -45,7 +47,13 @@ function FriendsList({ friends, setFriends }) {
             <input
               type="text"
               value={friendName}
-              onChange={(e) => setFriendName(e.target.value)}
+              onChange={(e) => {
+                if (isValidInput(e.target.value)) { 
+                  setFriendName(e.target.value);
+                }
+              }}
+              // minLength={0}
+              maxLength={50} //restricts User name input to 50 characters
             />
             <AddButton buttonName={"Add Victims😈"} type={"submit"}/>
           </div>
