@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NextButton from '../Button/NextPageButton';
 import AddButton from '../Button/AddButton';
 import Friends from './Friends';
