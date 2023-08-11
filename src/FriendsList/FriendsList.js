@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import NextButton from '../NextPageButton';
+import React, { useState, useEffect } from 'react';
+import NextButton from '../Button/NextPageButton';
+
 import AddButton from '../Button/AddButton';
 import Friends from './Friends';
 import './FriendsList.css'

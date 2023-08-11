@@ -1,5 +1,5 @@
 import React from 'react';
-import NextButton from './NextPageButton';
+import NextButton from './Button/NextPageButton';
 
 function EachOwed ({items, setItems, friends, setFriends}) {
 

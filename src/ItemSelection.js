@@ -1,14 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
-import NextButton from './NextPageButton';
+import NextButton from './Button/NextPageButton';
 
 // Function component called "ItemSelection" that takes "bills", "setBills", and "items" as props
-function ItemSelection({ bills, setBills, items, setItems, friends, setFriends }) {
+function ItemSelection({ bills, setBills, items, setItems, friends, setFriends, checked, setChecked}) {
 
-  const [tempFriends, setTempFriends] = useState({name:'',total: 0});
+  useEffect(() => {
+    const newChecked = Object.fromEntries(
+      friends.map((friend) => [
+        friend.name,
+        Object.fromEntries(items.map((item) => [item.name, checked[friend.name]?.[item.name] ?? false]))
+      ])
+    );
+  
+    setChecked(newChecked);
+  }, [friends, items]);
+  
+  useEffect(() => {
+      const updatedItems = items.map(item => ({ ...item, sharedPrice: 0 }));
+      setItems(updatedItems);
+  }, []);
+
+  useEffect(() => {
+    const updatedFriends = friends.map(friend => ({ ...friend, total: 0 }));
+    setFriends(updatedFriends);
+  }, []);
+
 
   // Function to handle checkbox changes when an item is selected for a friend's bill.
   const handleCheck = (e,friendIndex, item, itemIndex, friendval) => {
+
+    const updatedChecked = { ...checked };
+
+    // Toggle the checkbox state for the selected friend and item
+    updatedChecked[friendval.name][item.name] = !updatedChecked[friendval.name][item.name];
+
+    setChecked(updatedChecked);
 
     // Create a new copy of items array
     const updatedItems = items.map((item) => ({ ...item })); 
@@ -47,7 +74,7 @@ function ItemSelection({ bills, setBills, items, setItems, friends, setFriends }
     }
 
     const itemName = item.name
-    console.log("item name :",itemName)
+    // console.log("item name :",itemName)
     const itemIndexInFriend = friendToUpdate.items.indexOf(itemName)
 
     if(itemIndexInFriend === -1){
@@ -67,16 +94,6 @@ function ItemSelection({ bills, setBills, items, setItems, friends, setFriends }
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    friends.map((friend,index) => {
-      friends[index].total = 0;
-      setFriends(friends);
-    });
-
-    items.map((item,index) => {
-      items[index].sharedPrice = 0;
-      setItems(items)
-    });
-
     items.map((item,index) => {
       // console.log("item:",item.name," of length :",item.friends.length)
       item.sharedPrice = item.originalPrice/item.friends.length
@@ -95,17 +112,6 @@ function ItemSelection({ bills, setBills, items, setItems, friends, setFriends }
         setFriends(friends);
       })
     });
-    console.log("friends :",friends)
-
-    friends.map((friend,index) => {
-      tempFriends[index] = friend
-      setTempFriends(tempFriends)
-    });
-
-    // friends.map((friend,index) => {
-    //   friends[index].items = [];
-    //   setFriends(friends);
-    // });
   };
 
   // Render the UI components for the Item Selection app.
@@ -122,8 +128,11 @@ function ItemSelection({ bills, setBills, items, setItems, friends, setFriends }
               {/* Map through the "items" array to display each item with a checkbox */}
               {items.map((item,itemIndex) => (
                   <label key={item.name}>
-                    {/* Checkbox input for selecting the item */}
-                    <input type="checkbox" onChange={(e) => handleCheck(e,friendIndex, item, itemIndex, friendval)} />
+                    {checked[friendval.name] && checked[friendval.name][item.name] !== undefined &&
+                    <input type="checkbox" 
+                          checked={checked[friendval.name][item.name]} 
+                          onChange={(e) => handleCheck(e, friendIndex, item, itemIndex, friendval)} />
+                    }
                     {/* Display the item's name and price */}
                     {item.name} - £{item.originalPrice}
                   </label>

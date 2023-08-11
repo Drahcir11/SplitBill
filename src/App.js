@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import ItemsList from './ItemsList';
+import React, { useState, useEffect } from 'react';
+import ItemsList from './ItemList/ItemsList';
 import FriendsList from './FriendsList/FriendsList';
 import ItemSelection from './ItemSelection';
 import EachOwed from './EachOwed';
@@ -39,8 +39,69 @@ function App() {
     The useState initial values are set as an empty array.
   */
   const [bills, setBills] = useState([]);
-  const [items, setItems] = useState([]);
-  const [friends,setFriends] = useState([]);
+  const [items, setItems] = useState(() => {
+    const storedItems = localStorage.getItem('my-items-list');
+    return storedItems ? JSON.parse(storedItems) : [];
+  });
+
+  useEffect(() => {
+    const storedItems = localStorage.getItem('my-items-list');
+    if (storedItems) {
+      setFriends(JSON.parse(storedItems));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('my-items-list', JSON.stringify(items));
+  }, [items]);
+
+
+  const [friends, setFriends] = useState(() => {
+    const storedFriends = localStorage.getItem('my-friends-list');
+    return storedFriends ? JSON.parse(storedFriends) : [];
+  });
+
+  useEffect(() => {
+    const friendsStorage = localStorage.getItem('my-friends-list');
+    if (friendsStorage) {
+      setFriends(JSON.parse(friendsStorage));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('my-friends-list', JSON.stringify(friends));
+  }, [friends]);
+
+
+  const initialCheckedState = Object.fromEntries(
+    friends.map((friend) => [
+      friend.name,
+      Object.fromEntries(items.map((item) => [item.name, false])),
+    ])
+  );
+
+  const [checked, setChecked] = useState(() => {
+    const storedChecked = localStorage.getItem('my-check-list');
+    return storedChecked ? JSON.parse(storedChecked) : Object.fromEntries(
+      friends.map((friend) => [
+        friend.name,
+        Object.fromEntries(items.map((item) => [item.name, false])),
+      ])
+    );
+  });
+
+  useEffect(() => {
+    const checkedStorage = localStorage.getItem('my-check-list');
+    if (checkedStorage) {
+      setChecked(JSON.parse(checkedStorage));
+    }
+  }, []);
+
+  // Store checked state in localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('my-check-list', JSON.stringify(checked));
+  }, [checked]);
+
 
   return (
     /*
@@ -60,7 +121,7 @@ function App() {
           <Routes>
             <Route path="/" element={<FriendsList friends={friends} setFriends={setFriends} />} />
             <Route path="/item" element={<ItemsList items={items} setItems={setItems} />} />
-            <Route path="/itemSelection" element={<ItemSelection bills={bills} setBills={setBills} items={items} setItems={setItems} friends={friends} setFriends={setFriends}/>} />
+            <Route path="/itemSelection" element={<ItemSelection bills={bills} setBills={setBills} items={items} setItems={setItems} friends={friends} setFriends={setFriends} checked={checked} setChecked={setChecked}/>} />
             <Route path="/eachOwed" element={<EachOwed items={items} setItems={setItems} friends={friends} setFriends={setFriends}/>} />
           </Routes>
         </div>

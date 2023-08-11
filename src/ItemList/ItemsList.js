@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import NextButton from './NextPageButton';
+import NextButton from '../Button/NextPageButton';
 import './ItemsList.css'
+import Item from './Item'
+import EditItem from './EditItem';
 // Function component called "BillSplitter" that takes "items" and "setItems" as props
 function ItemsList({ items, setItems }) {
 
@@ -13,7 +15,7 @@ function ItemsList({ items, setItems }) {
   const handleSubmit = (e) => {
     e.preventDefault();
   
-    setItems([...items,{ name: name, originalPrice: originalPrice, sharedPrice: 0, friends:[]}])
+    setItems([...items,{ name: name, originalPrice: originalPrice, sharedPrice: 0, friends:[], isEdit : false}])
   
     // Concatenate the current "name" and "originalPrice" to the existing "items" array and update the "items" state.
     // setItems(items.concat({ name, originalPrice, sharedPrice, }));
@@ -21,6 +23,25 @@ function ItemsList({ items, setItems }) {
     // Reset the "name" and "originalPrice" state variables to empty strings after adding the item.
     setName('');
     setOriginalPrice('');
+  };
+
+  const deleteItem = (ItemInp) => {
+    setItems(items.filter((ItemVal) => ItemVal.name !== ItemInp.name));
+  }
+
+  const editItem = (id) => {
+    setItems(
+      items.map((item,index) =>
+        index === id ? { ...item, isEdit: !item.isEdit } : item
+      )
+    );
+  };
+
+  const editItemList = (name, originalPrice, id) => {
+    setItems(
+      items.map((item, index) =>
+        index === id ? { ...item, name, originalPrice, isEdit: !item.isEdit } : item
+      ));
   };
 
   // Render the UI components for the Bill Splitter app.
@@ -50,10 +71,17 @@ function ItemsList({ items, setItems }) {
       
       {/* List to display the added items */}
       <ul>
-        {items.map((item, index) => (
+        {items.map((item, index) => 
           // Each item in the "items" array is displayed as a list item with its name and originalPrice.
-          <li key={index}> {item.name} - £{item.originalPrice}</li>
-        ))}
+          // <li key={index}> {item.name} - £{item.originalPrice}</li>
+          {
+            if(item.isEdit){
+              return <EditItem Item={item} index={index} editItemList={editItemList} />
+            } else {
+              return <Item Item={item} index={index} deleteItem={deleteItem} editItem={editItem}/>
+            }
+          }
+        )}
       </ul>
       <NextButton buttonName={"Next"} to={"/itemSelection"}/>
     </div>
