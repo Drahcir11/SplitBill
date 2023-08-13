@@ -39,38 +39,52 @@ function App() {
     The useState initial values are set as an empty array.
   */
   const [bills, setBills] = useState([]);
+
+  // const[items, setItems] = useState([]);
+
   const [items, setItems] = useState(() => {
-    const storedItems = localStorage.getItem('my-items-list');
+    const storedItems = sessionStorage.getItem('my-items-list');
     return storedItems ? JSON.parse(storedItems) : [];
   });
 
   useEffect(() => {
-    const storedItems = localStorage.getItem('my-items-list');
+    const storedItems = sessionStorage.getItem('my-items-list');
     if (storedItems) {
-      setFriends(JSON.parse(storedItems));
+      setItems(JSON.parse(storedItems));
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('my-items-list', JSON.stringify(items));
+    sessionStorage.setItem('my-items-list', JSON.stringify(items));
   }, [items]);
 
 
   const [friends, setFriends] = useState(() => {
-    const storedFriends = localStorage.getItem('my-friends-list');
+    const storedFriends = sessionStorage.getItem('my-friends-list');
     return storedFriends ? JSON.parse(storedFriends) : [];
   });
 
   useEffect(() => {
-    const friendsStorage = localStorage.getItem('my-friends-list');
+    const friendsStorage = sessionStorage.getItem('my-friends-list');
     if (friendsStorage) {
       setFriends(JSON.parse(friendsStorage));
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('my-friends-list', JSON.stringify(friends));
+    sessionStorage.setItem('my-friends-list', JSON.stringify(friends));
   }, [friends]);
+
+  // useEffect(() => {
+  //   const handleUnload = () => {
+  //     localStorage.removeItem('my-items-list');
+  //     localStorage.removeItem('my-friends-list');
+  //   };
+  //   // Add an event listener
+  //   window.addEventListener('beforeunload', handleUnload);
+  //   // Cleanup the event listener when the component is unmount
+  //   return () => window.removeEventListener('beforeunload', handleUnload);
+  // }, []);  // Empty dependency array means this effect runs once when the component mounts and cleans up when it unmounts
 
 
   const initialCheckedState = Object.fromEntries(
