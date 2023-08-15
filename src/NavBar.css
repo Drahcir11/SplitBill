@@ -11,6 +11,13 @@ body{
     margin-right : 200px;
 }
 
+.non-logo {
+    /* border: 2px solid Blue; */
+    display:flex;
+    justify-content: space-around;
+    gap: 15px;
+}
+
 .nav {
     /* border : 2px solid blue; */
     background-color: #1b1b1b;
@@ -27,12 +34,10 @@ body{
     list-style: none;
     text-align: center;
     width : 100%;
+    display: flex;
+    justify-content: center;
 }
 
-.nav li{
-    /* border : 2px solid red; */
-    display : inline-block;
-}
 
 .nav a {
     /* border : 2px solid green; */
@@ -43,5 +48,5 @@ body{
     align-items: center;
     padding: .25rem;
     font-size : 12px;
-    margin-right : 20px;
+
 }

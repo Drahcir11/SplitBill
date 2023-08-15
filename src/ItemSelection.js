@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import NextButton from './Button/NextPageButton';
+import './ItemSelection.css'
 
 // Function component called "ItemSelection" that takes "bills", "setBills", and "items" as props
 function ItemSelection({ bills, setBills, items, setItems, friends, setFriends, checked, setChecked}) {
@@ -91,8 +92,7 @@ function ItemSelection({ bills, setBills, items, setItems, friends, setFriends, 
     // console.log("Items :",items)
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
 
     items.map((item,index) => {
       // console.log("item:",item.name," of length :",item.friends.length)
@@ -116,15 +116,15 @@ function ItemSelection({ bills, setBills, items, setItems, friends, setFriends, 
 
   // Render the UI components for the Item Selection app.
   return (
-    <div>
+    <div className='item-selection'>
       <h1>Item Selection</h1>
-      <form onSubmit={handleSubmit}>
+      <form className='friends-items'>
         {/* Map through the "bills" array to display each friend's bill */}
         {friends.map((friendval, friendIndex) => (
             <div key={friendIndex}>
               {/* Display the friend's name as the subheading */}
               <h2>{friendval.name}</h2>
-
+              <div className='items-per-friend'>
               {/* Map through the "items" array to display each item with a checkbox */}
               {items.map((item,itemIndex) => (
                   <label key={item.name}>
@@ -137,13 +137,11 @@ function ItemSelection({ bills, setBills, items, setItems, friends, setFriends, 
                     {item.name} - £{item.originalPrice}
                   </label>
               ))}
+              </div>
             </div>
         ))}
-        <button type='submit'>Submit</button>
       </form>
-      <Link to='/eachOwed'>
-      <NextButton buttonName={"Next"} to={"/eachOwed"}/>
-      </Link>
+      <NextButton buttonName={"Next"} to={"/eachOwed"} clickEvent={handleSubmit}/>
     </div>
   );
 }

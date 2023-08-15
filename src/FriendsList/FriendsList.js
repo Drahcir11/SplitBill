@@ -48,6 +48,7 @@ function FriendsList({ friends, setFriends }) {
             <input
               type="text"
               value={friendName}
+              placeholder="Name"
               onChange={(e) => {
                 if (isValidInput(e.target.value)) { 
                   setFriendName(e.target.value);

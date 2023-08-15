@@ -1,0 +1,23 @@
+
+.item-selection {
+    /* border : 2px solid yellow; */
+    width: 100vh;
+    height : 100vh;
+    padding:  0%;
+    /* border: 1px solid #ccc; */
+    display : flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #3231328a;
+
+}
+
+.items-per-friend {
+    display: flex;
+    flex-direction: column;
+}
+
+.friends-items{
+    overflow: auto;
+    padding : 15px;
+}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import NextButton from '../Button/NextPageButton';
+import AddButton from '../Button/AddButton';
 import './ItemsList.css'
 import Item from './Item'
 import EditItem from './EditItem';
@@ -62,14 +63,18 @@ function ItemsList({ items, setItems }) {
           className='input-price'
           type="number"
           placeholder="£"
+          min="0"
+          step="0.01"
           value={originalPrice}
           onChange={(e) => setOriginalPrice(e.target.value)} // Update the "price" state variable when the input changes
         />
         {/* Button to add the item to the list */}
-        <button type="submit">Add Item</button>
+        {/* <button type="submit">Add Item</button> */}
+        <AddButton buttonName={"Add Items"} type={"submit"}/>
       </form>
       
       {/* List to display the added items */}
+      <div className='item-name-list'>
       <ul>
         {items.map((item, index) => 
           // Each item in the "items" array is displayed as a list item with its name and originalPrice.
@@ -83,6 +88,7 @@ function ItemsList({ items, setItems }) {
           }
         )}
       </ul>
+      </div>
       <NextButton buttonName={"Next"} to={"/itemSelection"}/>
     </div>
   );

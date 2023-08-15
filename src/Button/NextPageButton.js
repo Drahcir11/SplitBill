@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import './NextButton.css';
 
-const NextButton = ({ buttonName, to, clickEvent}) => {
+const NextButton = ({ buttonName, to, clickEvent, type}) => {
   return(
     <div className="next-button">
       <Link to={to}>
-        <button onClick={clickEvent}>{buttonName}</button>
+        <button type={type} onClick={clickEvent}>{buttonName}</button>
       </Link>
     </div>
   );
