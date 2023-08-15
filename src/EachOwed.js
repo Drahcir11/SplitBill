@@ -1,11 +1,13 @@
 import React from 'react';
 import NextButton from './Button/NextPageButton';
 
-function EachOwed ({items, setItems, friends, setFriends}) {
+function EachOwed ({items, setItems, friends, setFriends, setChecked}) {
     // On clicking restart, clear out local storage of item and friends data
     const handleRestart = () => {
         setItems([]);
         setFriends([]);
+        setChecked([]);
+
     }
 
     return(
