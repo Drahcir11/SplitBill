@@ -95,7 +95,7 @@ function App() {
   );
 
   const [checked, setChecked] = useState(() => {
-    const storedChecked = localStorage.getItem('my-check-list');
+    const storedChecked = sessionStorage.getItem('my-check-list');
     return storedChecked ? JSON.parse(storedChecked) : Object.fromEntries(
       friends.map((friend) => [
         friend.name,
@@ -105,15 +105,15 @@ function App() {
   });
 
   useEffect(() => {
-    const checkedStorage = localStorage.getItem('my-check-list');
+    const checkedStorage = sessionStorage.getItem('my-check-list');
     if (checkedStorage) {
       setChecked(JSON.parse(checkedStorage));
     }
   }, []);
 
-  // Store checked state in localStorage whenever it changes
+  // Store checked state in sessionStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem('my-check-list', JSON.stringify(checked));
+   sessionStorage.setItem('my-check-list', JSON.stringify(checked));
   }, [checked]);
 
 
@@ -136,7 +136,7 @@ function App() {
             <Route path="/" element={<FriendsList friends={friends} setFriends={setFriends} />} />
             <Route path="/item" element={<ItemsList items={items} setItems={setItems} />} />
             <Route path="/itemSelection" element={<ItemSelection bills={bills} setBills={setBills} items={items} setItems={setItems} friends={friends} setFriends={setFriends} checked={checked} setChecked={setChecked}/>} />
-            <Route path="/eachOwed" element={<EachOwed items={items} setItems={setItems} friends={friends} setFriends={setFriends}/>} />
+            <Route path="/eachOwed" element={<EachOwed items={items} setItems={setItems} friends={friends} setFriends={setFriends} setChecked={setChecked}/>} />
           </Routes>
         </div>
       </Router>
