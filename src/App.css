@@ -2,8 +2,11 @@
   width : 100%;
   display: flex;
   flex-direction: column;
-  /* overflow : auto; */
-  /* min-height : 100vh; */
+  height: 100%;
+  min-height: 100vh;
+  /* border: 2px solid green; */
+  background-color: #444444;
+  color: #ffffff;
 }
 
 
@@ -11,14 +14,13 @@
   /* border : 2px solid purple; */
   background-color: #2a2a2a;
   background-size : cover;
-  height : 100%;
+  height: 100%;
+  min-height: 100vh;
   align-items: center;
   display : flex;
   justify-content: center;
-  /* min-height : 100vh; */
   background-repeat: no-repeat;
   background-attachment: fixed;
-  overflow : auto;
 
 }
 

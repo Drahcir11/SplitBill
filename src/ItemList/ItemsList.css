@@ -5,7 +5,8 @@
 .item-list {
     /* border : 2px solid yellow; */
     width: 100vh;
-    height : 100vh;
+    height: 100%;
+    min-height: 100vh;
     padding:  0%;
     /* border: 1px solid #ccc; */
     display : flex;
@@ -45,6 +46,6 @@
 }
 
 .item-name-list {
-    overflow: auto;
+    /* overflow: auto; */
     padding : 5px;
 }
