@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import EditButton from '../Button/EditButton';
 
 function EditItem({Item, index, editItemList}) {
     const [value, setValue] = useState(Item.name)
@@ -25,11 +26,13 @@ function EditItem({Item, index, editItemList}) {
             className='input-price'
             type="number"
             placeholder="£"
+            min="0"
+            step="0.01"
             value={price}
             onChange={(e) => setPrice(e.target.value)} // Update the "price" state variable when the input changes
             />
             {/* Button to add the item to the list */}
-            <button type="submit">Add Item</button>
+            <EditButton buttonName={"Update"} type={"submit"}/>
         </form>
     );
 }
