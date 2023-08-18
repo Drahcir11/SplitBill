@@ -1,12 +1,19 @@
-.item-list h1 {
+.item-container h1 {
     text-align: center;
   }
+
+.item-container {
+    /* border: 5px solid blue; */
+    display: flex;
+    flex-direction: column;
+    
+}
 
 .item-list {
     /* border : 2px solid yellow; */
     width: 100vh;
     height: 100%;
-    min-height: 100vh;
+    min-height: 50vh;
     padding:  0%;
     padding-bottom:  5%;
     /* border: 1px solid #ccc; */
@@ -17,7 +24,7 @@
 
 }
 
-.item-list form {
+.item-container form {
     /* border : 2px solid white; */
     width : 350px;
     display:flex;
@@ -26,10 +33,11 @@
     margin-top: 10px;
 }
 
-.item-list input{
+.item-container input{
     
     border-radius: 5px;
     border: none;
+    height:20px;
   }
 
 .input-price {
@@ -43,10 +51,25 @@
 .input-item {
     align-items: center;
     justify-content: center;
-
 }
 
 .item-name-list {
     /* overflow: auto; */
     padding : 5px;
+}
+
+.tax-name-list {
+    /* overflow: auto; */
+    padding : 5px;
+}
+
+.tax-list{
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* border: 2px solid pink; */
+    height: 100%;
+    min-height: 60vh;
+    background-color: #3231328a;
 }

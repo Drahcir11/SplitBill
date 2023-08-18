@@ -4,13 +4,17 @@ import AddButton from '../Button/AddButton';
 import './ItemsList.css'
 import Item from './Item'
 import EditItem from './EditItem';
+
 // Function component called "BillSplitter" that takes "items" and "setItems" as props
-function ItemsList({ items, setItems }) {
+function ItemsList({ items, setItems, tax, setTax }) {
 
   // Declare "name" and "originalPrice" variables. These will be used to store the item's name and originalPrice.
   // The "useState" hook is used to create state variables, initial values are set to empty strings.
   const [name, setName] = useState('');
   const [originalPrice, setOriginalPrice] = useState('');
+  const [services, setServices] = useState('');
+  const [priceCharge, setPriceCharge] = useState('');
+
 
   // Function to handle form submission when the "Add Item" button is clicked.
   const handleSubmit = (e) => {
@@ -25,6 +29,15 @@ function ItemsList({ items, setItems }) {
     setName('');
     setOriginalPrice('');
   };
+
+
+  const handleSubmitTax = (e) => {
+    e.preventDefault();
+    setTax([...tax,{name: services, originalPrice: priceCharge}])
+    console.log("Tax :",tax)
+    setServices('');
+    setPriceCharge('');
+  }
 
   const deleteItem = (ItemInp) => {
     setItems(items.filter((ItemVal) => ItemVal.name !== ItemInp.name));
@@ -47,49 +60,85 @@ function ItemsList({ items, setItems }) {
 
   // Render the UI components for the Bill Splitter app.
   return (
-    <div className='item-list'>
-      <h1>List of Items</h1>
-      <form onSubmit={handleSubmit}>
-        {/* Input field for entering the item's name */}
-        <input
-          className='input-item'
-          type="text"
-          placeholder="Item"
-          value={name}
-          onChange={(e) => setName(e.target.value)} // Update the "name" state variable when the input changes
-        />
-        {/* Input field for entering the item's originalPrice */}
-        <input
-          className='input-price'
-          type="number"
-          placeholder="£"
-          min="0"
-          step="0.01"
-          value={originalPrice}
-          onChange={(e) => setOriginalPrice(e.target.value)} // Update the "price" state variable when the input changes
-        />
-        {/* Button to add the item to the list */}
-        {/* <button type="submit">Add Item</button> */}
-        <AddButton buttonName={"Add Items"} type={"submit"}/>
-      </form>
-      
-      {/* List to display the added items */}
-      <div className='item-name-list'>
-      <ul>
-        {items.map((item, index) => 
-          // Each item in the "items" array is displayed as a list item with its name and originalPrice.
-          // <li key={index}> {item.name} - £{item.originalPrice}</li>
-          {
-            if(item.isEdit){
-              return <EditItem Item={item} index={index} editItemList={editItemList} />
-            } else {
-              return <Item Item={item} index={index} deleteItem={deleteItem} editItem={editItem}/>
+    <div className='item-container'>
+      <div className='item-list'>
+        <h1>List of Items</h1>
+        <form onSubmit={handleSubmit}>
+          {/* Input field for entering the item's name */}
+          <input
+            className='input-item'
+            type="text"
+            placeholder="Item"
+            value={name}
+            onChange={(e) => setName(e.target.value)} // Update the "name" state variable when the input changes
+          />
+          {/* Input field for entering the item's originalPrice */}
+          <input
+            className='input-price'
+            type="number"
+            placeholder="£"
+            min="0"
+            step="0.01"
+            value={originalPrice}
+            onChange={(e) => setOriginalPrice(e.target.value)} // Update the "price" state variable when the input changes
+          />
+          {/* Button to add the item to the list */}
+          {/* <button type="submit">Add Item</button> */}
+          <AddButton buttonName={"Add Items"} type={"submit"}/>
+        </form>
+        
+        {/* List to display the added items */}
+        <div className='item-name-list'>
+        <ul>
+          {items.map((item, index) => 
+            // Each item in the "items" array is displayed as a list item with its name and originalPrice.
+            // <li key={index}> {item.name} - £{item.originalPrice}</li>
+            {
+              if(item.isEdit){
+                return <EditItem Item={item} index={index} editItemList={editItemList} />
+              } else {
+                return <Item Item={item} index={index} deleteItem={deleteItem} editItem={editItem}/>
+              }
             }
-          }
-        )}
-      </ul>
+          )}
+        </ul>
+        </div>
       </div>
-      <NextButton buttonName={"Next"} to={"/itemSelection"}/>
+      <div className='tax-list'>
+      <h1>List of tax & services</h1>
+        <form onSubmit={handleSubmitTax}>
+            {/* Input field for entering the item's name */}
+            <input
+              className='input-tax'
+              type="text"
+              placeholder="Tax & Services"
+              value={services}
+              onChange={(e) => setServices(e.target.value)} // Update the "name" state variable when the input changes
+            />
+            {/* Input field for entering the item's originalPrice */}
+            <input
+              className='input-price'
+              type="number"
+              placeholder="%"
+              min="0"
+              step="0.01"
+              value={priceCharge}
+              onChange={(e) => setPriceCharge(e.target.value)} // Update the "price" state variable when the input changes
+            />
+            {/* Button to add the item to the list */}
+            {/* <button type="submit">Add Item</button> */}
+            <AddButton buttonName={"Add taxes"} type={"submit"}/>
+        </form>
+          {/* List to display the added items */}
+          <div className='tax-name-list'>
+          <ul>
+            {tax.map((taxval, taxindex) => 
+              <li key={taxindex}> {taxval.name} - {taxval.originalPrice}%</li>
+            )}
+          </ul>
+          </div>
+        {/* <NextButton buttonName={"Next"} to={"/itemSelection"}/> */}
+      </div>
     </div>
   );
 }

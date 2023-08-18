@@ -75,6 +75,8 @@ function App() {
     sessionStorage.setItem('my-friends-list', JSON.stringify(friends));
   }, [friends]);
 
+  const [tax, setTax] = useState([])
+
   // useEffect(() => {
   //   const handleUnload = () => {
   //     localStorage.removeItem('my-items-list');
@@ -134,7 +136,7 @@ function App() {
         <div className="App">
           <Routes>
             <Route path="/" element={<FriendsList friends={friends} setFriends={setFriends} />} />
-            <Route path="/item" element={<ItemsList items={items} setItems={setItems} />} />
+            <Route path="/item" element={<ItemsList items={items} setItems={setItems} tax={tax} setTax={setTax}/>} />
             <Route path="/itemSelection" element={<ItemSelection bills={bills} setBills={setBills} items={items} setItems={setItems} friends={friends} setFriends={setFriends} checked={checked} setChecked={setChecked}/>} />
             <Route path="/eachOwed" element={<EachOwed items={items} setItems={setItems} friends={friends} setFriends={setFriends} setChecked={setChecked}/>} />
           </Routes>
