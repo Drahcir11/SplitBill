@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import TaxList from './TaxList/Tax';
 import ItemsList from './ItemList/ItemsList';
 import FriendsList from './FriendsList/FriendsList';
 import ItemSelection from './ItemSelection';
@@ -6,6 +7,7 @@ import EachOwed from './EachOwed';
 import NavBar from './NavBar';
 import './App.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 
 
 /*
@@ -75,7 +77,24 @@ function App() {
     sessionStorage.setItem('my-friends-list', JSON.stringify(friends));
   }, [friends]);
 
-  const [tax, setTax] = useState([])
+
+
+
+  const [tax, setTax] = useState(() => {
+    const storedTax = sessionStorage.getItem('my-tax-list');
+    return storedTax ? JSON.parse(storedTax) : [];
+  });
+
+  useEffect(() => {
+    const taxStorage = sessionStorage.getItem('my-tax-list');
+    if (taxStorage) {
+      setTax(JSON.parse(taxStorage));
+    }
+  }, []);
+
+  useEffect(() => {
+    sessionStorage.setItem('my-tax-list', JSON.stringify(tax));
+  }, [tax]);
 
   // useEffect(() => {
   //   const handleUnload = () => {
@@ -137,7 +156,8 @@ function App() {
           <Routes>
             <Route path="/" element={<FriendsList friends={friends} setFriends={setFriends} />} />
             <Route path="/item" element={<ItemsList items={items} setItems={setItems} tax={tax} setTax={setTax}/>} />
-            <Route path="/itemSelection" element={<ItemSelection bills={bills} setBills={setBills} items={items} setItems={setItems} friends={friends} setFriends={setFriends} checked={checked} setChecked={setChecked}/>} />
+            <Route path="/tax" element={<TaxList tax={tax} setTax={setTax} />} />
+            <Route path="/itemSelection" element={<ItemSelection tax={tax} setTax={setTax} items={items} setItems={setItems} friends={friends} setFriends={setFriends} checked={checked} setChecked={setChecked}/>} />
             <Route path="/eachOwed" element={<EachOwed items={items} setItems={setItems} friends={friends} setFriends={setFriends} setChecked={setChecked}/>} />
           </Routes>
         </div>

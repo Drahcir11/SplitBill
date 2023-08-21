@@ -30,15 +30,6 @@ function ItemsList({ items, setItems, tax, setTax }) {
     setOriginalPrice('');
   };
 
-
-  const handleSubmitTax = (e) => {
-    e.preventDefault();
-    setTax([...tax,{name: services, originalPrice: priceCharge}])
-    console.log("Tax :",tax)
-    setServices('');
-    setPriceCharge('');
-  }
-
   const deleteItem = (ItemInp) => {
     setItems(items.filter((ItemVal) => ItemVal.name !== ItemInp.name));
   }
@@ -103,41 +94,7 @@ function ItemsList({ items, setItems, tax, setTax }) {
           )}
         </ul>
         </div>
-      </div>
-      <div className='tax-list'>
-      <h1>List of tax & services</h1>
-        <form onSubmit={handleSubmitTax}>
-            {/* Input field for entering the item's name */}
-            <input
-              className='input-tax'
-              type="text"
-              placeholder="Tax & Services"
-              value={services}
-              onChange={(e) => setServices(e.target.value)} // Update the "name" state variable when the input changes
-            />
-            {/* Input field for entering the item's originalPrice */}
-            <input
-              className='input-price'
-              type="number"
-              placeholder="%"
-              min="0"
-              step="0.01"
-              value={priceCharge}
-              onChange={(e) => setPriceCharge(e.target.value)} // Update the "price" state variable when the input changes
-            />
-            {/* Button to add the item to the list */}
-            {/* <button type="submit">Add Item</button> */}
-            <AddButton buttonName={"Add taxes"} type={"submit"}/>
-        </form>
-          {/* List to display the added items */}
-          <div className='tax-name-list'>
-          <ul>
-            {tax.map((taxval, taxindex) => 
-              <li key={taxindex}> {taxval.name} - {taxval.originalPrice}%</li>
-            )}
-          </ul>
-          </div>
-        {/* <NextButton buttonName={"Next"} to={"/itemSelection"}/> */}
+        <NextButton buttonName={"Next"} to={"/tax"}/>
       </div>
     </div>
   );

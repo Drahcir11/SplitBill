@@ -16,7 +16,7 @@ function EachOwed ({items, setItems, friends, setFriends, setChecked}) {
             <h2> How much individually people owe</h2>
             <ul>
                 {friends.map((friend,index) => (
-                    <li key={index}> {friend.name} owes £{Math.round(friend.total*10)/10}</li>
+                    <li key={index}> {friend.name} owes £{Math.round(friend.total*100)/100}</li>
                 ))}
             </ul>
             <NextButton buttonName={"Restart"} to={"/"} clickEvent={handleRestart}/>
