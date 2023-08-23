@@ -4,7 +4,7 @@ import NextButton from './Button/NextPageButton';
 import './ItemSelection.css'
 
 // Function component called "ItemSelection" that takes "bills", "setBills", and "items" as props
-function ItemSelection({ bills, setBills, items, setItems, friends, setFriends, checked, setChecked}) {
+function ItemSelection({ tax, setTax, items, setItems, friends, setFriends, checked, setChecked}) {
 
   useEffect(() => {
     const newChecked = Object.fromEntries(
@@ -18,7 +18,7 @@ function ItemSelection({ bills, setBills, items, setItems, friends, setFriends, 
   }, [friends, items]);
   
   useEffect(() => {
-      const updatedItems = items.map(item => ({ ...item, sharedPrice: 0 }));
+      const updatedItems = items.map(item => ({ ...item, priceWithTax: 0, sharedPrice: 0 }));
       setItems(updatedItems);
   }, []);
 
@@ -94,20 +94,32 @@ function ItemSelection({ bills, setBills, items, setItems, friends, setFriends, 
 
   const handleSubmit = () => {
 
-    items.map((item,index) => {
+    let tempVariable = 0.00
+
+    items.forEach((item, index) => {
+      tax.forEach((taxval) => {
+          tempVariable = tempVariable + (parseFloat(taxval.originalPrice) / 100.00);
+          console.log("temp variable value :",tempVariable)
+        });
+      item.priceWithTax = item.originalPrice * (1.00 + tempVariable);
+      tempVariable = 0
+      items[index] = item;
+      setItems(items);
+    });
+
+    items.forEach((item,index) => {
       // console.log("item:",item.name," of length :",item.friends.length)
-      item.sharedPrice = item.originalPrice/item.friends.length
+      item.sharedPrice = item.priceWithTax/item.friends.length
       // console.log("item shared price :",item)
       items[index] = item
       setItems(items)
     });
-    console.log("items :",items)
 
-    friends.map((friend,index) => {
-      friend.items.map((friendItem,nestIndex) => {
+    friends.forEach((friend,index) => {
+      friend.items.forEach((friendItem,nestIndex) => {
 
         const itemIndexInItems = items.findIndex(item => item.name === friendItem);
-        console.log("items :",items[itemIndexInItems].name, "shared price :",items[itemIndexInItems].sharedPrice)
+        // console.log("items :",items[itemIndexInItems].name, "shared price :",items[itemIndexInItems].sharedPrice)
         friends[index].total += parseFloat(items[itemIndexInItems].sharedPrice);
         setFriends(friends);
       })

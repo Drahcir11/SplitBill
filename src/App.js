@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import TaxList from './TaxList/Tax';
 import ItemsList from './ItemList/ItemsList';
 import FriendsList from './FriendsList/FriendsList';
 import ItemSelection from './ItemSelection';
@@ -6,6 +7,7 @@ import EachOwed from './EachOwed';
 import NavBar from './NavBar';
 import './App.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 
 
 /*
@@ -75,17 +77,17 @@ function App() {
     sessionStorage.setItem('my-friends-list', JSON.stringify(friends));
   }, [friends]);
 
-  // useEffect(() => {
-  //   const handleUnload = () => {
-  //     localStorage.removeItem('my-items-list');
-  //     localStorage.removeItem('my-friends-list');
-  //   };
-  //   // Add an event listener
-  //   window.addEventListener('beforeunload', handleUnload);
-  //   // Cleanup the event listener when the component is unmount
-  //   return () => window.removeEventListener('beforeunload', handleUnload);
-  // }, []);  // Empty dependency array means this effect runs once when the component mounts and cleans up when it unmounts
 
+
+
+  const [tax, setTax] = useState(() => {
+    const storedTax = sessionStorage.getItem('my-tax-list');
+    return storedTax ? JSON.parse(storedTax) : [];
+  });
+
+  useEffect(() => {
+    sessionStorage.setItem('my-tax-list', JSON.stringify(tax));
+  }, [tax]);
 
   const initialCheckedState = Object.fromEntries(
     friends.map((friend) => [
@@ -134,8 +136,9 @@ function App() {
         <div className="App">
           <Routes>
             <Route path="/" element={<FriendsList friends={friends} setFriends={setFriends} />} />
-            <Route path="/item" element={<ItemsList items={items} setItems={setItems} />} />
-            <Route path="/itemSelection" element={<ItemSelection bills={bills} setBills={setBills} items={items} setItems={setItems} friends={friends} setFriends={setFriends} checked={checked} setChecked={setChecked}/>} />
+            <Route path="/item" element={<ItemsList items={items} setItems={setItems} tax={tax} setTax={setTax}/>} />
+            <Route path="/tax" element={<TaxList tax={tax} setTax={setTax} />} />
+            <Route path="/itemSelection" element={<ItemSelection tax={tax} setTax={setTax} items={items} setItems={setItems} friends={friends} setFriends={setFriends} checked={checked} setChecked={setChecked}/>} />
             <Route path="/eachOwed" element={<EachOwed items={items} setItems={setItems} friends={friends} setFriends={setFriends} setChecked={setChecked}/>} />
           </Routes>
         </div>
