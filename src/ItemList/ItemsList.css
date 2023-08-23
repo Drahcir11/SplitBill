@@ -1,65 +1,61 @@
 .item-container h1 {
-    text-align: center;
-  }
+  text-align: center;
+}
 
 .item-container {
-    /* border: 5px solid blue; */
-    display: flex;
-    flex-direction: column;
-    
+  /* border: 5px solid blue; */
+  display: flex;
+  flex-direction: column;
 }
 
 .item-list {
-    /* border : 2px solid yellow; */
-    width: 100vh;
-    height: 100%;
-    min-height: 100vh;
-    padding:  0%;
-    padding-bottom:  5%;
-    /* border: 1px solid #ccc; */
-    display : flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #3231328a;
-
+  /* border : 2px solid yellow; */
+  width: 100vh;
+  height: 100%;
+  min-height: 100vh;
+  padding: 0%;
+  padding-bottom: 5%;
+  /* border: 1px solid #ccc; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #3231328a;
 }
 
 .item-container form {
-    /* border : 2px solid white; */
-    width : 350px;
-    display:flex;
-    margin : 0 auto;
-    margin-bottom: 10px;
-    margin-top: 10px;
+  /* border : 2px solid white; */
+  width: 350px;
+  display: flex;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
-.item-container input{
-    
-    border-radius: 5px;
-    border: none;
-    height:20px;
-  }
+.item-container input {
+  border-radius: 5px;
+  border: none;
+  height: 20px;
+}
 
 .input-price {
-    width : 35px;
+  width: 35px;
 }
 
-.input-price input{
-    appearance: textfield;
+.input-price input {
+  appearance: textfield;
 }
 
 .input-item {
-    align-items: center;
-    justify-content: center;
+  align-items: center;
+  justify-content: center;
 }
 
 .item-name-list {
-    /* overflow: auto; */
-    padding : 5px;
+  /* overflow: auto; */
+  padding: 5px;
 }
 
 .tax-name-list {
-    /* overflow: auto; */
-    padding : 5px;
+  /* overflow: auto; */
+  padding: 5px;
 }
-

@@ -1,45 +1,43 @@
 .tax-container {
-    /* border: 5px solid blue; */
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    min-height: 100vh;
-    
+  /* border: 5px solid blue; */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100vh;
 }
 
-.tax-list{
-    width: 100vh;
-    height: 100%;
-    min-height: 100vh;
-    padding:  0%;
-    padding-bottom:  5%;
-    /* border: 1px solid #ccc; */
-    display : flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #3231328a;
+.tax-list {
+  width: 100vh;
+  height: 100%;
+  min-height: 100vh;
+  padding: 0%;
+  padding-bottom: 5%;
+  /* border: 1px solid #ccc; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #3231328a;
 }
 
-.tax-container form{
-
-    width : 350px;
-    display:flex;
-    margin : 0 auto;
-    margin-bottom: 10px;
-    margin-top: 10px;
+.tax-container form {
+  width: 350px;
+  display: flex;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .tax-list input {
-    border-radius: 5px;
-    border: none;
-    height:20px;
+  border-radius: 5px;
+  border: none;
+  height: 20px;
 }
 
 .tax-input-price {
-    width : 10px;
+  width: 10px;
 }
 
 .tax-name-list {
-    /* overflow: auto; */
-    padding : 5px;
+  /* overflow: auto; */
+  padding: 5px;
 }
