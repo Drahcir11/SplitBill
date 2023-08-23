@@ -104,8 +104,6 @@ function ItemSelection({ tax, setTax, items, setItems, friends, setFriends, chec
           console.log("temp variable value :",tempVariable)
         });
       item.priceWithTax = item.originalPrice * (1.00 + tempVariable);
-      console.log("Item :",item.name,"Price tax :",item.priceWithTax, "Original Price :",item.originalPrice)
-      console.log("temp variable on the outside :",tempVariable)
       tempVariable = 0
       items[index] = item;
       setItems(items);
@@ -118,13 +116,12 @@ function ItemSelection({ tax, setTax, items, setItems, friends, setFriends, chec
       items[index] = item
       setItems(items)
     });
-    console.log("items :",items)
 
     friends.forEach((friend,index) => {
       friend.items.forEach((friendItem,nestIndex) => {
 
         const itemIndexInItems = items.findIndex(item => item.name === friendItem);
-        console.log("items :",items[itemIndexInItems].name, "shared price :",items[itemIndexInItems].sharedPrice)
+        // console.log("items :",items[itemIndexInItems].name, "shared price :",items[itemIndexInItems].sharedPrice)
         friends[index].total += parseFloat(items[itemIndexInItems].sharedPrice);
         setFriends(friends);
       })

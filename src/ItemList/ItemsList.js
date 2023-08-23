@@ -6,14 +6,12 @@ import Item from './Item'
 import EditItem from './EditItem';
 
 // Function component called "BillSplitter" that takes "items" and "setItems" as props
-function ItemsList({ items, setItems, tax, setTax }) {
+function ItemsList({ items, setItems }) {
 
   // Declare "name" and "originalPrice" variables. These will be used to store the item's name and originalPrice.
   // The "useState" hook is used to create state variables, initial values are set to empty strings.
   const [name, setName] = useState('');
   const [originalPrice, setOriginalPrice] = useState('');
-  const [services, setServices] = useState('');
-  const [priceCharge, setPriceCharge] = useState('');
 
 
   // Function to handle form submission when the "Add Item" button is clicked.

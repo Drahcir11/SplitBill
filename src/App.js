@@ -86,27 +86,8 @@ function App() {
   });
 
   useEffect(() => {
-    const taxStorage = sessionStorage.getItem('my-tax-list');
-    if (taxStorage) {
-      setTax(JSON.parse(taxStorage));
-    }
-  }, []);
-
-  useEffect(() => {
     sessionStorage.setItem('my-tax-list', JSON.stringify(tax));
   }, [tax]);
-
-  // useEffect(() => {
-  //   const handleUnload = () => {
-  //     localStorage.removeItem('my-items-list');
-  //     localStorage.removeItem('my-friends-list');
-  //   };
-  //   // Add an event listener
-  //   window.addEventListener('beforeunload', handleUnload);
-  //   // Cleanup the event listener when the component is unmount
-  //   return () => window.removeEventListener('beforeunload', handleUnload);
-  // }, []);  // Empty dependency array means this effect runs once when the component mounts and cleans up when it unmounts
-
 
   const initialCheckedState = Object.fromEntries(
     friends.map((friend) => [
