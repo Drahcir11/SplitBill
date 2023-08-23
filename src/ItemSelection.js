@@ -6,8 +6,6 @@ import './ItemSelection.css'
 // Function component called "ItemSelection" that takes "bills", "setBills", and "items" as props
 function ItemSelection({ tax, setTax, items, setItems, friends, setFriends, checked, setChecked}) {
 
-  console.log("tax :",tax)
-
   useEffect(() => {
     const newChecked = Object.fromEntries(
       friends.map((friend) => [
