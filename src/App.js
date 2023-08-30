@@ -37,7 +37,6 @@ function App() {
     or "setItems".
     The useState initial values are set as an empty array.
   */
-  const [bills, setBills] = useState([]);
 
   // const[items, setItems] = useState([]);
 
