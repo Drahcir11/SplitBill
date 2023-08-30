@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import TaxList from './TaxList/Tax';
-import ItemsList from './ItemList/ItemsList';
-import FriendsList from './FriendsList/FriendsList';
-import ItemSelection from './ItemSelection';
-import EachOwed from './EachOwed';
-import NavBar from './NavBar';
-import './App.css'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
-
+import React, { useState, useEffect } from "react";
+import TaxList from "./TaxList/Tax";
+import ItemsList from "./ItemList/ItemsList";
+import FriendsList from "./FriendsList/FriendsList";
+import ItemSelection from "./ItemSelection";
+import EachOwed from "./EachOwed";
+import NavBar from "./NavBar";
+import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 /*
 
@@ -32,7 +30,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 */
 function App() {
-
   /* 
     Declare bills and items variables with the "useState" to enable the use of states.
     The use of "useState" allows to read or get the variables with "bills" or "items".
@@ -40,84 +37,58 @@ function App() {
     or "setItems".
     The useState initial values are set as an empty array.
   */
-  const [bills, setBills] = useState([]);
 
   // const[items, setItems] = useState([]);
 
   const [items, setItems] = useState(() => {
-    const storedItems = sessionStorage.getItem('my-items-list');
+    const storedItems = sessionStorage.getItem("my-items-list");
     return storedItems ? JSON.parse(storedItems) : [];
   });
 
   useEffect(() => {
-    const storedItems = sessionStorage.getItem('my-items-list');
-    if (storedItems) {
-      setItems(JSON.parse(storedItems));
-    }
-  }, []);
-
-  useEffect(() => {
-    sessionStorage.setItem('my-items-list', JSON.stringify(items));
+    sessionStorage.setItem("my-items-list", JSON.stringify(items));
   }, [items]);
 
-
   const [friends, setFriends] = useState(() => {
-    const storedFriends = sessionStorage.getItem('my-friends-list');
+    const storedFriends = sessionStorage.getItem("my-friends-list");
     return storedFriends ? JSON.parse(storedFriends) : [];
   });
 
   useEffect(() => {
-    const friendsStorage = sessionStorage.getItem('my-friends-list');
-    if (friendsStorage) {
-      setFriends(JSON.parse(friendsStorage));
-    }
-  }, []);
-
-  useEffect(() => {
-    sessionStorage.setItem('my-friends-list', JSON.stringify(friends));
+    sessionStorage.setItem("my-friends-list", JSON.stringify(friends));
   }, [friends]);
 
-
-
-
   const [tax, setTax] = useState(() => {
-    const storedTax = sessionStorage.getItem('my-tax-list');
+    const storedTax = sessionStorage.getItem("my-tax-list");
     return storedTax ? JSON.parse(storedTax) : [];
   });
 
   useEffect(() => {
-    sessionStorage.setItem('my-tax-list', JSON.stringify(tax));
+    sessionStorage.setItem("my-tax-list", JSON.stringify(tax));
   }, [tax]);
 
-  const initialCheckedState = Object.fromEntries(
-    friends.map((friend) => [
-      friend.name,
-      Object.fromEntries(items.map((item) => [item.name, false])),
-    ])
-  );
-
   const [checked, setChecked] = useState(() => {
-    const storedChecked = sessionStorage.getItem('my-check-list');
-    return storedChecked ? JSON.parse(storedChecked) : Object.fromEntries(
-      friends.map((friend) => [
-        friend.name,
-        Object.fromEntries(items.map((item) => [item.name, false])),
-      ])
-    );
+    const storedChecked = sessionStorage.getItem("my-check-list");
+    return storedChecked
+      ? JSON.parse(storedChecked)
+      : Object.fromEntries(friends.map((friend) => [friend.name, Object.fromEntries(items.map((item) => [item.name, false]))]));
   });
-
-  useEffect(() => {
-    const checkedStorage = sessionStorage.getItem('my-check-list');
-    if (checkedStorage) {
-      setChecked(JSON.parse(checkedStorage));
-    }
-  }, []);
 
   // Store checked state in sessionStorage whenever it changes
   useEffect(() => {
-   sessionStorage.setItem('my-check-list', JSON.stringify(checked));
+    sessionStorage.setItem("my-check-list", JSON.stringify(checked));
   }, [checked]);
 
+  const itemSelectionProps = {
+    tax,
+    setTax,
+    items,
+    setItems,
+    friends,
+    setFriends,
+    checked,
+    setChecked,
+  };
 
   return (
     /*
@@ -128,22 +99,22 @@ function App() {
 
       Nav links are used to link the directories with buttons.
     */
-<div className='container'>
-    <div className='nav-app'>
-      <NavBar />
-    </div>
+    <div className="container">
+      <div className="nav-app">
+        <NavBar />
+      </div>
       <Router>
         <div className="App">
           <Routes>
             <Route path="/" element={<FriendsList friends={friends} setFriends={setFriends} />} />
-            <Route path="/item" element={<ItemsList items={items} setItems={setItems} tax={tax} setTax={setTax}/>} />
+            <Route path="/item" element={<ItemsList items={items} setItems={setItems} tax={tax} setTax={setTax} />} />
             <Route path="/tax" element={<TaxList tax={tax} setTax={setTax} />} />
-            <Route path="/itemSelection" element={<ItemSelection tax={tax} setTax={setTax} items={items} setItems={setItems} friends={friends} setFriends={setFriends} checked={checked} setChecked={setChecked}/>} />
-            <Route path="/eachOwed" element={<EachOwed items={items} setItems={setItems} friends={friends} setFriends={setFriends} setChecked={setChecked}/>} />
+            <Route path="/itemSelection" element={<ItemSelection props={itemSelectionProps} />} />
+            <Route path="/eachOwed" element={<EachOwed setItems={setItems} friends={friends} setFriends={setFriends} setChecked={setChecked} />} />
           </Routes>
         </div>
       </Router>
-   </div>
+    </div>
   );
 }
 
