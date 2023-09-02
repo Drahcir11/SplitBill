@@ -29,17 +29,17 @@ function ItemsList({ items, setItems }) {
     setOriginalPrice("");
   };
 
-  const deleteItem = (ItemInp) => {
-    setItems(items.filter((ItemVal) => ItemVal.name !== ItemInp.name));
+  const deleteItem = (InputItem) => {
+    setItems(items.filter((item) => item.name !== InputItem.name));
   };
 
-  const editItem = (id) => {
-    setItems(items.map((item, index) => (index === id ? { ...item, isEdit: !item.isEdit } : item)));
+  const editItem = (InputId) => {
+    setItems(items.map((item, index) => (index === InputId ? { ...item, isEdit: !item.isEdit } : item)));
   };
 
-  const editItemList = (name, originalPrice, id) => {
+  const editItemList = (InputName, InputPrice, InputId) => {
     setItems(
-      items.map((item, index) => (index === id ? { ...item, name, originalPrice, isEdit: !item.isEdit } : item))
+      items.map((item, index) => (index === InputId ? { ...item, InputName, InputPrice, isEdit: !item.isEdit } : item))
     );
   };
 
