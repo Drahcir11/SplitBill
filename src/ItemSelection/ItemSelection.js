@@ -9,7 +9,10 @@ function ItemSelection({ props }) {
 
   useEffect(() => {
     const newChecked = Object.fromEntries(
-      friends.map((friend) => [friend.name, Object.fromEntries(items.map((item) => [item.name, checked[friend.name]?.[item.name] ?? false]))])
+      friends.map((friend) => [
+        friend.name,
+        Object.fromEntries(items.map((item) => [item.name, checked[friend.name]?.[item.name] ?? false])),
+      ])
     );
 
     setChecked(newChecked);
