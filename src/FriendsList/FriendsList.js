@@ -49,11 +49,12 @@ function FriendsList({ friends, setFriends }) {
               type="text"
               value={friendName}
               placeholder="Name"
-              onChange={(e) => {
-                if (isValidInput(e.target.value)) { 
-                  setFriendName(e.target.value);
-                }
-              }}
+              onChange={
+                (e) => {
+                  if (isValidInput(e.target.value)) { 
+                    setFriendName(e.target.value);
+                  }
+                }}
               // minLength={0}
               maxLength={50} //restricts User name input to 50 characters
             />
