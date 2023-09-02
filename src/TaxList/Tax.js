@@ -4,6 +4,7 @@ import AddButton from "../Button/AddButton";
 import "./Tax.css";
 import EditItem from "./EditTaxItem";
 import TaxItem from "./TaxItem";
+import { isNumber, isValidInput, noWhiteSpace } from "../ErrorHandling";
 
 // Function component called "BillSplitter" that takes "items" and "setItems" as props
 function TaxList({ tax, setTax }) {
@@ -12,7 +13,9 @@ function TaxList({ tax, setTax }) {
 
   const handleSubmitTax = (e) => {
     e.preventDefault();
-
+    if(!noWhiteSpace(services) || !noWhiteSpace(priceCharge)){
+      return;
+    }
     setTax([...tax, { name: services, originalPrice: priceCharge, priceWithTax: 0, isEdit: false }]);
     setServices("");
     setPriceCharge("");
@@ -36,7 +39,7 @@ function TaxList({ tax, setTax }) {
   return (
     <div className="tax-container">
       <div className="tax-list">
-        <h1>List of tax & services</h1>
+        <h1>List of tax %</h1>
         <form onSubmit={handleSubmitTax} className="tax-form">
           {/* Input field for entering the item's name */}
           <input
@@ -44,17 +47,28 @@ function TaxList({ tax, setTax }) {
             type="text"
             placeholder="Tax & Services"
             value={services}
-            onChange={(e) => setServices(e.target.value)} // Update the "name" state variable when the input changes
+            onChange={(e) => 
+              {
+                if(isValidInput(e.target.value)){
+                  setServices(e.target.value)
+                }
+              }} // Update the "name" state variable when the input changes
           />
           {/* Input field for entering the item's originalPrice */}
           <input
             className="tax-input-price"
-            type="number"
+            type="text"
+            inputMode="numeric"
             placeholder="%"
             min="0"
             step="0.01"
             value={priceCharge}
-            onChange={(e) => setPriceCharge(e.target.value)} // Update the "price" state variable when the input changes
+            onChange={(e) => 
+              {
+                if(isNumber(e.target.value)){
+                  setPriceCharge(e.target.value)
+                }
+              }} // Update the "price" state variable when the input changes
           />
           {/* Button to add the item to the list */}
           {/* <button type="submit">Add Item</button> */}
