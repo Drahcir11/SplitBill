@@ -4,6 +4,7 @@ import AddButton from "../Button/AddButton";
 import "./ItemsList.css";
 import Item from "./Item";
 import EditItem from "./EditItem";
+import { isNumber, isValidInput, noWhiteSpace } from "../ErrorHandling";
 
 // Function component called "BillSplitter" that takes "items" and "setItems" as props
 function ItemsList({ items, setItems }) {
@@ -15,7 +16,9 @@ function ItemsList({ items, setItems }) {
   // Function to handle form submission when the "Add Item" button is clicked.
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    if(!noWhiteSpace(name) || !noWhiteSpace(originalPrice)){
+      return;
+    }
     setItems([...items, { name: name, originalPrice: originalPrice, sharedPrice: 0, friends: [], isEdit: false }]);
 
     // Concatenate the current "name" and "originalPrice" to the existing "items" array and update the "items" state.
@@ -35,7 +38,9 @@ function ItemsList({ items, setItems }) {
   };
 
   const editItemList = (name, originalPrice, id) => {
-    setItems(items.map((item, index) => (index === id ? { ...item, name, originalPrice, isEdit: !item.isEdit } : item)));
+    setItems(
+      items.map((item, index) => (index === id ? { ...item, name, originalPrice, isEdit: !item.isEdit } : item))
+    );
   };
 
   // Render the UI components for the Bill Splitter app.
@@ -50,17 +55,28 @@ function ItemsList({ items, setItems }) {
             type="text"
             placeholder="Item"
             value={name}
-            onChange={(e) => setName(e.target.value)} // Update the "name" state variable when the input changes
+            onChange={              
+              (e) => {
+              if(isValidInput(e.target.value)){
+                setName(e.target.value)
+              }
+            }} // Update the "name" state variable when the input changes
           />
           {/* Input field for entering the item's originalPrice */}
           <input
             className="input-price"
-            type="number"
+            type="text"
+            inputMode="numeric"
             placeholder="£"
             min="0"
             step="0.01"
             value={originalPrice}
-            onChange={(e) => setOriginalPrice(e.target.value)} // Update the "price" state variable when the input changes
+            onChange={
+              (e) => {
+                if(isNumber(e.target.value)){
+                  setOriginalPrice(e.target.value)
+                }
+              }} // Update the "price" state variable when the input changes
           />
           {/* Button to add the item to the list */}
           {/* <button type="submit">Add Item</button> */}
@@ -72,7 +88,6 @@ function ItemsList({ items, setItems }) {
           <ul>
             {items.map((item, index) =>
               // Each item in the "items" array is displayed as a list item with its name and originalPrice.
-              // <li key={index}> {item.name} - £{item.originalPrice}</li>
               {
                 if (item.isEdit) {
                   return <EditItem Item={item} index={index} editItemList={editItemList} />;
