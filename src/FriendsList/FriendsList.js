@@ -20,22 +20,22 @@ function FriendsList({ friends, setFriends }) {
     setFriendName('');
   };
   
-  const deleteTodo = (friend) => {
-    setFriends(friends.filter((friendval) => friendval.name !== friend.name));
+  const deleteTodo = (inputFriend) => {
+    setFriends(friends.filter((friend) => friend.name !== inputFriend.name));
   };
   
-  const editFriend = (id) => {
+  const editFriend = (inputId) => {
     setFriends(
       friends.map((friend,index) =>
-        index === id ? { ...friend, isEdit: !friend.isEdit } : friend
+        index === inputId ? { ...friend, isEdit: !friend.isEdit } : friend
       )
     );
   };
 
-  const editFriendList = (name, id) => {
+  const editFriendList = (inputName, inputId) => {
     setFriends(
       friends.map((friend, index) =>
-        index === id ? { ...friend, name, isEdit: !friend.isEdit } : friend
+        index === inputId ? { ...friend, name : inputName, isEdit: !friend.isEdit } : friend
       ));
   };
 
