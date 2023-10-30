@@ -20,22 +20,22 @@ function FriendsList({ friends, setFriends }) {
     setFriendName('');
   };
   
-  const deleteTodo = (friend) => {
-    setFriends(friends.filter((friendval) => friendval.name !== friend.name));
+  const deleteTodo = (inputFriend) => {
+    setFriends(friends.filter((friend) => friend.name !== inputFriend.name));
   };
   
-  const editFriend = (id) => {
+  const editFriend = (inputId) => {
     setFriends(
       friends.map((friend,index) =>
-        index === id ? { ...friend, isEdit: !friend.isEdit } : friend
+        index === inputId ? { ...friend, isEdit: !friend.isEdit } : friend
       )
     );
   };
 
-  const editFriendList = (name, id) => {
+  const editFriendList = (inputName, inputId) => {
     setFriends(
       friends.map((friend, index) =>
-        index === id ? { ...friend, name, isEdit: !friend.isEdit } : friend
+        index === inputId ? { ...friend, name : inputName, isEdit: !friend.isEdit } : friend
       ));
   };
 
@@ -49,11 +49,12 @@ function FriendsList({ friends, setFriends }) {
               type="text"
               value={friendName}
               placeholder="Name"
-              onChange={(e) => {
-                if (isValidInput(e.target.value)) { 
-                  setFriendName(e.target.value);
-                }
-              }}
+              onChange={
+                (e) => {
+                  if (isValidInput(e.target.value)) { 
+                    setFriendName(e.target.value);
+                  }
+                }}
               // minLength={0}
               maxLength={50} //restricts User name input to 50 characters
             />
