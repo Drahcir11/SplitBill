@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import NextButton from "./Button/NextPageButton";
+import NextButton from "../Button/NextPageButton";
 import "./ItemSelection.css";
 
 // Function component called "ItemSelection" that takes "bills", "setBills", and "items" as props
@@ -9,10 +9,7 @@ function ItemSelection({ props }) {
 
   useEffect(() => {
     const newChecked = Object.fromEntries(
-      friends.map((friend) => [
-        friend.name,
-        Object.fromEntries(items.map((item) => [item.name, checked[friend.name]?.[item.name] ?? false])),
-      ])
+      friends.map((friend) => [friend.name, Object.fromEntries(items.map((item) => [item.name, checked[friend.name]?.[item.name] ?? false]))])
     );
 
     setChecked(newChecked);
@@ -90,38 +87,80 @@ function ItemSelection({ props }) {
     setFriends(updatedFriends);
   };
 
-  const handleSubmit = () => {
-    let tempVariable = 0.0;
+  // Calculate tax for each item
+const calculateTotalTax = (tax) => {
 
-    const updatedItems = { ...items };
+  let calculatedTax = 0.0;
 
-    items.forEach((item, index) => {
-      tax.forEach((taxval) => {
-        tempVariable = tempVariable + parseFloat(taxval.originalPrice) / 100.0;
-      });
-      item.priceWithTax = item.originalPrice * (1.0 + tempVariable);
-      tempVariable = 0;
-      updatedItems[index] = item;
-    });
-    setItems(updatedItems);
+  tax.forEach((taxPercentage) => {
+    calculatedTax += parseFloat(taxPercentage.originalPrice) / 100.0;
+  });
 
-    items.forEach((item, index) => {
-      // console.log("item:",item.name," of length :",item.friends.length)
-      item.sharedPrice = item.priceWithTax / item.friends.length;
-      // console.log("item shared price :",item)
-      items[index] = item;
-      setItems(items);
-    });
+  return calculatedTax;
+};
 
-    friends.forEach((friend, index) => {
-      friend.items.forEach((friendItem) => {
-        const itemIndexInItems = items.findIndex((item) => item.name === friendItem);
-        // console.log("items :",items[itemIndexInItems].name, "shared price :",items[itemIndexInItems].sharedPrice)
-        friends[index].total += parseFloat(items[itemIndexInItems].sharedPrice);
-        setFriends(friends);
-      });
-    });
+// Update item with tax
+const updateItemWithTax = (item, calculatedTax) => {
+  let calculatedPriceWithTax = item.originalPrice * item.quantity * (1+ calculatedTax);
+
+  let updatedItem = {
+    ...item,
+    priceWithTax : calculatedPriceWithTax
   };
+
+  return updatedItem;
+}
+
+// Calculate shared price
+const updateSharedPrice = (item) => {
+  let calculatedSharedPrice = item.priceWithTax / item.friends.length;
+
+  let updatedItem = {
+    ...item,
+
+    sharedPrice : calculatedSharedPrice
+  };
+
+  return updatedItem;
+}
+
+// Update friends total
+const updateFriendTotal = (friend, items) => {
+
+  let total = 0;
+
+  friend.items.forEach((friendItem) => {
+    const itemIndexInItems = items.findIndex((item) => item.name === friendItem);
+    total += parseFloat(items[itemIndexInItems].sharedPrice);
+  });
+  return {
+    ...friend,
+    total,
+  };
+};
+
+// Main handleSubmit function
+const handleSubmit = () => {
+
+  // Calculate tax and update items
+  const updatedItems = items.map((item) => {
+    const calculatedTax = calculateTotalTax(tax);
+    return updateItemWithTax(item, calculatedTax);
+  });
+  setItems(updatedItems);
+
+  // Calculate shared price for items
+  const itemsWithSharedPrice = updatedItems.map((item) =>{
+    return updateSharedPrice(item);
+  });
+  setItems(itemsWithSharedPrice);
+
+  // Update friends with their totals
+  const updatedFriends = friends.map((friend) => {
+    return updateFriendTotal(friend, itemsWithSharedPrice);
+  });
+  setFriends(updatedFriends);
+};
 
   // Render the UI components for the Item Selection app.
   return (

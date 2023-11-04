@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import TaxList from "./TaxList/Tax";
 import ItemsList from "./ItemList/ItemsList";
 import FriendsList from "./FriendsList/FriendsList";
-import ItemSelection from "./ItemSelection";
+import ItemSelection from "./ItemSelection/ItemSelection";
 import EachOwed from "./EachOwed";
 import NavBar from "./NavBar";
 import "./App.css";
