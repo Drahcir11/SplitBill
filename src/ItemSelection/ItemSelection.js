@@ -57,10 +57,10 @@ function ItemSelection({ props }) {
     function updateCheckedState(previousChecked) {
 
       // Clone the previous checked state
-      var newCheckedState = Object.assign({}, previousChecked);
+      let newCheckedState = Object.assign({}, previousChecked);
   
       // Clone the state for this particular friend, to avoid mutating it directly
-      var friendCheckedState = Object.assign({}, previousChecked[friendName]);
+      let friendCheckedState = Object.assign({}, previousChecked[friendName]);
   
       // Toggle the checked state for the specific item for this friend
       friendCheckedState[itemName] = !friendCheckedState[itemName];

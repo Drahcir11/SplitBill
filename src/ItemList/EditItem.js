@@ -65,20 +65,6 @@ function EditItem({Item, index, items, setItems}) {
                     }
                 }} // Update the "price" state variable when the input changes
             />
-            <input
-            className="quantity"
-            type="text"
-            inputMode="numeric"
-            placeholder="qty"
-            min="0"
-            step="1"
-            value={newQuantity}
-            onChange={(e)=>{
-              if(isNumber(e.target.value)){
-                setNewQuantity(e.target.value);
-              }
-            }}
-            />
             {/* Button to add the item to the list */}
             <EditButton buttonName={"Update"} type={"submit"}/>
         </form>

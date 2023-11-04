@@ -23,7 +23,9 @@
 }
 
 .item-container form {
-  /* border : 2px solid white; */
+  /* border : 2px solid green; */
+  justify-content: center;
+  align-items: center;
   width: 350px;
   display: flex;
   flex-direction: row;
@@ -45,7 +47,8 @@
 }
 
 .input-price {
-  width: 75px;
+  width: 65px;
+  max-width: 65px;
 }
 
 .quantity {
@@ -56,12 +59,16 @@
   appearance: textfield;
 }
 
-.item-name-list {
+.tax-name-list {
   /* overflow: auto; */
   padding: 5px;
 }
 
-.tax-name-list {
-  /* overflow: auto; */
-  padding: 5px;
+.item-name-list ul{
+  display : flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  /* border: 2px solid red; */
+  width: 100%;
 }
