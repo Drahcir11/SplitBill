@@ -13,9 +13,20 @@ function Items({ Item, index, items, setItems}) {
   };
 
   const increaseQuantity = (InputId) => {
-    setItems(items.map((item, index)=>(
-      index === InputId ? {...item, quantity: item.quantity + 1 } : item
-    )))
+    // Create a new array with the same items
+    const newItems = [...items];
+  
+    // Update the quantity of the item at InputId index
+    if (newItems[InputId]) {
+      const currentQuantity = parseFloat(newItems[InputId].quantity); // Ensure the quantity is a float
+      newItems[InputId] = {
+        ...newItems[InputId],
+        quantity: currentQuantity + 1
+      };
+    }
+  
+    // Set the new array as the new state
+    setItems(newItems);
   };
 
   const decreaseQuantity = (InputId) => {

@@ -199,39 +199,32 @@ const handleSubmit = () => {
       <form className="friends-items">
         {/* Map through the "bills" array to display each friend's bill */}
         {friends.map((friendElement, friendIndex) => (
-          <div key={friendIndex}>
+          <div className="friend-container" key={friendIndex}>
             {/* Display the friend's name as the subheading */}
-            <h2>{friendElement.name}</h2>
+            <h2 className="friendName">{friendElement.name}</h2>
             <div className="items-per-friend">
               {/* Map through the "items" array to display each item with a checkbox */}
               {items.map((item, itemIndex) => {
                 // Start by checking if the checked state for this friend and item exists
                 let isItemChecked = false;
                 if (
-                  checked[friendElement.name] && 
+                  checked[friendElement.name] &&
                   checked[friendElement.name][item.name] !== undefined
                 ) {
                   // If it does exist, use that state to determine if the checkbox is checked
                   isItemChecked = checked[friendElement.name][item.name];
                 }
 
-                return (
-                  <label key={item.name}>
-                    {/* Conditional rendering with the "&&" operator is used for the checkbox */}
-                    {/* If the state for this checkbox is defined, then render the checkbox */}
-                    {isItemChecked !== undefined && (
-                      <input
-                        type="checkbox"
-                        // Set the checkbox to be checked based on our isItemChecked variable
-                        checked={isItemChecked}
-                        // When the checkbox is changed, call handleCheck with all the necessary info
-                        onChange={(e) => handleCheck(e, friendIndex, item, itemIndex, friendElement)}
-                      />
-                    )}
+                let isSelected = checked[friendElement.name] && checked[friendElement.name][item.name];
 
-                    {/* Always display the item's name and price next to the checkbox */}
+                return (
+                  <div
+                    key={item.name}
+                    className={`itemSelection ${isSelected ? 'selected' : ''}`}
+                    onClick={(e) => handleCheck(e, friendIndex, item, itemIndex, friendElement)}
+                  >
                     {item.name} - £{item.originalPrice}
-                  </label>
+                  </div>
                 );
               })}
             </div>

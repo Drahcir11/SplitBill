@@ -9,7 +9,7 @@ function TaxItem({Item, index, deleteItem, editItem}) {
 
 
     return (  
-        <div className="item">
+        <div className="tax-item">
             <p>{Item.name} - {Item.originalPrice}%</p>
             <div className='item-icon'>
                 <FontAwesomeIcon icon={faPenToSquare} onClick={() => editItem(index)}/>

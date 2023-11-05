@@ -59,7 +59,7 @@ function ItemsList({ items, setItems }) {
           <input
             className="input-price"
             type="text"
-            inputMode="numeric"
+            inputMode="decimal"
             placeholder="£"
             min="0"
             step="0.01"
