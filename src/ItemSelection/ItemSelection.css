@@ -16,9 +16,43 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  /* border: 1px solid #ccc; */
 }
 
 .friends-items {
   /* overflow: auto; */
   padding: 15px;
+}
+
+
+.itemSelection {
+  font-size: 0.85em;
+  padding: 10px;
+  margin: 2px;
+  border: 1px solid #ccc;
+  border-radius: 20px; /* This makes the divs have rounded corners */
+  cursor: pointer; /* Changes the mouse cursor to indicate it's clickable */
+  user-select: none; /* Prevents text selection */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.friend-container {
+  border: 2px solid white;
+  margin-bottom: 15px;
+  width: 270px;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+.itemSelection.selected {
+  background-color: rgb(255, 102, 255); /* Blue background for selected items */
+  color: white; /* White text for better contrast on blue background */
+  border-color: white; /* Blue border to match the background */
+}
+
+.friendName {
+  display:flex;
+  
 }

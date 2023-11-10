@@ -8,10 +8,12 @@ import { isNumber, isValidInput, noWhiteSpace } from "../ErrorHandling";
 
 // Function component called "BillSplitter" that takes "items" and "setItems" as props
 function ItemsList({ items, setItems }) {
+
   // Declare "name" and "originalPrice" variables. These will be used to store the item's name and originalPrice.
   // The "useState" hook is used to create state variables, initial values are set to empty strings.
   const [name, setName] = useState("");
   const [originalPrice, setOriginalPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
 
   // Function to handle form submission when the "Add Item" button is clicked.
   const handleSubmit = (e) => {
@@ -19,28 +21,19 @@ function ItemsList({ items, setItems }) {
     if(!noWhiteSpace(name) || !noWhiteSpace(originalPrice)){
       return;
     }
-    setItems([...items, { name: name, originalPrice: originalPrice, sharedPrice: 0, friends: [], isEdit: false }]);
-
+    if(!quantity){
+      setItems([...items, { name: name, originalPrice: originalPrice, quantity: 1, sharedPrice: 0, friends: [], isEdit: false }]);
+    }
+    else{
+        setItems([...items, { name: name, originalPrice: originalPrice, quantity: quantity, sharedPrice: 0, friends: [], isEdit: false }]);
+      }
     // Concatenate the current "name" and "originalPrice" to the existing "items" array and update the "items" state.
     // setItems(items.concat({ name, originalPrice, sharedPrice, }));
 
     // Reset the "name" and "originalPrice" state variables to empty strings after adding the item.
     setName("");
     setOriginalPrice("");
-  };
-
-  const deleteItem = (InputItem) => {
-    setItems(items.filter((item) => item.name !== InputItem.name));
-  };
-
-  const editItem = (InputId) => {
-    setItems(items.map((item, index) => (index === InputId ? { ...item, isEdit: !item.isEdit } : item)));
-  };
-
-  const editItemList = (InputName, InputPrice, InputId) => {
-    setItems(
-      items.map((item, index) => (index === InputId ? { ...item, InputName, InputPrice, isEdit: !item.isEdit } : item))
-    );
+    setQuantity("");
   };
 
   // Render the UI components for the Bill Splitter app.
@@ -66,20 +59,32 @@ function ItemsList({ items, setItems }) {
           <input
             className="input-price"
             type="text"
-            inputMode="numeric"
+            inputMode="decimal"
             placeholder="£"
             min="0"
             step="0.01"
             value={originalPrice}
-            onChange={
-              (e) => {
+            onChange={(e) => {
                 if(isNumber(e.target.value)){
                   setOriginalPrice(e.target.value)
                 }
               }} // Update the "price" state variable when the input changes
           />
+          <input
+            className="quantity"
+            type="text"
+            inputMode="numeric"
+            placeholder="qty"
+            min="0"
+            step="1"
+            value={quantity}
+            onChange={(e)=>{
+              if(isNumber(e.target.value)){
+                setQuantity(e.target.value);
+              }
+            }}
+          />
           {/* Button to add the item to the list */}
-          {/* <button type="submit">Add Item</button> */}
           <AddButton buttonName={"Add Items"} type={"submit"} />
         </form>
 
@@ -90,9 +95,9 @@ function ItemsList({ items, setItems }) {
               // Each item in the "items" array is displayed as a list item with its name and originalPrice.
               {
                 if (item.isEdit) {
-                  return <EditItem Item={item} index={index} editItemList={editItemList} />;
+                  return <EditItem Item={item} index={index} items={items} setItems={setItems}/>;
                 } else {
-                  return <Item Item={item} index={index} deleteItem={deleteItem} editItem={editItem} />;
+                  return <Item Item={item} index={index} items={items} setItems={setItems} />;
                 }
               }
             )}

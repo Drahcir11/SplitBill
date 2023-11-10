@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import TaxList from "./TaxList/Tax";
 import ItemsList from "./ItemList/ItemsList";
 import FriendsList from "./FriendsList/FriendsList";
-import ItemSelection from "./ItemSelection";
+import ItemSelection from "./ItemSelection/ItemSelection";
 import EachOwed from "./EachOwed";
 import NavBar from "./NavBar";
 import "./App.css";
@@ -38,15 +38,22 @@ function App() {
     The useState initial values are set as an empty array.
   */
 
-  // const[items, setItems] = useState([]);
-
   const [items, setItems] = useState(() => {
+    // Attempt to retrieve the stored items from the session storage.
     const storedItems = sessionStorage.getItem("my-items-list");
+    
+    // If 'storedItems' exists, parse it as JSON to convert it back into an array.
+    // If not, initialize 'items' as an empty array.
     return storedItems ? JSON.parse(storedItems) : [];
   });
-
+  
+  // useEffect hook is used to perform side effects in the component.
+  // In this case, it's used to store the 'items' state in the session storage whenever 'items' changes.
   useEffect(() => {
+    // The current state of 'items' is stringified and stored in the session storage.
+    // This ensures that the state is persisted across page refreshes for the current session.
     sessionStorage.setItem("my-items-list", JSON.stringify(items));
+    // The dependency array [items] means this effect runs whenever 'items' changes.
   }, [items]);
 
   const [friends, setFriends] = useState(() => {
@@ -68,10 +75,20 @@ function App() {
   }, [tax]);
 
   const [checked, setChecked] = useState(() => {
+    // Retrieve the 'checked' state from the session storage.
     const storedChecked = sessionStorage.getItem("my-check-list");
+  
+    // If 'storedChecked' exists, parse it as JSON to convert it back into an object.
+    // If not, create a new object based on the 'friends' and 'items' arrays.
     return storedChecked
       ? JSON.parse(storedChecked)
-      : Object.fromEntries(friends.map((friend) => [friend.name, Object.fromEntries(items.map((item) => [item.name, false]))]));
+      : Object.fromEntries(
+          friends.map((friend) => [
+            friend.name,
+            // Create an object for each friend with keys from 'items' and false as default values.
+            Object.fromEntries(items.map((item) => [item.name, false]))
+          ])
+        );
   });
 
   // Store checked state in sessionStorage whenever it changes

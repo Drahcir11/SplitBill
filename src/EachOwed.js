@@ -3,6 +3,7 @@ import NextButton from "./Button/NextPageButton";
 import "./EachOwed.css";
 
 function EachOwed({ setItems, friends, setFriends, setChecked }) {
+
   // On clicking restart, clear out local storage of item and friends data
   const handleRestart = () => {
     setItems([]);

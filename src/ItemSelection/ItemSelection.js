@@ -1,18 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import NextButton from "./Button/NextPageButton";
+import React, { useEffect } from "react";
+import NextButton from "../Button/NextPageButton";
 import "./ItemSelection.css";
 
 // Function component called "ItemSelection" that takes "bills", "setBills", and "items" as props
 function ItemSelection({ props }) {
-  const { friends, setFriends, items, setItems, tax, setTax, checked, setChecked } = props;
+  const { friends, setFriends, items, setItems, tax, checked, setChecked } = props;
 
   useEffect(() => {
     const newChecked = Object.fromEntries(
-      friends.map((friend) => [
-        friend.name,
-        Object.fromEntries(items.map((item) => [item.name, checked[friend.name]?.[item.name] ?? false])),
-      ])
+      friends.map((friend) => [friend.name, Object.fromEntries(items.map((item) => [item.name, checked[friend.name]?.[item.name] ?? false]))])
     );
 
     setChecked(newChecked);
@@ -32,96 +28,169 @@ function ItemSelection({ props }) {
     setFriends(updatedFriends);
   }, []);
 
-  // Function to handle checkbox changes when an item is selected for a friend's bill.
-  const handleCheck = (e, friendIndex, item, itemIndex, friendval) => {
-    const updatedChecked = { ...checked };
-
-    // Toggle the checkbox state for the selected friend and item
-    updatedChecked[friendval.name][item.name] = !updatedChecked[friendval.name][item.name];
-
-    setChecked(updatedChecked);
-
-    // Create a new copy of items array
-    const updatedItems = items.map((item) => ({ ...item }));
-
-    // access the item to be updated with the itemIndex
-    const itemToUpdate = updatedItems[itemIndex];
-
-    // Check if the item's friends array is defined, if not, initialize it
-    if (!itemToUpdate.friends) {
-      itemToUpdate.friends = [];
-    }
-
-    // Check if the friend's name is already in the item's friends array
-    const friendName = friendval.name;
-    const friendIndexInItem = itemToUpdate.friends.indexOf(friendName);
-
-    // If the friend's name is not in the friends array, add it; otherwise, remove it.
-    if (friendIndexInItem === -1) {
-      itemToUpdate.friends = [...itemToUpdate.friends, friendName];
+  const toggleArrayElement = (array, element) => {
+    const index = array.indexOf(element);
+    if (index === -1) {
+      // Element is not in the array, so add it
+      return array.concat(element); // concat() can be used instead of spread operator for simplicity
     } else {
-      itemToUpdate.friends.splice(friendIndexInItem, 1);
+      // Element is in the array, so remove it
+      return array.filter((_, i) => i !== index);
     }
+  };
+  
+  function handleCheck(event, friendIndex, item, itemIndex, friendElement) {
+    // Get the names of the friend and item involved in the checkbox change
+    var friendName = friendElement.name;
+    var itemName = item.name;
 
-    updatedItems[itemIndex] = itemToUpdate;
-    setItems(updatedItems);
+    /**
+     * 
+     * @param {useState} previousChecked 
+     * previousChecked is not a variable that you have declared somewhere in your component. 
+     * It's a value that React passes to your updater function at the time it's called.
+     * The updateCheckedState function is being called by the useEffect "setChecked". 
+     * @returns {useState} newCheckedState
+     */
+  
+    // Function to toggle the checkbox state
+    function updateCheckedState(previousChecked) {
 
-    // copy the friends array
-    const updatedFriends = friends.map((friend) => ({ ...friend }));
-
-    // friends to be updated accessed by its friendIndex
-    const friendToUpdate = updatedFriends[friendIndex];
-
-    if (!friendToUpdate.items) {
-      friendToUpdate.items = [];
+      // Clone the previous checked state
+      let newCheckedState = Object.assign({}, previousChecked);
+  
+      // Clone the state for this particular friend, to avoid mutating it directly
+      let friendCheckedState = Object.assign({}, previousChecked[friendName]);
+  
+      // Toggle the checked state for the specific item for this friend
+      friendCheckedState[itemName] = !friendCheckedState[itemName];
+  
+      // Assign this updated checked state back into the main state
+      newCheckedState[friendName] = friendCheckedState;
+  
+      return newCheckedState;
     }
+  
+    // Call setChecked with the update function to update the state
+    setChecked(updateCheckedState);
+  
+    // Function to update the items state
+    function updateItemsState(previousItems) {
 
-    const itemName = item.name;
-    // console.log("item name :",itemName)
-    const itemIndexInFriend = friendToUpdate.items.indexOf(itemName);
-
-    if (itemIndexInFriend === -1) {
-      friendToUpdate.items = [...friendToUpdate.items, itemName];
-    } else {
-      friendToUpdate.items.splice(itemIndexInFriend, 1);
+      // Map over the previous items to produce a new array of items
+      return previousItems.map(function (currentItem, idx) {
+        if (idx === itemIndex) {
+          // If it's the item we're interested in, toggle the friend in the friends list
+          return {
+            ...currentItem,
+            friends: toggleArrayElement(currentItem.friends || [], friendName),
+          };
+        } else {
+          // Otherwise, return the item as it was
+          return currentItem;
+        }
+      });
     }
+  
+    // Call setItems with the update function to update the state
+    setItems(updateItemsState);
+  
+    // Function to update the friends state
+    function updateFriendsState(previousFriends) {
+      // Map over the previous friends to produce a new array of friends
+      return previousFriends.map(function (currentFriend, idx) {
+        if (idx === friendIndex) {
+          // If it's the friend we're interested in, toggle the item in the items list
+          return {
+            ...currentFriend,
+            items: toggleArrayElement(currentFriend.items || [], itemName),
+          };
+        } else {
+          // Otherwise, return the friend as it was
+          return currentFriend;
+        }
+      });
+    }
+  
+    // Call setFriends with the update function to update the state
+    setFriends(updateFriendsState);
+  }
+  
 
-    updatedFriends[friendIndex] = friendToUpdate;
-    setFriends(updatedFriends);
+  // Calculate tax for each item
+const calculateTotalTax = (tax) => {
+
+  let calculatedTax = 0.0;
+
+  tax.forEach((taxPercentage) => {
+    calculatedTax += parseFloat(taxPercentage.originalPrice) / 100.0;
+  });
+
+  return calculatedTax;
+};
+
+// Update item with tax
+const updateItemWithTax = (item, calculatedTax) => {
+  let calculatedPriceWithTax = item.originalPrice * item.quantity * (1+ calculatedTax);
+
+  let updatedItem = {
+    ...item,
+    priceWithTax : calculatedPriceWithTax
   };
 
-  const handleSubmit = () => {
-    let tempVariable = 0.0;
+  return updatedItem;
+}
 
-    const updatedItems = { ...items };
+// Calculate shared price
+const updateSharedPrice = (item) => {
+  let calculatedSharedPrice = item.priceWithTax / item.friends.length;
 
-    items.forEach((item, index) => {
-      tax.forEach((taxval) => {
-        tempVariable = tempVariable + parseFloat(taxval.originalPrice) / 100.0;
-      });
-      item.priceWithTax = item.originalPrice * (1.0 + tempVariable);
-      tempVariable = 0;
-      updatedItems[index] = item;
-    });
-    setItems(updatedItems);
+  let updatedItem = {
+    ...item,
 
-    items.forEach((item, index) => {
-      // console.log("item:",item.name," of length :",item.friends.length)
-      item.sharedPrice = item.priceWithTax / item.friends.length;
-      // console.log("item shared price :",item)
-      items[index] = item;
-      setItems(items);
-    });
-
-    friends.forEach((friend, index) => {
-      friend.items.forEach((friendItem) => {
-        const itemIndexInItems = items.findIndex((item) => item.name === friendItem);
-        // console.log("items :",items[itemIndexInItems].name, "shared price :",items[itemIndexInItems].sharedPrice)
-        friends[index].total += parseFloat(items[itemIndexInItems].sharedPrice);
-        setFriends(friends);
-      });
-    });
+    sharedPrice : calculatedSharedPrice
   };
+
+  return updatedItem;
+}
+
+// Update friends total
+const updateFriendTotal = (friend, items) => {
+
+  let total = 0;
+
+  friend.items.forEach((friendItem) => {
+    const itemIndexInItems = items.findIndex((item) => item.name === friendItem);
+    total += parseFloat(items[itemIndexInItems].sharedPrice);
+  });
+  return {
+    ...friend,
+    total,
+  };
+};
+
+// Main handleSubmit function
+const handleSubmit = () => {
+
+  // Calculate tax and update items
+  const updatedItems = items.map((item) => {
+    const calculatedTax = calculateTotalTax(tax);
+    return updateItemWithTax(item, calculatedTax);
+  });
+  setItems(updatedItems);
+
+  // Calculate shared price for items
+  const itemsWithSharedPrice = updatedItems.map((item) =>{
+    return updateSharedPrice(item);
+  });
+  setItems(itemsWithSharedPrice);
+
+  // Update friends with their totals
+  const updatedFriends = friends.map((friend) => {
+    return updateFriendTotal(friend, itemsWithSharedPrice);
+  });
+  setFriends(updatedFriends);
+};
 
   // Render the UI components for the Item Selection app.
   return (
@@ -129,25 +198,35 @@ function ItemSelection({ props }) {
       <h1>Item Selection</h1>
       <form className="friends-items">
         {/* Map through the "bills" array to display each friend's bill */}
-        {friends.map((friendval, friendIndex) => (
-          <div key={friendIndex}>
+        {friends.map((friendElement, friendIndex) => (
+          <div className="friend-container" key={friendIndex}>
             {/* Display the friend's name as the subheading */}
-            <h2>{friendval.name}</h2>
+            <h2 className="friendName">{friendElement.name}</h2>
             <div className="items-per-friend">
               {/* Map through the "items" array to display each item with a checkbox */}
-              {items.map((item, itemIndex) => (
-                <label key={item.name}>
-                  {checked[friendval.name] && checked[friendval.name][item.name] !== undefined && (
-                    <input
-                      type="checkbox"
-                      checked={checked[friendval.name][item.name]}
-                      onChange={(e) => handleCheck(e, friendIndex, item, itemIndex, friendval)}
-                    />
-                  )}
-                  {/* Display the item's name and price */}
-                  {item.name} - £{item.originalPrice}
-                </label>
-              ))}
+              {items.map((item, itemIndex) => {
+                // Start by checking if the checked state for this friend and item exists
+                let isItemChecked = false;
+                if (
+                  checked[friendElement.name] &&
+                  checked[friendElement.name][item.name] !== undefined
+                ) {
+                  // If it does exist, use that state to determine if the checkbox is checked
+                  isItemChecked = checked[friendElement.name][item.name];
+                }
+
+                let isSelected = checked[friendElement.name] && checked[friendElement.name][item.name];
+
+                return (
+                  <div
+                    key={item.name}
+                    className={`itemSelection ${isSelected ? 'selected' : ''}`}
+                    onClick={(e) => handleCheck(e, friendIndex, item, itemIndex, friendElement)}
+                  >
+                    {item.name} - £{item.originalPrice}
+                  </div>
+                );
+              })}
             </div>
           </div>
         ))}
