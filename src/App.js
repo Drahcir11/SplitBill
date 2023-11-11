@@ -5,6 +5,8 @@ import FriendsList from "./FriendsList/FriendsList";
 import ItemSelection from "./ItemSelection/ItemSelection";
 import EachOwed from "./EachOwed";
 import NavBar from "./NavBar";
+import About from "./About/About"
+import HowTo from "./HowTo/HowTo";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -128,6 +130,8 @@ function App() {
             <Route path="/tax" element={<TaxList tax={tax} setTax={setTax} />} />
             <Route path="/itemSelection" element={<ItemSelection props={itemSelectionProps} />} />
             <Route path="/eachOwed" element={<EachOwed setItems={setItems} friends={friends} setFriends={setFriends} setChecked={setChecked} />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/howto" element={<HowTo />} />
           </Routes>
         </div>
       </Router>

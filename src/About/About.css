@@ -1,0 +1,25 @@
+@import url("../global.css");
+
+.about-container {
+    width: 100vw;
+    height: 100vh;
+    /* border: 5px solid red; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.about-content {
+    background-color: var(--nav-bg-color);
+    border-radius: 15px;
+    /* border: 2px solid red; */
+    width: 85vw;
+    height: 50vh;
+    font-size: 10px;
+    font-family: Tahoma;
+    display: block;
+    font-weight: 300;
+    color: var(--primary-card-border-color);
+    padding: 15px;
+}
