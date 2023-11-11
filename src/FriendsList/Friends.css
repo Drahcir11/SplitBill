@@ -1,5 +1,5 @@
 .friends {
-    border : 2px solid white;
+    border : 2px solid #2B3A67;
     border-radius : 10px;
     padding-right : 10px;
     padding-left : 10px;
@@ -8,6 +8,7 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom : 10px;
+    font-weight: 500;
 }
 
 .fa-trash {

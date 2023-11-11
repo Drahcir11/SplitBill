@@ -56,7 +56,7 @@ function Items({ Item, index, items, setItems}) {
             <FontAwesomeIcon icon={faPlus} size="xs" onClick={() => increaseQuantity(index)} />
           </div>
         </div>
-        <div className="icon">
+        <div className="edit-icon">
           <FontAwesomeIcon icon={faPenToSquare} size="xs" onClick={() => editItem(index)} />
         </div>
       </div>

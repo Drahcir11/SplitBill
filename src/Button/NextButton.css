@@ -1,20 +1,22 @@
+@import url('../global.css');
+
 .next-button button {
     margin-top: 15px;
     font-family: monospace;
     font-size: smaller;
     padding: 5px 10px;
     background-color: transparent; /* Transparent background */
-    border: 1.5px solid #ff66ff; /* Green border */
+    border: 1.5px solid var(--primary-card-border-color); /* Green border */
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.2s, color 0.2s;
-    color: #ff66ff;
+    color: var(--primary-card-border-color);
     
   }
   
   .next-button button:hover {
-    background-color: #ff66ff; /* Green background on hover */
-    color: #ffffff; /* White text color on hover */
+    background-color: var(--primary-card-border-color); /* Green background on hover */
+    color: var(--white-bg); /* White text color on hover */
   }
   
   .next-button button:focus {

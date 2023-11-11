@@ -39,7 +39,7 @@ body {
 
 .nav a {
   /* border : 2px solid green; */
-  color: inherit;
+  color: #E63946;
   text-decoration: none;
   height: 100%;
   display: flex;

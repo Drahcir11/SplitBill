@@ -6,7 +6,10 @@ function NavBar() {
       <div className="nav">
         <ul>
           <li>
-            <h1 className="logo">Logo</h1>
+            <div className="logo"> 
+              <img src="./bear_logo.png" alt="bear logo"></img>
+            </div>
+            {/* <h1 className="logo">Logo</h1> */}
           </li>
           <div className="non-logo">
             <li>

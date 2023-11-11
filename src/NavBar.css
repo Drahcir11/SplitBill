@@ -1,3 +1,5 @@
+@import url('./global.css');
+
 * {
   box-sizing: border-box;
 }
@@ -6,28 +8,22 @@ body {
   margin: 0;
 }
 
-.logo {
-  font-size: 24px;
-  margin-right: 200px;
-}
-
 .non-logo {
-  /* border: 2px solid Blue; */
   display: flex;
   justify-content: space-around;
   gap: 15px;
 }
 
 .nav {
-  /* border : 2px solid blue; */
-  background-color: #1b1b1b;
-  color: white;
+  background-color: var(--nav-bg-color);
+  color: var(--primary-text-color);
+  font-family: sans-serif;
   align-items: center;
   padding: 0 1rem;
   overflow: hidden;
+  font-weight: 1000;
 }
 .nav ul {
-  /* border : 2px solid yellow; */
   padding: 0;
   margin: 0;
   list-style: none;
@@ -38,7 +34,6 @@ body {
 }
 
 .nav a {
-  /* border : 2px solid green; */
   color: inherit;
   text-decoration: none;
   height: 100%;
@@ -46,4 +41,17 @@ body {
   align-items: center;
   padding: 0.25rem;
   font-size: 12px;
+}
+
+
+.nav img {
+  height: 80px;
+  padding-top: 10px
+  
+}
+
+.logo {
+  display: flex;
+  margin-right: 175px;
+  align-items: center;
 }

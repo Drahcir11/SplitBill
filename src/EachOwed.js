@@ -13,7 +13,7 @@ function EachOwed({ setItems, friends, setFriends, setChecked }) {
 
   return (
     <div className="each-owed">
-      <h2> How much individually people owe</h2>
+      <h2> Share Amount</h2>
       <ul>
         {friends.map((friend, index) => (
           <li key={index}>
