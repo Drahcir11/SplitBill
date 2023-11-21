@@ -22,4 +22,5 @@
     font-weight: 300;
     color: var(--primary-card-border-color);
     padding: 15px;
+    overflow: auto;
 }

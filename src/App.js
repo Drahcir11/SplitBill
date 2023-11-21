@@ -4,7 +4,7 @@ import ItemsList from "./ItemList/ItemsList";
 import FriendsList from "./FriendsList/FriendsList";
 import ItemSelection from "./ItemSelection/ItemSelection";
 import EachOwed from "./EachOwed";
-import NavBar from "./NavBar";
+import NavBar from "./NavBar/NavBar";
 import About from "./About/About"
 import HowTo from "./HowTo/HowTo";
 import "./App.css";

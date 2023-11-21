@@ -30,7 +30,7 @@
 .item-description .item-price{
     font-size: 0.75em;
     font-weight: 300;
-    color: lightgrey;
+    color: var(--primary-text-color);
 }
 
 .item-editable{
