@@ -119,19 +119,19 @@ function App() {
       Nav links are used to link the directories with buttons.
     */
     <div className="container">
+      <Router>
       <div className="nav-app">
         <NavBar />
       </div>
-      <Router>
         <div className="App">
           <Routes>
+            <Route path="/about" element={<About />} />
+            <Route path="/howto" element={<HowTo />} />
             <Route path="/" element={<FriendsList friends={friends} setFriends={setFriends} />} />
             <Route path="/item" element={<ItemsList items={items} setItems={setItems} tax={tax} setTax={setTax} />} />
             <Route path="/tax" element={<TaxList tax={tax} setTax={setTax} />} />
             <Route path="/itemSelection" element={<ItemSelection props={itemSelectionProps} />} />
             <Route path="/eachOwed" element={<EachOwed setItems={setItems} friends={friends} setFriends={setFriends} setChecked={setChecked} />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/howto" element={<HowTo />} />
           </Routes>
         </div>
       </Router>

@@ -42,7 +42,7 @@ function FriendsList({ friends, setFriends }) {
   return (
     <>
       <div className='friends-list'>
-        <h1>List of victims</h1>
+        <h1>List of Friends</h1>
         <form onSubmit={handleSubmit}>
           <div className="input-container">
             <input

@@ -1,5 +1,7 @@
+@import url('../global.css');
+
 .friends {
-    border : 2px solid #2B3A67;
+    border : 2px solid  var(--primary-card-border-color);
     border-radius : 10px;
     padding-right : 10px;
     padding-left : 10px;
