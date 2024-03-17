@@ -32,7 +32,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 */
 function App() {
-  /* 
+  /*
     Declare bills and items variables with the "useState" to enable the use of states.
     The use of "useState" allows to read or get the variables with "bills" or "items".
     The use of "useState" also allows to write or set the variables with "setBills"
@@ -43,12 +43,12 @@ function App() {
   const [items, setItems] = useState(() => {
     // Attempt to retrieve the stored items from the session storage.
     const storedItems = sessionStorage.getItem("my-items-list");
-    
+
     // If 'storedItems' exists, parse it as JSON to convert it back into an array.
     // If not, initialize 'items' as an empty array.
     return storedItems ? JSON.parse(storedItems) : [];
   });
-  
+
   // useEffect hook is used to perform side effects in the component.
   // In this case, it's used to store the 'items' state in the session storage whenever 'items' changes.
   useEffect(() => {
@@ -79,7 +79,7 @@ function App() {
   const [checked, setChecked] = useState(() => {
     // Retrieve the 'checked' state from the session storage.
     const storedChecked = sessionStorage.getItem("my-check-list");
-  
+
     // If 'storedChecked' exists, parse it as JSON to convert it back into an object.
     // If not, create a new object based on the 'friends' and 'items' arrays.
     return storedChecked
@@ -114,7 +114,7 @@ function App() {
       Router tag here is to link all the different react components.
       It takes in a custom path and the element.
       Path is the directory to be linked to a specific react component.
-      Element is to be given the react component with its input arguments. 
+      Element is to be given the react component with its input arguments.
 
       Nav links are used to link the directories with buttons.
     */
@@ -131,7 +131,7 @@ function App() {
             <Route path="/item" element={<ItemsList items={items} setItems={setItems} tax={tax} setTax={setTax} />} />
             <Route path="/tax" element={<TaxList tax={tax} setTax={setTax} />} />
             <Route path="/itemSelection" element={<ItemSelection props={itemSelectionProps} />} />
-            <Route path="/eachOwed" element={<EachOwed setItems={setItems} friends={friends} setFriends={setFriends} setChecked={setChecked} />} />
+            <Route path="/eachOwed" element={<EachOwed items={items} setItems={setItems} friends={friends} setFriends={setFriends} setChecked={setChecked} />} />
           </Routes>
         </div>
       </Router>

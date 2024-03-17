@@ -5,9 +5,18 @@
   min-height: 100vh;
   padding: 0%;
   padding-bottom: 5%;
-  /* border: 1px solid #ccc; */
+  border: 1px solid #ccc;
   display: flex;
   flex-direction: column;
+  padding: 20px;
   align-items: center;
   background-color: #CAD3E4;
+}
+
+.friendsOwe{
+  width: 100%
+}
+
+ul {
+  list-style-type: none;
 }
