@@ -42,7 +42,7 @@ function FriendsList({ friends, setFriends }) {
   return (
     <>
       <div className='friends-list'>
-        <h1>List of victims</h1>
+        <h1>List of Friends</h1>
         <form onSubmit={handleSubmit}>
           <div className="input-container">
             <input
@@ -58,7 +58,7 @@ function FriendsList({ friends, setFriends }) {
               // minLength={0}
               maxLength={50} //restricts User name input to 50 characters
             />
-            <AddButton buttonName={"Add Victims😈"} type={"submit"}/>
+            <AddButton buttonName={"Add"} type={"submit"}/>
           </div>
         </form>
         <div className='name-list'>

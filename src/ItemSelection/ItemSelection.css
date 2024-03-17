@@ -1,15 +1,15 @@
+@import url('../global.css');
+
 .item-selection {
-  /* border : 2px solid yellow; */
   width: 100vh;
   height: 100%;
   min-height: 100vh;
   padding: 0%;
   padding-bottom: 5%;
-  /* border: 1px solid #ccc; */
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #3231328a;
+  background-color: var(--primary-bg-color);
 }
 
 .items-per-friend {
@@ -19,6 +19,37 @@
 }
 
 .friends-items {
-  /* overflow: auto; */
   padding: 15px;
+}
+
+
+.itemSelection {
+  font-size: 0.85em;
+  padding: 10px;
+  margin: 2px;
+  border: 1px solid var(--primary-card-border-color);
+  border-radius: 20px; /* This makes the divs have rounded corners */
+  cursor: pointer; /* Changes the mouse cursor to indicate it's clickable */
+  user-select: none; /* Prevents text selection */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.friend-container {
+  border: 2px solid var(--primary-card-border-color);
+  margin-bottom: 15px;
+  width: 270px;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+.itemSelection.selected {
+  background-color: var(--primary-card-border-color); /* Blue background for selected items */
+  color: var(--white-bg); /* White text for better contrast on blue background */
+  border-color: var(--white-bg); /* Blue border to match the background */
+}
+
+.friendName {
+  display:flex;
 }

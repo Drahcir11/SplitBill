@@ -1,16 +1,78 @@
+@import url('../global.css');
+
 .item {
-    border : 2px solid white;
-    border-radius : 10px;
+    border : 2px solid  var(--primary-card-border-color);
+    border-radius : 16px;
     padding-right : 10px;
     padding-left : 10px;
-    width : 280px;
+    width : 12em;
+    height: 6em;
     display : flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: left;
     justify-content: space-between;
-    margin-bottom : 10px;
+    margin-bottom : 15px;
+    font-weight: 500;
 }
 
-
-.fa-trash {
-    margin-left: 0.75rem;
+.item-description { 
+    display: flex;
+    /* border: solid 2px red; */
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
 }
+
+.item-description .item-name{
+    font-size: 0.9em;
+}
+
+.item-description .item-price{
+    font-size: 0.75em;
+    font-weight: 300;
+    color: var(--primary-text-color);
+}
+
+.item-editable{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom : 15px;
+
+}
+
+.item-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1.5px solid var(--primary-item-control);
+    min-height: 22px;
+    width: 65px;
+    border-radius: 10px;
+    background-color: var(--white-bg);
+    font-size: 0.75em;
+    padding: 0px;
+}
+
+.icon {
+    width: 20px; /* or any size that fits the design */
+    text-align: center; /* ensures the icon is centered within its allocated width */
+    display: inline-block; /* helps in aligning the text and icon properly */
+  }
+
+.edit-icon {
+    width: 20px; /* or any size that fits the design */
+    text-align: center; /* ensures the icon is centered within its allocated width */
+    display: inline-block; /* helps in aligning the text and icon properly */
+    color: var(--edit-color);
+  }
+  
+.icon-trash {
+    width: 7px; /* or any size that fits the design */
+    text-align: center; /* ensures the icon is centered within its allocated width */
+    display: flex; /* helps in aligning the text and icon properly */
+    margin-left: 7px;
+    color: var(--trash-color);
+}
+  

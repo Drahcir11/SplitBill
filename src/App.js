@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import TaxList from "./TaxList/Tax";
 import ItemsList from "./ItemList/ItemsList";
 import FriendsList from "./FriendsList/FriendsList";
-import ItemSelection from "./ItemSelection";
+import ItemSelection from "./ItemSelection/ItemSelection";
 import EachOwed from "./EachOwed";
-import NavBar from "./NavBar";
+import NavBar from "./NavBar/NavBar";
+import About from "./About/About"
+import HowTo from "./HowTo/HowTo";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -30,7 +32,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 */
 function App() {
-  /* 
+  /*
     Declare bills and items variables with the "useState" to enable the use of states.
     The use of "useState" allows to read or get the variables with "bills" or "items".
     The use of "useState" also allows to write or set the variables with "setBills"
@@ -38,15 +40,22 @@ function App() {
     The useState initial values are set as an empty array.
   */
 
-  // const[items, setItems] = useState([]);
-
   const [items, setItems] = useState(() => {
+    // Attempt to retrieve the stored items from the session storage.
     const storedItems = sessionStorage.getItem("my-items-list");
+
+    // If 'storedItems' exists, parse it as JSON to convert it back into an array.
+    // If not, initialize 'items' as an empty array.
     return storedItems ? JSON.parse(storedItems) : [];
   });
 
+  // useEffect hook is used to perform side effects in the component.
+  // In this case, it's used to store the 'items' state in the session storage whenever 'items' changes.
   useEffect(() => {
+    // The current state of 'items' is stringified and stored in the session storage.
+    // This ensures that the state is persisted across page refreshes for the current session.
     sessionStorage.setItem("my-items-list", JSON.stringify(items));
+    // The dependency array [items] means this effect runs whenever 'items' changes.
   }, [items]);
 
   const [friends, setFriends] = useState(() => {
@@ -68,10 +77,20 @@ function App() {
   }, [tax]);
 
   const [checked, setChecked] = useState(() => {
+    // Retrieve the 'checked' state from the session storage.
     const storedChecked = sessionStorage.getItem("my-check-list");
+
+    // If 'storedChecked' exists, parse it as JSON to convert it back into an object.
+    // If not, create a new object based on the 'friends' and 'items' arrays.
     return storedChecked
       ? JSON.parse(storedChecked)
-      : Object.fromEntries(friends.map((friend) => [friend.name, Object.fromEntries(items.map((item) => [item.name, false]))]));
+      : Object.fromEntries(
+          friends.map((friend) => [
+            friend.name,
+            // Create an object for each friend with keys from 'items' and false as default values.
+            Object.fromEntries(items.map((item) => [item.name, false]))
+          ])
+        );
   });
 
   // Store checked state in sessionStorage whenever it changes
@@ -95,22 +114,24 @@ function App() {
       Router tag here is to link all the different react components.
       It takes in a custom path and the element.
       Path is the directory to be linked to a specific react component.
-      Element is to be given the react component with its input arguments. 
+      Element is to be given the react component with its input arguments.
 
       Nav links are used to link the directories with buttons.
     */
     <div className="container">
+      <Router>
       <div className="nav-app">
         <NavBar />
       </div>
-      <Router>
         <div className="App">
           <Routes>
+            <Route path="/about" element={<About />} />
+            <Route path="/howto" element={<HowTo />} />
             <Route path="/" element={<FriendsList friends={friends} setFriends={setFriends} />} />
             <Route path="/item" element={<ItemsList items={items} setItems={setItems} tax={tax} setTax={setTax} />} />
             <Route path="/tax" element={<TaxList tax={tax} setTax={setTax} />} />
             <Route path="/itemSelection" element={<ItemSelection props={itemSelectionProps} />} />
-            <Route path="/eachOwed" element={<EachOwed setItems={setItems} friends={friends} setFriends={setFriends} setChecked={setChecked} />} />
+            <Route path="/eachOwed" element={<EachOwed items={items} setItems={setItems} friends={friends} setFriends={setFriends} setChecked={setChecked} />} />
           </Routes>
         </div>
       </Router>

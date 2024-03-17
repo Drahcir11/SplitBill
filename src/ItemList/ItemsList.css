@@ -3,29 +3,29 @@
 }
 
 .item-container {
-  /* border: 5px solid blue; */
   display: flex;
   flex-direction: column;
+  width: 100vh;
 }
 
 .item-list {
-  /* border : 2px solid yellow; */
-  width: 100vh;
+  width: 100%;
   height: 100%;
   min-height: 100vh;
   padding: 0%;
   padding-bottom: 5%;
-  /* border: 1px solid #ccc; */
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #3231328a;
+  background-color: var(--primary-bg-color);
 }
 
 .item-container form {
-  /* border : 2px solid white; */
+  justify-content: center;
+  align-items: center;
   width: 350px;
   display: flex;
+  flex-direction: row;
   margin: 0 auto;
   margin-bottom: 10px;
   margin-top: 10px;
@@ -33,29 +33,32 @@
 
 .item-container input {
   border-radius: 5px;
-  border: none;
   height: 20px;
-}
-
-.input-price {
-  width: 35px;
-}
-
-.input-price input {
-  appearance: textfield;
 }
 
 .input-item {
   align-items: center;
   justify-content: center;
+  width: 150px;
 }
 
-.item-name-list {
-  /* overflow: auto; */
-  padding: 5px;
+.input-price {
+  width: 65px;
+  max-width: 65px;
+}
+
+.quantity {
+  width : 45px;
 }
 
 .tax-name-list {
-  /* overflow: auto; */
   padding: 5px;
+}
+
+.item-name-list ul{
+  display : flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
 }
