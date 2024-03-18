@@ -48,7 +48,8 @@ function ItemsList({ items, setItems }) {
             type="text"
             placeholder="Item"
             value={name}
-            onChange={              
+            maxlength="28"
+            onChange={
               (e) => {
               if(isValidInput(e.target.value)){
                 setName(e.target.value)
