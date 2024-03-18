@@ -25,7 +25,7 @@ function EachOwed({ items, setItems, friends, setFriends, setChecked }) {
 
         // totalBill += items[index]["priceWithTax"]
       }
-      setTotalBill(totalBill)
+      setTotalBill(totalBill.toFixed(2))
     };
 
     getTotalBill();
