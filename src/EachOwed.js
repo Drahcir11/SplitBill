@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import NextButton from "./Button/NextPageButton";
 import "./EachOwed.css";
+import Decimal from 'decimal.js';
 
 function EachOwed({ items, setItems, friends, setFriends, setChecked }) {
 
@@ -15,11 +16,14 @@ function EachOwed({ items, setItems, friends, setFriends, setChecked }) {
 
   useEffect(()=>{
     const getTotalBill = () => {
-      let totalBill = 0;
+      let totalBill = new Decimal('0');
       for(const index in items){
-        console.log("item :" + JSON.stringify(items[index]));
+        // console.log("total bill :" + JSON.stringify(items[index]));
 
-        totalBill += items[index]["priceWithTax"]
+        let itemPrice = new Decimal(items[index]["priceWithTax"])
+        totalBill = totalBill.plus(itemPrice)
+
+        // totalBill += items[index]["priceWithTax"]
       }
       setTotalBill(totalBill)
     };
@@ -42,7 +46,7 @@ function EachOwed({ items, setItems, friends, setFriends, setChecked }) {
         </ul>
         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
           <p style={{fontWeight: "bold"}}>Total Bill </p>
-          <p>£{totalBill}</p>
+          <p>£{totalBill.toFixed(2).toString()}</p>
         </div>
 
       </div>
