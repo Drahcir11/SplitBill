@@ -46,7 +46,7 @@ function EachOwed({ items, setItems, friends, setFriends, setChecked }) {
         </ul>
         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
           <p style={{fontWeight: "bold"}}>Total Bill </p>
-          <p>£{totalBill.toFixed(2).toString()}</p>
+          <p>£{totalBill.toString()}</p>
         </div>
 
       </div>
