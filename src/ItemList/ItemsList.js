@@ -40,15 +40,19 @@ function ItemsList({ items, setItems }) {
   return (
     <div className="item-container">
       <div className="item-list">
-        <h1>List of Items</h1>
+        <h1 style={{fontSize: "24px", marginBlockEnd: "0px", marginBlockStart: "48px"}}>List of Items</h1>
+        <h5 style={{fontWeight: "500", fontSize: "12px", marginBlockStart:"0px", marginBlockEnd: "24px"}}> 
+            Add the list of purchased food items per unit price.
+            </h5>
         <form onSubmit={handleSubmit}>
           {/* Input field for entering the item's name */}
           <input
             className="input-item"
             type="text"
-            placeholder="Item"
+            placeholder="e.g. Salmon Sashimi"
             value={name}
-            onChange={              
+            maxlength="28"
+            onChange={
               (e) => {
               if(isValidInput(e.target.value)){
                 setName(e.target.value)
@@ -60,7 +64,7 @@ function ItemsList({ items, setItems }) {
             className="input-price"
             type="text"
             inputMode="decimal"
-            placeholder="£"
+            placeholder="£ 12.50"
             min="0"
             step="0.01"
             value={originalPrice}
@@ -85,7 +89,7 @@ function ItemsList({ items, setItems }) {
             }}
           />
           {/* Button to add the item to the list */}
-          <AddButton buttonName={"Add Items"} type={"submit"} />
+          <AddButton buttonName={"Add"} type={"submit"} />
         </form>
 
         {/* List to display the added items */}

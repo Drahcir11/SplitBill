@@ -1,23 +1,20 @@
-.friends-list h1 {
-  text-align: center;
-}
+@import url('../global.css');
+
+
 .friends-list {
   width: 100vh;
   height: 100%;
   min-height: 100vh;
   padding:  0%;
   padding-bottom:  5%;
-  /* border: 1px solid #ccc; */
   display : flex;
   flex-direction: column;
   align-items: center;
-  background-color: #3231328a;
+  background-color: var(--primary-bg-color);
   
 }
 
 .friends-list form{
-  /* border : 2px solid white; */
-  width : 300px;
   display : flex;
   margin : 0 auto;
   margin-bottom: 10px;
@@ -25,32 +22,27 @@
 }
 
 .friends-list input {
-  border-radius: 5px;
-  border: none;
+  border-radius: 10px;
 }
 
 .input-container {
   align-items: center;
   justify-content: center;
-  width : 100%;
+  width : 95%;
   display : flex;
 }
 
 .button-container {
-  /* border : 1px solid yellow; */
   align-items: center;
   justify-content: center;
   display : flex;
 }
 
 .name-list {
-  width : 310px;
-  padding : 0px;
-  /* margin : 0 auto; */
-  /* border : 2px solid white; */
+  width : 80vw;
+  margin-top : 32px;
   display : flex;
   font-size : 14px;
-  /* overflow : auto; */
   
 }
 

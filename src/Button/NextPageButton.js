@@ -5,7 +5,7 @@ const NextButton = ({ buttonName, to, clickEvent, type}) => {
   return(
     <div className="next-button">
       <Link to={to}>
-        <button type={type} onClick={clickEvent}>{buttonName}</button>
+        <button style= {{fontWeight: "700"}} type={type} onClick={clickEvent}>{buttonName}</button>
       </Link>
     </div>
   );

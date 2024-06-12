@@ -195,13 +195,20 @@ const handleSubmit = () => {
   // Render the UI components for the Item Selection app.
   return (
     <div className="item-selection">
-      <h1>Item Selection</h1>
+      <h1 style={{fontSize: "24px", fontWeight: "700", marginBlockEnd: "0px", marginBlockStart: "48px"}} >Item Selection</h1>
+      <h5 style={{fontWeight: "500", fontSize: "12px", marginBlockStart:"0px", marginBlockEnd: "24px"}}> 
+          Be honest and select items that you ate.
+      </h5>
       <form className="friends-items">
         {/* Map through the "bills" array to display each friend's bill */}
         {friends.map((friendElement, friendIndex) => (
-          <div className="friend-container" key={friendIndex}>
-            {/* Display the friend's name as the subheading */}
-            <h2 className="friendName">{friendElement.name}</h2>
+          <div className="friend-container" key={friendIndex} style={{backgroundColor: "White", display:"flex", flexDirection:"column"}}>
+            <div style={{display:"flex", justifyContent:"center"}}>
+              {/* Display the friend's name as the subheading */}
+              <h4 className="friendName" style={{
+                marginBlockStart: "0px",
+              }}>{friendElement.name}</h4>
+            </div>
             <div className="items-per-friend">
               {/* Map through the "items" array to display each item with a checkbox */}
               {items.map((item, itemIndex) => {
@@ -222,8 +229,17 @@ const handleSubmit = () => {
                     key={item.name}
                     className={`itemSelection ${isSelected ? 'selected' : ''}`}
                     onClick={(e) => handleCheck(e, friendIndex, item, itemIndex, friendElement)}
+                    style={{
+                      fontSize: "12px",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      paddingTop: "0px",
+                      paddingBottom: "0px"
+                    }}
                   >
-                    {item.name} - £{item.originalPrice}
+                    <p> {item.name}</p>
+                    <p> £{item.originalPrice}</p>
+                    {/* {item.name} - £{item.originalPrice} */}
                   </div>
                 );
               })}

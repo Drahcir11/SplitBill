@@ -1,6 +1,8 @@
 import "./Item.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash, faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { IconButton, Stack } from '@mui/material';
 
 function Items({ Item, index, items, setItems}) {
 
@@ -42,11 +44,22 @@ function Items({ Item, index, items, setItems}) {
         <p className="item-price">£{Item.originalPrice}</p>
       </div>
       <div className="item-editable">
-        <div className="item-controls">
+        <Stack className="item-controls"
+        direction="row"
+        alignItems="center"
+        justifyContent="center"
+        >
           {/* Render minus or trash icon based on the item quantity */}
           <div className="icon">
             {Item.quantity < 2 ? (
-              <FontAwesomeIcon icon={faTrash} className="icon-trash" size="xs" onClick={() => deleteItem(Item)} />
+              // <FontAwesomeIcon icon={faTrash} className="icon-trash" size="24px" onClick={() => deleteItem(Item)} />
+              <IconButton onClick={()=>{deleteItem(Item)}}
+              sx={{
+                padding: "0px",
+                color: "red",
+              }}>
+                <DeleteOutlineIcon sx={{fontSize: "15px"}}/>
+              </IconButton>
             ) : (
               <FontAwesomeIcon icon={faMinus} size="xs" onClick={() => decreaseQuantity(index)} />
             )}
@@ -55,8 +68,8 @@ function Items({ Item, index, items, setItems}) {
           <div className="icon">
             <FontAwesomeIcon icon={faPlus} size="xs" onClick={() => increaseQuantity(index)} />
           </div>
-        </div>
-        <div className="icon">
+        </Stack>
+        <div className="edit-icon">
           <FontAwesomeIcon icon={faPenToSquare} size="xs" onClick={() => editItem(index)} />
         </div>
       </div>

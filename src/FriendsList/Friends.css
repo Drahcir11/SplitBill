@@ -1,13 +1,18 @@
+@import url('../global.css');
+
 .friends {
-    border : 2px solid white;
+    border : 2px solid  var(--primary-card-border-color);
     border-radius : 10px;
     padding-right : 10px;
     padding-left : 10px;
-    width : 280px;
+    width : 80vw;
     display : flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom : 10px;
+    font-weight: 700;
+    /* background-color: var(--nav-bg-color); */
+    background-color: #fff;
 }
 
 .fa-trash {

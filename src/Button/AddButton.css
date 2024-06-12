@@ -1,22 +1,28 @@
-
+@import url('../global.css');
 
 .add-button button {
     font-family: monospace;
     font-size: smaller;
-    padding: 3px 5px;
-    background-color: transparent; /* Transparent background */
-    border: 1.5px solid #ff66ff; /* Green border */
+    padding: 3px 8px;
+    background-color: transparent ; /* Transparent background */
+    border: 2px solid var(--primary-card-border-color);
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.2s, color 0.2s;
-    color: #ff66ff;
+    color: var(--primary-card-border-color);
     justify-content: center;
     align-items: center;
     display: flex;
+    font-weight:700;
+    min-width: 30px;
+    max-width: 70px;
+    min-height: 22.8px;
+    max-height: 50px;
+    white-space: nowrap;
   
   }
   
   .add-button button:hover {
-    background-color: #ff66ff; /* Green background on hover */
-    color: #ffffff; /* White text color on hover */
+    background-color: var(--primary-card-border-color); /* Green background on hover */
+    color: var(--white-bg); /* White text color on hover */
   }

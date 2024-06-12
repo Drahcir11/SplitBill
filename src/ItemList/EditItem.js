@@ -9,16 +9,16 @@ function EditItem({Item, index, items, setItems}) {
 
     const editItemList = (InputName, InputPrice, InputQuantity, InputId) => {
         setItems(
-            items.map((item, index) => 
-                (index === InputId 
-                    ? { 
-                        ...item, 
-                        name: InputName, 
-                        originalPrice: 
-                        InputPrice, 
-                        quantity: InputQuantity, 
-                        isEdit: !item.isEdit 
-                    } 
+            items.map((item, index) =>
+                (index === InputId
+                    ? {
+                        ...item,
+                        name: InputName,
+                        originalPrice:
+                        InputPrice,
+                        quantity: InputQuantity,
+                        isEdit: !item.isEdit
+                    }
                 : item
                 )
             )
@@ -42,6 +42,7 @@ function EditItem({Item, index, items, setItems}) {
             type="text"
             placeholder="Item"
             value={value}
+            maxLength="28"
             onChange={
                 (e) => {
                     if(isValidInput(e.target.value)){

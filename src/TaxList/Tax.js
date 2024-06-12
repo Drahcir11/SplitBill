@@ -39,13 +39,15 @@ function TaxList({ tax, setTax }) {
   return (
     <div className="tax-container">
       <div className="tax-list">
-        <h1>List of tax %</h1>
+        <h1 style={{fontSize: "24px", marginBlockEnd: "0px", marginBlockStart: "48px"}} > Tax/Services</h1>
+        <h5 style={{fontWeight: "500", fontSize: "12px", marginBlockStart:"0px", marginBlockEnd: "24px"}}> 
+          Enter Tax/Services charges percentage value (%).</h5>
         <form onSubmit={handleSubmitTax} className="tax-form">
           {/* Input field for entering the item's name */}
           <input
             className="input-tax"
             type="text"
-            placeholder="Tax & Services"
+            placeholder="e.g. Service Charge"
             value={services}
             onChange={(e) => 
               {
@@ -59,7 +61,7 @@ function TaxList({ tax, setTax }) {
             className="tax-input-price"
             type="text"
             inputMode="decimal"
-            placeholder="%"
+            placeholder="e.g. 20 (%)"
             min="0"
             step="0.01"
             value={priceCharge}
@@ -72,7 +74,7 @@ function TaxList({ tax, setTax }) {
           />
           {/* Button to add the item to the list */}
           {/* <button type="submit">Add Item</button> */}
-          <AddButton buttonName={"Add tax"} type={"submit"} />
+          <AddButton buttonName={"Add"} type={"submit"} />
         </form>
         {/* List to display the added items */}
         <div className="tax-name-list">
