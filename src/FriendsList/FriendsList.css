@@ -1,8 +1,6 @@
 @import url('../global.css');
 
-.friends-list h1 {
-  text-align: center;
-}
+
 .friends-list {
   width: 100vh;
   height: 100%;
@@ -17,7 +15,6 @@
 }
 
 .friends-list form{
-  width : 300px;
   display : flex;
   margin : 0 auto;
   margin-bottom: 10px;
@@ -31,7 +28,7 @@
 .input-container {
   align-items: center;
   justify-content: center;
-  width : 100%;
+  width : 95%;
   display : flex;
 }
 
@@ -42,8 +39,8 @@
 }
 
 .name-list {
-  width : 310px;
-  padding : 0px;
+  width : 80vw;
+  margin-top : 32px;
   display : flex;
   font-size : 14px;
   

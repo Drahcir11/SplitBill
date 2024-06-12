@@ -5,12 +5,14 @@
     border-radius : 10px;
     padding-right : 10px;
     padding-left : 10px;
-    width : 280px;
+    width : 80vw;
     display : flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom : 10px;
-    font-weight: 500;
+    font-weight: 700;
+    /* background-color: var(--nav-bg-color); */
+    background-color: #fff;
 }
 
 .fa-trash {

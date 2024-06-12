@@ -1,5 +1,6 @@
 import "./NavBar.css";
 import { Link } from 'react-router-dom';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 function NavBar() {
   return (
@@ -12,12 +13,13 @@ function NavBar() {
             {/* <h1 className="logo">Logo</h1> */}
           <div className="non-logo">
             <li>
-            <Link to="/about">About</Link>
+            <Link to="/about">
+              <InfoOutlinedIcon />
+            </Link>
             </li>
-            <li>
-              {/* <a href="/howto"> HowTo?</a> */}
+            {/* <li>
               <Link to="/howto"> Howto?</Link>
-            </li>
+            </li> */}
           </div>
         </ul>
       </div>

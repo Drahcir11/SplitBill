@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import NextButton from "./Button/NextPageButton";
 import "./EachOwed.css";
 import Decimal from 'decimal.js';
+import Divider from '@mui/material/Divider';
 
 function EachOwed({ items, setItems, friends, setFriends, setChecked }) {
 
@@ -38,10 +39,13 @@ function EachOwed({ items, setItems, friends, setFriends, setChecked }) {
       <div className="friendsOwe">
         <ul>
           {friends.map((friend, index) => (
-            <li style={{display:"flex", flexDirection:"row", justifyContent:"space-between", border: "1px", borderColor:"white"}} key={index}>
-              <p> {friend.name}  </p>
-              <p> £{Math.round(friend.total * 100) / 100}</p>
-            </li>
+            <div>
+              <li style={{display:"flex", flexDirection:"row", justifyContent:"space-between", border: "1px", borderColor:"white"}} key={index}>
+                <p> {friend.name}  </p>
+                <p> £{Math.round(friend.total * 100) / 100}</p>
+              </li>
+              <Divider/>
+            </div>
           ))}
         </ul>
         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>

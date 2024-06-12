@@ -28,7 +28,7 @@
   padding: 10px;
   margin: 2px;
   border: 1px solid var(--primary-card-border-color);
-  border-radius: 20px; /* This makes the divs have rounded corners */
+  border-radius: 8px; /* This makes the divs have rounded corners */
   cursor: pointer; /* Changes the mouse cursor to indicate it's clickable */
   user-select: none; /* Prevents text selection */
   display: flex;
@@ -41,7 +41,8 @@
   margin-bottom: 15px;
   width: 270px;
   padding: 10px;
-  border-radius: 15px;
+  padding-bottom: 24px;
+  border-radius: 10px;
 }
 
 .itemSelection.selected {

@@ -3,13 +3,13 @@
 .add-button button {
     font-family: monospace;
     font-size: smaller;
-    padding: 3px 5px;
+    padding: 3px 8px;
     background-color: transparent ; /* Transparent background */
-    border: 2px solid var(--action-button-color);
+    border: 2px solid var(--primary-card-border-color);
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.2s, color 0.2s;
-    color: var(--action-button-color);
+    color: var(--primary-card-border-color);
     justify-content: center;
     align-items: center;
     display: flex;
@@ -23,6 +23,6 @@
   }
   
   .add-button button:hover {
-    background-color: var(--action-button-color); /* Green background on hover */
+    background-color: var(--primary-card-border-color); /* Green background on hover */
     color: var(--white-bg); /* White text color on hover */
   }
