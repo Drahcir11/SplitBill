@@ -1,0 +1,13 @@
+
+
+.file-input {
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.cropped-image {
+    margin-top: 1rem;
+    width: "200px";
+    max-width: 50%;
+    height: "500px";
+}

@@ -7,6 +7,7 @@ import EachOwed from "./EachOwed";
 import NavBar from "./NavBar/NavBar";
 import About from "./About/About"
 import HowTo from "./HowTo/HowTo";
+import ReceiptCapture from "./ReceiptCapture/ReceiptCapture";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -109,6 +110,17 @@ function App() {
     setChecked,
   };
 
+  const [itemsName, setItemsName] = useState([])
+  const [itemsPrice, setItemsPrice] = useState([])
+
+  const itemProps ={
+    itemsName,
+    setItemsName,
+    itemsPrice,
+    setItemsPrice,
+    setItems
+  }
+
   return (
     /*
       Router tag here is to link all the different react components.
@@ -132,6 +144,7 @@ function App() {
             <Route path="/tax" element={<TaxList tax={tax} setTax={setTax} />} />
             <Route path="/itemSelection" element={<ItemSelection props={itemSelectionProps} />} />
             <Route path="/eachOwed" element={<EachOwed items={items} setItems={setItems} friends={friends} setFriends={setFriends} setChecked={setChecked} />} />
+            <Route path="/ReceiptCapture" element={<ReceiptCapture props={itemProps}/>}/>
           </Routes>
         </div>
       </Router>
