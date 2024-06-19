@@ -28,7 +28,7 @@ function EditItem({Item, index, items, setItems}) {
     const handleSubmit = (e) => {
         // prevent default action
         e.preventDefault();
-        if(!noWhiteSpace(value) || !noWhiteSpace(price)){
+        if(!noWhiteSpace(String(value)) || !noWhiteSpace(String(price))){
             return;
           }
         editItemList(value, price, newQuantity, index)

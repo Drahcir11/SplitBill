@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Stack } from "@mui/material";
+import { Stack, IconButton } from "@mui/material";
 import Button from "@mui/material/Button";
 import Cropper from "react-cropper";
 import Tesseract from "tesseract.js";
@@ -87,7 +87,7 @@ function ReceiptCapture({ props }) {
                 const cleanedItem = item.replace(/[^\w\s.]/g, "");
 
                 // Regular expression to match item name and price
-                const match = cleanedItem.match(/(.+?)\s*(\d+\.\d{2})/);
+                const match = cleanedItem.match(/(.+?)\s*(\d+\.\d{1,2})/);
 
                 console.log("item :", item, "regex match :", match);
 
@@ -102,29 +102,6 @@ function ReceiptCapture({ props }) {
 
             setItemsName(itemNames);
             setItemsPrice(itemPrices);
-
-            // if (step === 1) {
-            //     const names = [];
-            //     const prices = [];
-            //     for (const name of extractedText) {
-            //         if (name === "") continue;
-            //         names.push(name);
-            //         prices.push(""); // Initialize with empty strings
-            //     }
-            //     setItemsName(names);
-            //     setItemsPrice(prices);
-            // } else {
-            //     setItemsPrice((prevPrices) => {
-            //         const newPrices = [...prevPrices];
-            //         for (const [index, price] of extractedText.entries()) {
-            //             if (price === "") continue;
-            //             if (index < newPrices.length) {
-            //                 newPrices[index] = price;
-            //             }
-            //         }
-            //         return newPrices;
-            //     });
-            // }
         });
     };
 
@@ -139,6 +116,12 @@ function ReceiptCapture({ props }) {
         newPrices[index] = event.target.value;
         setItemsPrice(newPrices);
     };
+
+    const handleDeleteItem = (index)=>{
+        setItemsPrice(itemsPrice.filter((_, priceIndex)=> priceIndex !== index));
+        setItemsName(itemsName.filter((_, nameIndex)=> nameIndex !== index));
+
+    }
 
     return (
         <div
@@ -156,7 +139,7 @@ function ReceiptCapture({ props }) {
                 }}
             >
                 <h1 style={{ fontSize: "24px", fontWeight: "700", marginBlockEnd: "0px", marginBlockStart: "48px" }}>Receipt</h1>
-                <h5 style={{ fontWeight: "500", fontSize: "12px", marginBlockStart: "0px", marginBlockEnd: "24px" }}>
+                <h5 style={{ fontWeight: "500", fontSize: "12px", marginBlockStart: "0px", marginBlockEnd: "24px", color:"#5c5c5c"}}>
                     Capture the receipt with your camera and crop relevant area.
                 </h5>
                 {/* {!submitFile && ( */}
@@ -209,11 +192,13 @@ function ReceiptCapture({ props }) {
                             src={image}
                             style={{
                                 height: "50vh",
-                                width: "90%",
+                                width: "85vw",
+                                maxWidth: "480px"
                             }}
                             initialAspectRatio={1}
                             guides={false}
                             ref={cropperRef}
+                            
                         />
                     </div>
                 )}
@@ -226,29 +211,6 @@ function ReceiptCapture({ props }) {
                             width: "95%",
                         }}
                     >
-                        {/* <Button
-                            variant="outlined"
-                            component="label"
-                            sx={{
-                                textTransform: "none",
-                                fontSize: "10px",
-                                fontWeight: "700",
-                                padding: "6px 10px 6px 10px",
-                                borderColor: "#2B3A67",
-                                color: "#2B3A67",
-                                borderWidth: "2px",
-                                "&:hover": {
-                                    backgroundColor: "#2B3A67", // Change to a different color on hover,
-                                    color: "white",
-                                },
-                                "&:active": {
-                                    backgroundColor: "#141F3B", // Change to a different color when clicked
-                                },
-                            }}
-                        >
-                            RE-UPLOAD
-                            <input type="file" accept="image/*" onChange={handleFileChange} className="file-input" hidden />
-                        </Button> */}
 
                         <Button
                             variant="contained"
@@ -339,7 +301,9 @@ function ReceiptCapture({ props }) {
                                     textAlign: "center"
                                 }}
                             />
-                            <DeleteOutlineIcon sx={{ color: "red" }} />
+                            <IconButton onClick={()=>{handleDeleteItem(index)}}>
+                                <DeleteOutlineIcon sx={{ color: "red" }} />
+                            </IconButton>
                         </Stack>
                     ))}
                 </div>
