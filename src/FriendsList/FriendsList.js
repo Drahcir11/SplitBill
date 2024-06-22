@@ -50,7 +50,10 @@ function FriendsList({ friends, setFriends }) {
             textAlign: "center"
           }}>
             <h1 style={{fontSize: "24px", fontWeight: "700", marginBlockEnd: "0px", marginBlockStart: "48px"}}>Friends</h1>
-            <h5 style={{fontWeight: "500", fontSize: "12px", marginBlockStart:"0px", marginBlockEnd: "24px"}}> 
+            <h5 style={{fontWeight: "500", fontSize: "12px", marginBlockStart:"0px", marginBlockEnd: "24px",  
+              // color: "black",
+              color: "#5c5c5c"
+              }}> 
             Add your list of friend's names here.
             </h5>
 
@@ -85,7 +88,7 @@ function FriendsList({ friends, setFriends }) {
           </ol>
         </div>
         <div className='button-container'>
-          <NextButton buttonName={"Next"} to={"/item"}/>
+          <NextButton buttonName={"Next"} to={"/ReceiptCapture"}/>
         </div>
         </div>
       </div>

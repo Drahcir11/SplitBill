@@ -39,7 +39,7 @@
 }
 
 .name-list {
-  width : 80vw;
+  width : 90%;
   margin-top : 32px;
   display : flex;
   font-size : 14px;
@@ -51,6 +51,7 @@
   margin: 0; /* Remove default margin from the ordered list */
   margin-left : 5px;
   list-style-type: none; /* Remove the default numbering */
+  width: 100%;
 }
 
 .name-list li {
