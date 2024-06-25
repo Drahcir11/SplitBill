@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Stack, IconButton, Box } from "@mui/material";
+import { Stack, Box, Divider, IconButton } from "@mui/material";
 import Button from "@mui/material/Button";
 import Cropper from "react-cropper";
 import Tesseract from "tesseract.js";
@@ -16,18 +16,18 @@ function ReceiptCapture({ props }) {
     const [image, setImage] = useState(() => {
         const storedReceiptImage = sessionStorage.getItem("my-receipt-image");
         return storedReceiptImage ? storedReceiptImage : null;
-      })
-    useEffect(()=>{
+    });
+    useEffect(() => {
         sessionStorage.setItem("my-receipt-image", image);
-    }, [image])
+    }, [image]);
 
-    const [submitFile, setSubmitFile] = useState(()=>{
+    const [submitFile, setSubmitFile] = useState(() => {
         const storedSubmitFile = sessionStorage.getItem("my-submit-file");
         return storedSubmitFile ? storedSubmitFile : false;
     });
-    useEffect(()=>{
-        sessionStorage.setItem("my-submit-file", submitFile)
-    },[submitFile])
+    useEffect(() => {
+        sessionStorage.setItem("my-submit-file", submitFile);
+    }, [submitFile]);
     const cropperRef = useRef(null);
 
     useEffect(() => {
@@ -52,9 +52,8 @@ function ReceiptCapture({ props }) {
 
             console.log("final items list :", finalItemsList);
         };
-        transformItemsStructure()
+        transformItemsStructure();
     }, [itemsName, itemsPrice]);
-
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -117,11 +116,12 @@ function ReceiptCapture({ props }) {
         setItemsPrice(newPrices);
     };
 
-    const handleDeleteItem = (index)=>{
-        setItemsPrice(itemsPrice.filter((_, priceIndex)=> priceIndex !== index));
-        setItemsName(itemsName.filter((_, nameIndex)=> nameIndex !== index));
+    const handleDeleteItem = (index) => {
+        setItemsPrice(itemsPrice.filter((_, priceIndex) => priceIndex !== index));
+        setItemsName(itemsName.filter((_, nameIndex) => nameIndex !== index));
+    };
 
-    }
+    const nextPageString = "< NEXT PAGE >";
 
     return (
         <div
@@ -138,34 +138,61 @@ function ReceiptCapture({ props }) {
                     textAlign: "center",
                 }}
             >
-                <h1 style={{ fontSize: "24px", fontWeight: "700", marginBlockEnd: "0px", marginBlockStart: "48px" }}>Receipt</h1>
-                <h5 style={{ fontWeight: "500", fontSize: "12px", marginBlockStart: "16px", marginBlockEnd: "24px", color:"#5c5c5c"}}>
-                    Capture the receipt with your camera and <b style={{fontWeight:"700", color:"black"}} >only</b> crop the area<br></br>
-                    listing the <b style={{fontWeight:"700", color:"black"}}>item's name and prices</b>.
+                <h1 style={{ fontSize: "24px", fontWeight: "1000", marginBlockEnd: "0px", marginBlockStart: "48px", color: "black" }}>Receipt</h1>
+                <h5 style={{ fontWeight: "500", fontSize: "12px", marginBlockStart: "16px", marginBlockEnd: "24px", color: "#5c5c5c" }}>
+                    Capture the receipt with your camera and <b style={{ fontWeight: "700", color: "black" }}>only</b> crop the area<br></br>
+                    listing the <b style={{ fontWeight: "700", color: "black" }}>item's name and prices</b>.
                 </h5>
-                {/* {!submitFile && ( */}
                 <Button
                     variant="outlined"
                     component="label"
                     sx={{
                         textTransform: "none",
-                        fontSize: "10px",
-                        fontWeight: "700",
-                        padding: "6px 10px 6px 10px",
-                        borderColor: "#2B3A67",
-                        color: "#2B3A67",
-                        borderWidth: "2px",
+                        fontSize: "12px",
+                        fontWeight: "1000",
+                        padding: "5px 10px",
+                        borderColor: "black",
+                        color: "black",
+                        borderWidth: "2.5px",
+                        backgroundColor: "white",
                         "&:hover": {
-                            backgroundColor: "#2B3A67", // Change to a different color on hover,
-                            color: "white",
+                            backgroundColor: "#c4a1ff",
+                            borderWidth: "2.5px",
+                            borderColor: "black",
+                            color: "black",
+                            boxShadow: "0px 0px"
                         },
-                        "&:active": {
-                            backgroundColor: "#141F3B", // Change to a different color when clicked
-                        },
+                        marginRight: "32px",
+                        boxShadow: "3px 3px",
                     }}
                 >
-                    UPLOAD IMAGE
+                    UPLOAD
                     <input type="file" accept="image/*" onChange={handleFileChange} className="file-input" hidden />
+                </Button>
+                <Button
+                    variant="outlined"
+                    component="label"
+                    sx={{
+                        textTransform: "none",
+                        fontSize: "12px",
+                        fontWeight: "1000",
+                        padding: "5px 10px",
+                        borderColor: "black",
+                        color: "black",
+                        borderWidth: "2.5px",
+                        backgroundColor: "#c4a1ff",
+                        "&:hover": {
+                            backgroundColor: "white",
+                            borderWidth: "2.5px",
+                            borderColor: "black",
+                            color: "black",
+                            boxShadow: "0px 0px"
+                        },
+                        boxShadow: "3px 3px"
+                    }}
+                >
+                    CAPTURE
+                    <input type="file" accept="image/*" capture onChange={handleFileChange} className="file-input" hidden />
                 </Button>
             </div>
             <div
@@ -182,10 +209,10 @@ function ReceiptCapture({ props }) {
                 {image && (
                     <div
                         style={{
-                            borderWidth: "6px",
+                            borderWidth: "8px",
                             borderStyle: "solid",
                             borderColor: "white",
-                            borderRadius: "4px",
+                            borderRadius: "2px",
                         }}
                     >
                         <Cropper
@@ -193,12 +220,11 @@ function ReceiptCapture({ props }) {
                             style={{
                                 height: "50vh",
                                 width: "85vw",
-                                maxWidth: "480px"
+                                maxWidth: "480px",
                             }}
                             initialAspectRatio={1}
                             guides={false}
                             ref={cropperRef}
-                            
                         />
                     </div>
                 )}
@@ -211,24 +237,24 @@ function ReceiptCapture({ props }) {
                             width: "95%",
                         }}
                     >
-
                         <Button
                             variant="contained"
                             onClick={handleCrop}
                             className="crop-button"
                             sx={{
-                                color: "white",
+                                color: "black",
                                 borderColor: "black",
-                                backgroundColor: "#2B3A67 !important",
+                                backgroundColor: "#E3A018 !important",
                                 padding: "6px 10px 6px 10px",
-                                borderWidth: "2px !important",
+                                borderWidth: "2.5px !important",
                                 borderStyle: "solid !important",
-                                fontSize: "10px",
-                                fontWeight: "700",
-                                width: "95%",
+                                fontSize: "14px",
+                                fontWeight: "1000",
+                                width: "100%",
+                                boxShadow: "4px 4px"
                             }}
                         >
-                            Crop
+                            CROP IMAGE
                         </Button>
                     </div>
                 )}
@@ -243,69 +269,61 @@ function ReceiptCapture({ props }) {
             <div
                 style={{
                     display: "flex",
-                    flexDirection: "row",
+                    flexDirection:"column",
                     justifyContent: "center",
                     alignContent: "center",
                     marginTop: "48px",
                 }}
             >
-                <div
-                    style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "16px",
-                        borderWidth: "2px",
-                    }}
-                >
-                    {itemsName.map((name, index) => (
-                        <input
-                            type="text"
-                            value={name}
-                            onChange={(e) => handleNameChange(index, e)}
-                            style={{
-                                fontSize: "14px",
-                                borderRadius: "10px",
-                                padding: "10px 48px 10px 16px",
-                                borderColor: "black",
-                                borderWidth: "2px",
-                                backgroundColor: "white",
-                            }}
-                        />
-                    ))}
-                </div>
+                    {
+                        itemsName.map((name, index)=>(
 
-                <div
-                    style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "16px",
-                    }}
-                >
-                    {itemsPrice.map((price, index) => (
-                        <Stack direction="row" alignItems="center" justifyContent="center">
-                            <input
-                                type="text"
-                                value={price}
-                                onChange={(e) => handlePriceChange(index, e)}
-                                style={{
-                                    width: "60px",
-                                    fontSize: "14px",
-                                    paddingTop: "10px",
-                                    paddingBottom: "10px",
-                                    borderRadius: "10px",
-                                    borderColor: "black",
-                                    borderWidth: "2px",
-                                    backgroundColor: "white",
-                                    textAlign: "center",
-                                    marginRight:"8px",
-                                }}
+                            <Stack direction="row" alignItems="center" justifyContent="center"
+                                sx={{ 
+                                    marginBottom:"16px", 
+                                    backgroundColor: "white", 
+                                    borderWidth: "2.5px", 
+                                    borderColor: "black", 
+                                    borderStyle:"solid",
+                                    
+                                }}>
+
+                                <input
+                                    type="text"
+                                    value={name}
+                                    onChange={(e) => handleNameChange(index, e)}
+                                    style={{
+                                        fontSize: "14px",
+                                        fontWeight: "700",
+                                        padding: "5px 10px",
+                                        borderColor: "transparent",
+                                        backgroundColor: "white",
+                                        outline: "none"
+                                    }}
+                                />
+                                <Divider orientation="vertical" variant="middle" flexItem />
+                                <input
+                                    type="text"
+                                    value={itemsPrice[index]}
+                                    onChange={(e) => handlePriceChange(index, e)}
+                                    style={{
+                                        width: "50px",
+                                        fontSize: "14px",
+                                        fontWeight: "700",
+                                        paddingTop: "10px",
+                                        paddingBottom: "10px",
+                                        borderColor: "transparent",
+                                        textAlign: "center",
+                                        outline: "none"
+                                    }}
                             />
+                            <Divider orientation="vertical" variant="middle" flexItem />
                             <IconButton sx={{ paddingLeft: "0px"}}onClick={()=>{handleDeleteItem(index)}}>
-                                <DeleteOutlineIcon sx={{ color: "red" }} />
+                                <DeleteOutlineIcon sx={{ color: "red", marginRight: "8px", marginLeft: "16px" }} />
                             </IconButton>
-                        </Stack>
-                    ))}
-                </div>
+                            </Stack>
+                        ))
+                    }
             </div>
             <Box
                 style={{
@@ -313,7 +331,7 @@ function ReceiptCapture({ props }) {
                     display: "flex",
                     justifyContent: "center",
                     justifyItems: "center",
-                    textAlign: "center"
+                    textAlign: "center",
                 }}
             >
                 {submitFile && (
@@ -323,46 +341,48 @@ function ReceiptCapture({ props }) {
                             flexDirection: "column",
                             justifyContent: "center",
                             justifyItems: "center",
-                            textAlign: "center"
-                        }}    
+                            textAlign: "center",
+                        }}
                     >
-                        <p style={{fontSize:"10px", marginBottom: "24px"}}> Add more items in next page. </p>
                         <Box
                             style={{
                                 display: "flex",
-                                flexDirection: "row",
+                                flexDirection: "column",
                                 justifyContent: "center",
                                 justifyItems: "center",
-                                textAlign: "center"
-                            }}    
-                        >
-                        <Button
-                            variant="outlined"
-                            component={Link}
-                            to="/item"
-                            sx={{
-                                textTransform: "none",
-                                fontSize: "10px",
-                                fontWeight: "700",
-                                padding: "5px 10px 5px 10px",
-                                borderColor: "#2B3A67",
-                                color: "#2B3A67",
-                                borderWidth: "2px",
-                                borderRadius: "8px",
-                                "&:hover": {
-                                    backgroundColor: "#2B3A67", // Change to a different color on hover,
-                                    color: "white",
-                                },
-                                "&:active": {
-                                    backgroundColor: "#141F3B", // Change to a different color when clicked
-                                },
-                                width: "60px"
+                                textAlign: "center",
                             }}
                         >
-                            Next
-                        </Button>
+                            <Button
+                                variant="outlined"
+                                component={Link}
+                                to="/item"
+                                sx={{
+                                    textTransform: "none",
+                                    fontFamily: "monospace",
+                                    fontSize: "12px",
+                                    fontWeight: "1000",
+                                    padding: "5px 5px",
+                                    borderColor: "black",
+                                    color: "black",
+                                    borderWidth: "2.5px",
+                                    borderRadius: "4px",
+                                    backgroundColor: "#e3dff2",
+                                    boxShadow: "4px 3px",
+                                    "&:hover": {
+                                        backgroundColor: "#9723c9", // Change to a different color on hover,
+                                        color: "black",
+                                        borderWidth: "2.5px",
+                                        borderColor: "black",
+                                        boxShadow: "0px 0px"
+                                    },
+                                }}
+                            >
+                                {nextPageString}
+                            </Button>
+                            <p style={{ fontSize: "10px", marginBottom: "24px" }}> Add more items in next page. </p>
+                        </Box>
                     </Box>
-                </Box>
                 )}
             </Box>
         </div>

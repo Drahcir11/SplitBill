@@ -1,11 +1,12 @@
 @import url('../global.css');
 
 .item {
-    border : 2px solid  var(--primary-card-border-color);
+    border : 2.5px solid  black;
     border-radius : 16px;
     padding-right : 10px;
     padding-left : 10px;
-    width : 80vw;
+    width : 100vw;
+    max-width: 357px;
     height: 6em;
     display : flex;
     flex-direction: column;

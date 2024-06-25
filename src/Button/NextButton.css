@@ -3,28 +3,18 @@
 .next-button button {
     margin-top: 15px;
     font-family: monospace;
-    font-size: smaller;
+    font-size: 12px;
     padding: 5px 10px;
     background-color: transparent; /* Transparent background */
-    border: 2px solid var(--primary-card-border-color); /* Green border */
-    border-radius: 8px;
+    border: 2.5px solid black;
+    border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.2s, color 0.2s;
-    color: var(--primary-card-border-color);
-    
+    color: black;
+    background-color: #e3dff2;
+    box-shadow: 4px 3px;
   }
-  
-  .next-button button:hover {
-    background-color: var(--primary-card-border-color); /* Green background on hover */
-    color: var(--white-bg); /* White text color on hover */
-  }
-  
-  .next-button button:focus {
-    outline: #5d5d5d;
-    /* Add any focus styles here if desired */
-  }
-  
-  .next-button button:focus {
-    outline: #5d5d5d;
-    /* Add any focus styles here if desired */
-  }
+
+.next-button button:hover{
+  box-shadow: 0px 0px;
+  background-color: #c4a1ff;
+}

@@ -74,7 +74,7 @@ function TaxList({ tax, setTax }) {
           />
           {/* Button to add the item to the list */}
           {/* <button type="submit">Add Item</button> */}
-          <AddButton buttonName={"Add"} type={"submit"} />
+          <AddButton buttonName={"+"} type={"submit"} />
         </form>
         {/* List to display the added items */}
         <div className="tax-name-list">

@@ -46,13 +46,22 @@ function FriendsList({ friends, setFriends }) {
                             textAlign: "center",
                         }}
                     >
-                        <h1 style={{ fontSize: "24px", fontWeight: "700", marginBlockEnd: "0px", marginBlockStart: "48px" }}>Friends</h1>
+                        <h1 
+                            style={{ 
+                                fontSize: "24px", 
+                                fontWeight: "700", 
+                                marginBlockEnd: "0px", 
+                                marginBlockStart: "48px", 
+                                color: "black" 
+                                }}>
+                                    Friends
+                                </h1>
                         <h5
                             style={{
                                 fontWeight: "500",
                                 fontSize: "12px",
-                                marginBlockStart: "0px",
-                                marginBlockEnd: "24px",
+                                marginBlockStart: "4px",
+                                marginBlockEnd: "32px",
                                 // color: "black",
                                 color: "#5c5c5c",
                             }}
@@ -73,8 +82,12 @@ function FriendsList({ friends, setFriends }) {
                                 }}
                                 // minLength={0}
                                 maxLength={50} //restricts User name input to 50 characters
+                                style={{
+                                    boxShadow: "4px 4px",
+                                    borderColor: "black"
+                                }}
                             />
-                            <AddButton buttonName={"Add"} type={"submit"} />
+                            <AddButton buttonName={"+"} type={"submit"} />
                         </div>
                     </form>
                     <div className="name-list">
@@ -96,7 +109,7 @@ function FriendsList({ friends, setFriends }) {
                             justifyContent: "center",
                         }}
                     >
-                        <NextButton buttonName={"Next"} to={"/ReceiptCapture"} />
+                        <NextButton buttonName={"< NEXT PAGE >"} to={"/ReceiptCapture"} />
                         <p
                             style={{
                                 fontSize: "8px",

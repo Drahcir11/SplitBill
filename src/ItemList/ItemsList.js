@@ -52,52 +52,99 @@ function ItemsList({ items, setItems }) {
                 <h5 style={{ fontWeight: "500", fontSize: "12px", marginBlockStart: "0px", marginBlockEnd: "24px" }}>
                     Add the list of purchased food items per unit price.
                 </h5>
+                <div>
+
                 <form onSubmit={handleSubmit}>
-                    {/* Input field for entering the item's name */}
-                    <input
-                        className="input-item"
-                        type="text"
-                        placeholder="e.g. Salmon Sashimi"
-                        value={name}
-                        maxlength="28"
-                        onChange={(e) => {
-                            if (isValidInput(e.target.value)) {
-                                setName(e.target.value);
-                            }
-                        }} // Update the "name" state variable when the input changes
-                    />
-                    {/* Input field for entering the item's originalPrice */}
-                    <input
-                        className="input-price"
-                        type="text"
-                        inputMode="decimal"
-                        placeholder="£ 12.50"
-                        min="0"
-                        step="0.01"
-                        value={originalPrice}
-                        onChange={(e) => {
-                            if (isNumber(e.target.value)) {
-                                setOriginalPrice(e.target.value);
-                            }
-                        }} // Update the "price" state variable when the input changes
-                    />
-                    <input
-                        className="quantity"
-                        type="text"
-                        inputMode="numeric"
-                        placeholder="qty"
-                        min="0"
-                        step="1"
-                        value={quantity}
-                        onChange={(e) => {
-                            if (isNumber(e.target.value)) {
-                                setQuantity(e.target.value);
-                            }
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "center",
+                            alignItems: "center"
                         }}
-                    />
-                    {/* Button to add the item to the list */}
-                    <AddButton buttonName={"Add"} type={"submit"} />
+                    >
+                        <div
+                            style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                justifyContent: "center",
+                                alignContent: "center",
+                                textAlign: "center",
+                                backgroundColor: "white", 
+                                borderWidth: "2.5px", 
+                                borderColor: "black", 
+                                borderStyle:"solid",
+                                height: "3em",
+                                marginRight: "10px",
+                                borderRadius: "8px",
+                                boxShadow: "4px 4px"
+                            }}
+                        >
+
+                        
+                        {/* Input field for entering the item's name */}
+                        <input
+                            className="input-item"
+                            type="text"
+                            placeholder="e.g. Salmon Sashimi"
+                            value={name}
+                            maxlength="28"
+                            onChange={(e) => {
+                                if (isValidInput(e.target.value)) {
+                                    setName(e.target.value);
+                                }
+                            }}
+                            style={{
+                                outline: "none",
+                                backgroundColor: "transparent",
+                                borderColor: "transparent",
+                            }}
+                        />
+                        {/* Input field for entering the item's originalPrice */}
+                        <input
+                            className="input-price"
+                            type="text"
+                            inputMode="decimal"
+                            placeholder="£ 12.50"
+                            min="0"
+                            step="0.01"
+                            value={originalPrice}
+                            onChange={(e) => {
+                                if (isNumber(e.target.value)) {
+                                    setOriginalPrice(e.target.value);
+                                }
+                            }}
+                            style={{
+                                outline: "none",
+                                backgroundColor: "transparent",
+                                borderColor: "transparent"
+                            }}
+                        />
+                        <input
+                            className="quantity"
+                            type="text"
+                            inputMode="numeric"
+                            placeholder="qty"
+                            min="0"
+                            step="1"
+                            value={quantity}
+                            onChange={(e) => {
+                                if (isNumber(e.target.value)) {
+                                    setQuantity(e.target.value);
+                                }
+                            }}
+                            style={{
+                                outline: "none",
+                                backgroundColor: "transparent",
+                                borderColor: "transparent"
+                            }}
+                        />
+                        </div>
+                        {/* Button to add the item to the list */}
+                        <AddButton buttonName={"+"} type={"submit"} />
+                    </div>
                 </form>
+                </div>
                 {items && (
                     <div
                         style={{
@@ -108,7 +155,8 @@ function ItemsList({ items, setItems }) {
                             fontWeight: "500",
                             backgroundColor: "#fff",
                             fontSize: "12px",
-                            width: "80vw",
+                            width: "100%",
+                            maxWidth: "357px",
                             paddingRight: "16px",
                             paddingLeft: "10px",
                             display:"flex",
@@ -136,7 +184,7 @@ function ItemsList({ items, setItems }) {
                         )}
                     </ul>
                 </div>
-                <NextButton buttonName={"Next"} to={"/tax"} />
+                <NextButton buttonName={"< NEXT PAGE >"} to={"/tax"} />
             </div>
         </div>
     );

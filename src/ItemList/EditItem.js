@@ -35,7 +35,7 @@ function EditItem({Item, index, items, setItems}) {
         };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} style={{display:"flex", flexDirection: "row"}}>
             {/* Input field for entering the item's name */}
             <input
             className='input-item'

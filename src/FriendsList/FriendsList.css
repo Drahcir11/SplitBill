@@ -22,7 +22,9 @@
 }
 
 .friends-list input {
-  border-radius: 10px;
+  border-radius: 8px;
+  height: 3em;
+  outline: none;
 }
 
 .input-container {

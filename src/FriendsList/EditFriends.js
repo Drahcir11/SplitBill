@@ -19,6 +19,9 @@ function EditFriends({ friend, index, deleteTodo, editFriend }) {
       <input
         type="text"
         value={value}
+        style={{
+          height: "2em"
+        }}
         onChange={(e) => {
           if (isValidInput(e.target.value)) {
             setValue(e.target.value);
