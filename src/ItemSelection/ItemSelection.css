@@ -37,7 +37,7 @@
 }
 
 .friend-container {
-  border: 2px solid var(--primary-card-border-color);
+  border: 2px solid black;
   margin-bottom: 15px;
   width: 270px;
   padding: 10px;

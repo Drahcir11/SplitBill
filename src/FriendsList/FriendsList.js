@@ -41,33 +41,31 @@ function FriendsList({ friends, setFriends }) {
                         maxWidth: "420px",
                     }}
                 >
-                    <div
+                    <div className="heading"
                         style={{
                             textAlign: "center",
+                            display:"flex",
+                            flexDirection: "column",
+                            alignItems: "center",
                         }}
                     >
-                        <h1 
-                            style={{ 
-                                fontSize: "24px", 
-                                fontWeight: "700", 
-                                marginBlockEnd: "0px", 
-                                marginBlockStart: "48px", 
-                                color: "black" 
-                                }}>
-                                    Friends
-                                </h1>
-                        <h5
-                            style={{
-                                fontWeight: "500",
-                                fontSize: "12px",
-                                marginBlockStart: "4px",
-                                marginBlockEnd: "32px",
-                                // color: "black",
-                                color: "#5c5c5c",
-                            }}
-                        >
-                            Add your list of friend's names here.
-                        </h5>
+                        <h1>FRIENDS</h1>
+                        <div style={{ width: "85%", textAlign:"center", textJustify: "center", marginTop: "4px", marginBottom: "24px"}}>
+                            <h5
+                                style={{
+                                    fontStyle: "sans-serif",
+                                    fontWeight: "700",
+                                    fontSize: "12px",
+                                    marginBlockStart: "8px",
+                                    marginBlockEnd: "8px",
+                                    color: "black",
+                                    textAlign: "center",
+                                    // color: "#5c5c5c",
+                                }}
+                            >
+                                Add your list of friend's names here.
+                            </h5>
+                        </div>
                     </div>
                     <form onSubmit={handleSubmit}>
                         <div className="input-container">

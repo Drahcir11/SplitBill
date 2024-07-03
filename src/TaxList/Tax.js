@@ -39,8 +39,8 @@ function TaxList({ tax, setTax }) {
   return (
     <div className="tax-container">
       <div className="tax-list">
-        <h1 style={{fontSize: "24px", marginBlockEnd: "0px", marginBlockStart: "48px"}} > Tax/Services</h1>
-        <h5 style={{fontWeight: "500", fontSize: "12px", marginBlockStart:"0px", marginBlockEnd: "24px"}}> 
+        <h1 style={{fontSize: "36px", marginBlockEnd: "0px", marginBlockStart: "48px", textShadow: "2px 2px black", color: "white"}} > Tax Charges</h1>
+        <h5 style={{fontWeight: "700", fontSize: "12px", marginBlockStart:"0px", marginBlockEnd: "24px", color: "black"}}> 
           Enter Tax/Services charges percentage value (%).</h5>
         <form onSubmit={handleSubmitTax} className="tax-form">
           {/* Input field for entering the item's name */}

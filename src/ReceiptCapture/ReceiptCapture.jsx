@@ -138,8 +138,19 @@ function ReceiptCapture({ props }) {
                     textAlign: "center",
                 }}
             >
-                <h1 style={{ fontSize: "24px", fontWeight: "1000", marginBlockEnd: "0px", marginBlockStart: "48px", color: "black" }}>Receipt</h1>
-                <h5 style={{ fontWeight: "500", fontSize: "12px", marginBlockStart: "16px", marginBlockEnd: "24px", color: "#5c5c5c" }}>
+                <h1 
+                    style={{ 
+                        fontSize: "36px", 
+                        fontWeight: "1000", 
+                        marginBlockEnd: "0px",
+                        marginBlockStart: "32px",
+                        color: "white", 
+                        textShadow: "2px 2px black",
+                    }}
+                >
+                    RECEIPT CAPTURE
+                </h1>
+                <h5 style={{ fontWeight: "500", fontSize: "12px", marginBlockStart: "16px", marginBlockEnd: "24px", color: "black" }}>
                     Capture the receipt with your camera and <b style={{ fontWeight: "700", color: "black" }}>only</b> crop the area<br></br>
                     listing the <b style={{ fontWeight: "700", color: "black" }}>item's name and prices</b>.
                 </h5>
@@ -156,7 +167,7 @@ function ReceiptCapture({ props }) {
                         borderWidth: "2.5px",
                         backgroundColor: "white",
                         "&:hover": {
-                            backgroundColor: "#c4a1ff",
+                            backgroundColor: "#ad7aff",
                             borderWidth: "2.5px",
                             borderColor: "black",
                             color: "black",
@@ -180,7 +191,7 @@ function ReceiptCapture({ props }) {
                         borderColor: "black",
                         color: "black",
                         borderWidth: "2.5px",
-                        backgroundColor: "#c4a1ff",
+                        backgroundColor: "#ad7aff",
                         "&:hover": {
                             backgroundColor: "white",
                             borderWidth: "2.5px",
@@ -223,8 +234,9 @@ function ReceiptCapture({ props }) {
                                 maxWidth: "480px",
                             }}
                             initialAspectRatio={1}
-                            guides={false}
+                            guides={false}   
                             ref={cropperRef}
+                            dragMode={'none'}
                         />
                     </div>
                 )}
@@ -367,10 +379,10 @@ function ReceiptCapture({ props }) {
                                     color: "black",
                                     borderWidth: "2.5px",
                                     borderRadius: "4px",
-                                    backgroundColor: "#e3dff2",
+                                    backgroundColor: "#ad7aff",
                                     boxShadow: "4px 3px",
                                     "&:hover": {
-                                        backgroundColor: "#9723c9", // Change to a different color on hover,
+                                        backgroundColor: "#7e2fff", // Change to a different color on hover,
                                         color: "black",
                                         borderWidth: "2.5px",
                                         borderColor: "black",

@@ -10,11 +10,12 @@
     border-radius: 4px;
     cursor: pointer;
     color: black;
-    background-color: #e3dff2;
+    background-color: #ad7aff;
     box-shadow: 4px 3px;
+    transition: 0.3s;
   }
 
 .next-button button:hover{
   box-shadow: 0px 0px;
-  background-color: #c4a1ff;
+  background-color: #7e2fff
 }

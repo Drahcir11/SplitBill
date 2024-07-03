@@ -2,7 +2,7 @@
 
 .friends {
     border : 3px solid  black;
-    border-radius : 2px;
+    border-radius : 10px;
     padding-right : 10px;
     padding-left : 10px;
     width : 100%;
@@ -17,5 +17,5 @@
 
 .fa-trash {
     margin-left: 0.75rem;
-    color: #ff6b6b
+    color: red;
 }

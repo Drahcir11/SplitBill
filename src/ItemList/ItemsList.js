@@ -48,11 +48,19 @@ function ItemsList({ items, setItems }) {
     return (
         <div className="item-container">
             <div className="item-list">
-                <h1 style={{ fontSize: "24px", marginBlockEnd: "0px", marginBlockStart: "48px" }}>List of Items</h1>
-                <h5 style={{ fontWeight: "500", fontSize: "12px", marginBlockStart: "0px", marginBlockEnd: "24px" }}>
+                <h1 style={{ fontSize: "36px", marginBlockEnd: "0px", marginBlockStart: "48px", color: "white", textShadow: "2px 2px black" }}>ITEMS</h1>
+                <h5 style={{ fontWeight: "700", fontSize: "12px", marginBlockStart: "0px", marginBlockEnd: "24px", color: "black" }}>
                     Add the list of purchased food items per unit price.
                 </h5>
-                <div>
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        // width: "100vh"
+                    }}
+                >
 
                 <form onSubmit={handleSubmit}>
                     <div
@@ -60,10 +68,10 @@ function ItemsList({ items, setItems }) {
                             display: "flex",
                             flexDirection: "row",
                             justifyContent: "center",
-                            alignItems: "center"
+                            alignItems: "center",
                         }}
                     >
-                        <div
+                        <div className="input-container-maybe"
                             style={{
                                 display: "flex",
                                 flexDirection: "row",
@@ -77,7 +85,8 @@ function ItemsList({ items, setItems }) {
                                 height: "3em",
                                 marginRight: "10px",
                                 borderRadius: "8px",
-                                boxShadow: "4px 4px"
+                                boxShadow: "4px 4px",
+                                width: "90%"
                             }}
                         >
 
