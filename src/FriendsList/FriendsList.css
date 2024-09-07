@@ -22,7 +22,9 @@
 }
 
 .friends-list input {
-  border-radius: 10px;
+  border-radius: 8px;
+  height: 3em;
+  outline: none;
 }
 
 .input-container {
@@ -39,7 +41,7 @@
 }
 
 .name-list {
-  width : 80vw;
+  width : 90%;
   margin-top : 32px;
   display : flex;
   font-size : 14px;
@@ -51,6 +53,7 @@
   margin: 0; /* Remove default margin from the ordered list */
   margin-left : 5px;
   list-style-type: none; /* Remove the default numbering */
+  width: 100%;
 }
 
 .name-list li {
@@ -61,3 +64,13 @@
   list-style-type: none;
 }
 
+.heading h1{
+  font-style: sans-serif;
+  text-shadow: 2px 2px black;
+  -webkit-text-stroke: 1.5px black;
+  font-size: 36px;
+  font-weight: 1000; 
+  margin-block-end: 0px; 
+  margin-block-start: 32px; 
+  color: white;
+}

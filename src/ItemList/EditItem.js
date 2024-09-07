@@ -28,14 +28,14 @@ function EditItem({Item, index, items, setItems}) {
     const handleSubmit = (e) => {
         // prevent default action
         e.preventDefault();
-        if(!noWhiteSpace(value) || !noWhiteSpace(price)){
+        if(!noWhiteSpace(String(value)) || !noWhiteSpace(String(price))){
             return;
           }
         editItemList(value, price, newQuantity, index)
         };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} style={{display:"flex", flexDirection: "row"}}>
             {/* Input field for entering the item's name */}
             <input
             className='input-item'
@@ -54,7 +54,7 @@ function EditItem({Item, index, items, setItems}) {
             <input
             className='input-price'
             type="text"
-            inputMode='numeric'
+            inputMode='decimal'
             placeholder="£"
             min="0"
             step="0.01"

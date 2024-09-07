@@ -195,14 +195,14 @@ const handleSubmit = () => {
   // Render the UI components for the Item Selection app.
   return (
     <div className="item-selection">
-      <h1 style={{fontSize: "24px", fontWeight: "700", marginBlockEnd: "0px", marginBlockStart: "48px"}} >Item Selection</h1>
-      <h5 style={{fontWeight: "500", fontSize: "12px", marginBlockStart:"0px", marginBlockEnd: "24px"}}> 
+      <h1 style={{fontSize: "36px", fontWeight: "1000", marginBlockEnd: "0px", marginBlockStart: "48px", color: "white", textShadow: "2px 2px black"}} >SELECT ITEMS</h1>
+      <h5 style={{fontWeight: "700", fontSize: "12px", marginBlockStart:"0px", marginBlockEnd: "24px", color:"black"}}> 
           Be honest and select items that you ate.
       </h5>
       <form className="friends-items">
         {/* Map through the "bills" array to display each friend's bill */}
         {friends.map((friendElement, friendIndex) => (
-          <div className="friend-container" key={friendIndex} style={{backgroundColor: "White", display:"flex", flexDirection:"column"}}>
+          <div className="friend-container" key={friendIndex} style={{backgroundColor: "White", display:"flex", flexDirection:"column", boxShadow: "4px 2px black"}}>
             <div style={{display:"flex", justifyContent:"center"}}>
               {/* Display the friend's name as the subheading */}
               <h4 className="friendName" style={{
@@ -234,7 +234,7 @@ const handleSubmit = () => {
                       display: "flex",
                       justifyContent: "space-between",
                       paddingTop: "0px",
-                      paddingBottom: "0px"
+                      paddingBottom: "0px",
                     }}
                   >
                     <p> {item.name}</p>

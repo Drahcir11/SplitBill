@@ -19,6 +19,7 @@ body {
 
 .nav {
   background-color: var(--nav-bg-color);
+  /* background-color: white; */
   color: var(--primary-text-color);
   display:flex;
   font-family: sans-serif;
@@ -27,9 +28,9 @@ body {
   overflow: hidden;
   font-weight: 1000;
   padding-top: 10px;
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--edit-color);
+  border-bottom-width: 3px;
+  border-bottom-style: solid;
+  border-bottom-color: black;
 }
 .nav ul {
   padding: 0;

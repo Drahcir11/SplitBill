@@ -41,7 +41,7 @@ function Items({ Item, index, items, setItems}) {
     <div className="item">
       <div className="item-description">
         <p className="item-name">{Item.name}</p>
-        <p className="item-price">£{Item.originalPrice}</p>
+        <p className="item-price">£{Item.originalPrice} <span style={{fontSize: "8px", fontWeight: "500"}}>per unit</span></p>
       </div>
       <div className="item-editable">
         <Stack className="item-controls"

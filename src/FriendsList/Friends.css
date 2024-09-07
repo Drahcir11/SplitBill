@@ -1,11 +1,11 @@
 @import url('../global.css');
 
 .friends {
-    border : 2px solid  var(--primary-card-border-color);
+    border : 3px solid  black;
     border-radius : 10px;
     padding-right : 10px;
     padding-left : 10px;
-    width : 80vw;
+    width : 100%;
     display : flex;
     align-items: center;
     justify-content: space-between;
@@ -17,4 +17,5 @@
 
 .fa-trash {
     margin-left: 0.75rem;
+    color: red;
 }

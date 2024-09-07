@@ -11,13 +11,17 @@
 
 .App {
   /* border : 2px solid purple; */
-  background-color: #CAD3E4;
+  /* background-color: #CAD3E4; */
+  /* background-color: #7DF9FF; */
+  background-color: #ebeef5;
   background-size: cover;
-  height: 100%;
-  min-height: 100vh;
   align-items: center;
   display: flex;
   justify-content: center;
+  height: 100%;
+  min-height: 100vh;
+  width: 100%;
+  min-width: 100vw;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
