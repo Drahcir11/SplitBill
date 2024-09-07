@@ -11,3 +11,7 @@
     max-width: 50%;
     height: "500px";
 }
+
+h1 {
+    -webkit-text-stroke: 1.5px black;
+}

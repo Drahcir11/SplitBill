@@ -41,24 +41,31 @@ function FriendsList({ friends, setFriends }) {
                         maxWidth: "420px",
                     }}
                 >
-                    <div
+                    <div className="heading"
                         style={{
                             textAlign: "center",
+                            display:"flex",
+                            flexDirection: "column",
+                            alignItems: "center",
                         }}
                     >
-                        <h1 style={{ fontSize: "24px", fontWeight: "700", marginBlockEnd: "0px", marginBlockStart: "48px" }}>Friends</h1>
-                        <h5
-                            style={{
-                                fontWeight: "500",
-                                fontSize: "12px",
-                                marginBlockStart: "0px",
-                                marginBlockEnd: "24px",
-                                // color: "black",
-                                color: "#5c5c5c",
-                            }}
-                        >
-                            Add your list of friend's names here.
-                        </h5>
+                        <h1>FRIENDS</h1>
+                        <div style={{ width: "85%", textAlign:"center", textJustify: "center", marginTop: "4px", marginBottom: "24px"}}>
+                            <h5
+                                style={{
+                                    fontStyle: "sans-serif",
+                                    fontWeight: "700",
+                                    fontSize: "12px",
+                                    marginBlockStart: "8px",
+                                    marginBlockEnd: "8px",
+                                    color: "black",
+                                    textAlign: "center",
+                                    // color: "#5c5c5c",
+                                }}
+                            >
+                                Add your list of friend's names here.
+                            </h5>
+                        </div>
                     </div>
                     <form onSubmit={handleSubmit}>
                         <div className="input-container">
@@ -73,8 +80,12 @@ function FriendsList({ friends, setFriends }) {
                                 }}
                                 // minLength={0}
                                 maxLength={50} //restricts User name input to 50 characters
+                                style={{
+                                    boxShadow: "4px 4px",
+                                    borderColor: "black"
+                                }}
                             />
-                            <AddButton buttonName={"Add"} type={"submit"} />
+                            <AddButton buttonName={"+"} type={"submit"} />
                         </div>
                     </form>
                     <div className="name-list">
@@ -96,7 +107,7 @@ function FriendsList({ friends, setFriends }) {
                             justifyContent: "center",
                         }}
                     >
-                        <NextButton buttonName={"Next"} to={"/ReceiptCapture"} />
+                        <NextButton buttonName={"< NEXT PAGE >"} to={"/ReceiptCapture"} />
                         <p
                             style={{
                                 fontSize: "8px",
