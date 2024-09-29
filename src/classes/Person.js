@@ -1,5 +1,8 @@
+import { v4 as uuidv4 } from 'uuid';
+
 class Person {
 	constructor(name) {
+		this.person_id = uuidv4();
 		this.name = name;
 		this.totalBill = 0.00;
 		this.selectedItems = [];
@@ -39,10 +42,6 @@ class Person {
 	getSelectedItems() {
 		return this.selectedItems;
 	}
-
-	toggleEditMode() {
-		this.isEdit = !this.isEdit;
-	}
 }
 
-module.exports = Person;
+export default Person;

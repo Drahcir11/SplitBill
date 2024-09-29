@@ -1,5 +1,5 @@
 import { createContext, useReducer } from 'react'
-const Person = require('../classes/Person.js');
+import Person from '../classes/Person';
 
 export const BillContext = createContext();
 
@@ -25,14 +25,14 @@ export const BillContextReducer = (state, action) => {
         }
 
         case 'REMOVE_FRIEND': {
-            // Extract the target friend's name to be removed
-            const friendNameToRemove = action.payload;
+            // Extract the target friend's unique object ID to be removed
+            const friendId = action.payload;
 
             // Create a new list without the friend at the given index
             const updatedFriendsList = state.listOfFriends.filter((friend) => {
 
                 // Keep all friends whose index does not match the one we want to remove
-                return friend.name !== friendNameToRemove;
+                return friend.person_id !== friendId;
             });
 
             // Return the updated state with the modified friends list
