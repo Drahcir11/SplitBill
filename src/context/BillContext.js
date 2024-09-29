@@ -38,6 +38,44 @@ export const BillContextReducer = (state, action) => {
             // Return the updated state with the modified friends list
             return {...state, listOfFriends: updatedFriendsList};
         }
+
+        case 'TOGGLE_IS_EDIT' : {
+
+            const friendId = action.payload;
+            const updatedFriendsList = state.listOfFriends.map(friend => {
+                if(friend.person_id === friendId){
+                    return {...friend, isEdit: !friend.isEdit};
+                }
+                else {
+                    return friend;
+                }
+            })
+
+            return {...state, listOfFriends: updatedFriendsList};
+            
+        }
+
+        case 'UPDATE_NAME' : {
+
+            const { friendId, newName } = action.payload;
+
+            console.log(friendId, newName)
+
+            const updatedFriendsList = state.listOfFriends.map( friend => {
+                if (friend.person_id === friendId) {
+                    return {...friend, name: newName, isEdit: !friend.isEdit}
+                }
+                else {
+                    return friend
+                }
+            })
+
+            return {...state, listOfFriends: updatedFriendsList};
+
+        }
+
+        default:
+            return state;
     }
 }
 

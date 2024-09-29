@@ -3,11 +3,16 @@ import NextButton from "../Button/NextPageButton";
 import { Link } from "react-router-dom";
 import AddButton from "../Button/AddButton";
 import Friends from "./Friends";
+import ObjectFriend from "./ObjectFriend";
+import EditObjectFriend from "./EditObjectFriend";
 import "./FriendsList.css";
 import EditFriends from "./EditFriends";
 import { isValidInput, noWhiteSpace } from "../ErrorHandling";
+import { useBillContext } from "../Hooks/useBillContext";
+
 
 function FriendsList({ friends, setFriends }) {
+    const { dispatch, listOfFriends } = useBillContext();
     const [friendName, setFriendName] = useState("");
 
     const handleSubmit = (e) => {
@@ -15,13 +20,22 @@ function FriendsList({ friends, setFriends }) {
         if (!noWhiteSpace(friendName)) {
             return;
         }
+
+        dispatch({ type: "ADD_FRIEND", payload: friendName });
+
         setFriendName("");
         setFriends([...friends, { name: friendName, items: [], total: 0, isEdit: false }]);
         setFriendName("");
+
+        console.log("list of friends :", listOfFriends);
     };
 
     const deleteTodo = (inputFriend) => {
         setFriends(friends.filter((friend) => friend.name !== inputFriend.name));
+    };
+
+    const deleteFriend = (friend_id) => {
+        dispatch({type: "REMOVE_FRIEND", payload: friend_id})
     };
 
     const editFriend = (inputId) => {
@@ -41,16 +55,17 @@ function FriendsList({ friends, setFriends }) {
                         maxWidth: "420px",
                     }}
                 >
-                    <div className="heading"
+                    <div
+                        className="heading"
                         style={{
                             textAlign: "center",
-                            display:"flex",
+                            display: "flex",
                             flexDirection: "column",
                             alignItems: "center",
                         }}
                     >
                         <h1>FRIENDS</h1>
-                        <div style={{ width: "85%", textAlign:"center", textJustify: "center", marginTop: "4px", marginBottom: "24px"}}>
+                        <div style={{ width: "85%", textAlign: "center", textJustify: "center", marginTop: "4px", marginBottom: "24px" }}>
                             <h5
                                 style={{
                                     fontStyle: "sans-serif",
@@ -82,7 +97,7 @@ function FriendsList({ friends, setFriends }) {
                                 maxLength={50} //restricts User name input to 50 characters
                                 style={{
                                     boxShadow: "4px 4px",
-                                    borderColor: "black"
+                                    borderColor: "black",
                                 }}
                             />
                             <AddButton buttonName={"+"} type={"submit"} />
@@ -95,6 +110,17 @@ function FriendsList({ friends, setFriends }) {
                                     return <EditFriends friend={friend} index={index} deleteTodo={deleteTodo} editFriend={editFriendList} />;
                                 } else {
                                     return <Friends friend={friend} index={index} deleteTodo={deleteTodo} editFriend={editFriend} />;
+                                }
+                            })}
+                        </ol>
+                        <ol>
+                            {listOfFriends.map((friend, index) => {
+                                
+                                if (friend.isEdit) {
+                                    return < EditObjectFriend friend={friend}/>
+                                }
+                                else {
+                                    return <ObjectFriend friend={friend} deleteFriend={deleteFriend} editFriend={editFriend} />
                                 }
                             })}
                         </ol>
@@ -115,7 +141,7 @@ function FriendsList({ friends, setFriends }) {
                         >
                             Manually add items
                             <Link to="/item">
-                                <span style={{ textDecoration: "underline"}}> click here</span>
+                                <span style={{ textDecoration: "underline" }}> click here</span>
                             </Link>
                         </p>
                     </div>
