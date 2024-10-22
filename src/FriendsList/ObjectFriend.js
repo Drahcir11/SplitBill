@@ -1,22 +1,33 @@
-import './Friends.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import "./Friends.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
-import { useBillContext } from '../Hooks/useBillContext'
+import { useBillContext } from "../Hooks/useBillContext";
 
-
-function Friends({friend, deleteFriend, editFriend}) {
-
+function Friends({ friend }) {
     const { dispatch } = useBillContext();
 
-    return (  
+    const handleNameChange = (e) => {
+        e.preventDefault();
+        dispatch({ type: "UPDATE_FRIEND_NAME", payload: { friendId: friend.personId, newName: e.target.value } });
+    };
+
+    return (
         <div className="friends">
-            <p>object - {friend.name}</p>
-            <div className='friends-icon'>
-                <FontAwesomeIcon icon={faPenToSquare} onClick={() => dispatch({ type: 'TOGGLE_IS_EDIT', payload: friend.person_id}) }/>
-                <FontAwesomeIcon icon={faTrash} onClick={() => deleteFriend(friend.person_id)}/>
-            </div>
+            <input
+                className="friends-icon"
+                type="text"
+                value={friend.name}
+                onChange={(e) => handleNameChange(e)}
+                style={{
+                    fontWeight: "700",
+                    fontSize: "14px",
+                    outline: "none",
+                    backgroundColor: "transparent",
+                    borderColor: "transparent",
+                }}
+            />
+            <FontAwesomeIcon icon={faTrash} onClick={() => dispatch({ type: "REMOVE_FRIEND", payload: friend.personId })} />
         </div>
     );
 }

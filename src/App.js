@@ -8,6 +8,7 @@ import NavBar from "./NavBar/NavBar";
 import About from "./About/About";
 import HowTo from "./HowTo/HowTo";
 import ReceiptCapture from "./ReceiptCapture/ReceiptCapture";
+import ObjectItemSelection from "./ItemSelection/ObjectItemSelection";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -116,6 +117,7 @@ function App() {
                         <Route path="/item" element={<ItemsList items={items} setItems={setItems} tax={tax} setTax={setTax} />} />
                         <Route path="/tax" element={<TaxList tax={tax} setTax={setTax} />} />
                         <Route path="/itemSelection" element={<ItemSelection props={itemSelectionProps} />} />
+                        <Route path="/objectItemSelection" element={<ObjectItemSelection />}/>
                         <Route
                             path="/eachOwed"
                             element={<EachOwed items={items} setItems={setItems} friends={friends} setFriends={setFriends} setChecked={setChecked} />}
@@ -128,4 +130,4 @@ function App() {
     );
 }
 
-export default App;
+export default App

@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import AddButton from "../Button/AddButton";
 import Friends from "./Friends";
 import ObjectFriend from "./ObjectFriend";
-import EditObjectFriend from "./EditObjectFriend";
 import "./FriendsList.css";
 import EditFriends from "./EditFriends";
 import { isValidInput, noWhiteSpace } from "../ErrorHandling";
@@ -27,23 +26,6 @@ function FriendsList({ friends, setFriends }) {
         setFriends([...friends, { name: friendName, items: [], total: 0, isEdit: false }]);
         setFriendName("");
 
-        console.log("list of friends :", listOfFriends);
-    };
-
-    const deleteTodo = (inputFriend) => {
-        setFriends(friends.filter((friend) => friend.name !== inputFriend.name));
-    };
-
-    const deleteFriend = (friend_id) => {
-        dispatch({type: "REMOVE_FRIEND", payload: friend_id})
-    };
-
-    const editFriend = (inputId) => {
-        setFriends(friends.map((friend, index) => (index === inputId ? { ...friend, isEdit: !friend.isEdit } : friend)));
-    };
-
-    const editFriendList = (inputName, inputId) => {
-        setFriends(friends.map((friend, index) => (index === inputId ? { ...friend, name: inputName, isEdit: !friend.isEdit } : friend)));
     };
 
     return (
@@ -104,7 +86,7 @@ function FriendsList({ friends, setFriends }) {
                         </div>
                     </form>
                     <div className="name-list">
-                        <ol>
+                        {/* <ol>
                             {friends.map((friend, index) => {
                                 if (friend.isEdit) {
                                     return <EditFriends friend={friend} index={index} deleteTodo={deleteTodo} editFriend={editFriendList} />;
@@ -112,16 +94,12 @@ function FriendsList({ friends, setFriends }) {
                                     return <Friends friend={friend} index={index} deleteTodo={deleteTodo} editFriend={editFriend} />;
                                 }
                             })}
-                        </ol>
+                        </ol> */}
                         <ol>
                             {listOfFriends.map((friend, index) => {
-                                
-                                if (friend.isEdit) {
-                                    return < EditObjectFriend friend={friend}/>
-                                }
-                                else {
-                                    return <ObjectFriend friend={friend} deleteFriend={deleteFriend} editFriend={editFriend} />
-                                }
+
+                                return <ObjectFriend friend={friend} />
+        
                             })}
                         </ol>
                     </div>
