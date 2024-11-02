@@ -1,13 +1,53 @@
 import { createContext, useReducer } from "react";
 import Person from "../classes/Person";
 import Item from "../classes/Item";
+import { $, multiply } from 'moneysafe';
+import {$$, subtractPercent, addPercent } from 'moneysafe/ledger';
+import { v4 as uuidv4 } from 'uuid'
 
 export const BillContext = createContext();
 
 const initialState = {
     listOfFriends: [],
     listOfItems: [],
+    listOfCharges: [],
+    itemSubTotalCost: 0.00,
+    itemTotalCost: 0.00
 };
+
+const calculateSubTotalCost = (listOfItems) => {
+
+    // Loop through each items and calculate item sub total cost
+    let updatedItemSubTotalCost = 0.00
+    for(const item of listOfItems){
+        updatedItemSubTotalCost += multiply($(parseFloat(item.unitPrice).toFixed(2)), $(item.quantity));
+    }
+
+    return updatedItemSubTotalCost.toFixed(2);
+}
+
+const calculateTotalCost = (itemSubTotalCost, listOfCharges) => {
+
+    if (listOfCharges.length < 1) {
+        return itemSubTotalCost
+    }
+
+    // Loop through the list of charges/discounts
+    let updatedItemTotalCost = itemSubTotalCost
+    for(const charges of listOfCharges) {
+
+        // Increase total cost when its service charge
+        if(charges["name"] === "Service Charges"){
+            updatedItemTotalCost = $$($(updatedItemTotalCost), addPercent(charges["value"]))
+        }
+        // Decrease total cost when its service charge
+        else if(charges["name"] === "Discount"){
+            updatedItemTotalCost = $$($(updatedItemTotalCost), subtractPercent(charges["value"]))
+        }
+    }
+
+    return updatedItemTotalCost.toFixed(2);
+}
 
 export const BillContextReducer = (state, action) => {
     switch (action.type) {
@@ -41,8 +81,6 @@ export const BillContextReducer = (state, action) => {
             // Extract the target friend and its new name
             const { friendId, newName } = action.payload;
 
-            console.log("friend id", friendId, "new friend name: ", newName);
-
             // Loop through each friends and rename the one with matching friend ID
             const updatedFriendsList = state.listOfFriends.map((friend) => {
                 if (friend.personId === friendId) {
@@ -61,11 +99,13 @@ export const BillContextReducer = (state, action) => {
 
             const newItemObject = new Item(itemName, unitPrice, quantity);
 
-            const updatedItemsList = [...state.listOfItems, newItemObject];
+            const updatedItemList = [...state.listOfItems, newItemObject];
 
-            console.log("Added new item :", newItemObject);
+            const updatedItemSubTotalCost = calculateSubTotalCost(updatedItemList);
 
-            return { ...state, listOfItems: updatedItemsList };
+            const updatedItemTotalCost = calculateTotalCost(updatedItemSubTotalCost, state.listOfCharges);
+
+            return { ...state, listOfItems: updatedItemList, itemSubTotalCost: updatedItemSubTotalCost, itemTotalCost: updatedItemTotalCost };
         }
 
         case "UPDATE_ITEM_NAME": {
@@ -96,14 +136,18 @@ export const BillContextReducer = (state, action) => {
                 }
             });
 
-            return { ...state, listOfItems: updatedItemList };
+            const updatedItemSubTotalCost = calculateSubTotalCost(updatedItemList);
+
+            const updatedItemTotalCost = calculateTotalCost(updatedItemSubTotalCost, state.listOfCharges);
+
+            return { ...state, listOfItems: updatedItemList, itemSubTotalCost: updatedItemSubTotalCost, itemTotalCost: updatedItemTotalCost };
         }
 
         case "UPDATE_ITEM_QUANTITY": {
             const { itemId, qtyChange } = action.payload;
 
             // Loop through each friends and update the matching item's quantity
-            const updatedItemsList = state.listOfItems.map((item) => {
+            const updatedItemList = state.listOfItems.map((item) => {
                 if (item.itemId === itemId) {
                     return { ...item, quantity: item.quantity + qtyChange };
                 } else {
@@ -111,7 +155,11 @@ export const BillContextReducer = (state, action) => {
                 }
             });
 
-            return { ...state, listOfItems: updatedItemsList };
+            const updatedItemSubTotalCost = calculateSubTotalCost(updatedItemList);
+
+            const updatedItemTotalCost = calculateTotalCost(updatedItemSubTotalCost, state.listOfCharges);
+
+            return { ...state, listOfItems: updatedItemList, itemSubTotalCost: updatedItemSubTotalCost, itemTotalCost: updatedItemTotalCost };
         }
 
         case "REMOVE_ITEM": {
@@ -123,12 +171,16 @@ export const BillContextReducer = (state, action) => {
                 return item.itemId !== itemId;
             });
 
-            return { ...state, listOfItems: updatedItemList };
+            const updatedItemSubTotalCost = calculateSubTotalCost(updatedItemList);
+
+            const updatedItemTotalCost = calculateTotalCost(updatedItemSubTotalCost, state.listOfCharges);
+
+            return { ...state, listOfItems: updatedItemList, itemSubTotalCost: updatedItemSubTotalCost, itemTotalCost: updatedItemTotalCost };
         }
 
         case "RESET_ITEMS": {
 
-            return {...state, listOfItems: []}
+            return {...state, listOfItems: [], itemSubTotalCost: 0.00, itemTotalCost: 0.00}
         }
 
         case "INSERT_ITEM_INTO_FRIEND": {
@@ -164,6 +216,91 @@ export const BillContextReducer = (state, action) => {
 
             return {...state, listOfFriends: updatedFriendsList}
 
+        }
+
+        case "ADD_CHARGES": {
+            const { chargesName, chargesValue } = action.payload;
+
+            let chargesObject = {}
+            // Add service charges
+            if (chargesName === "Service Charges") {
+                chargesObject = { "chargesId": uuidv4(),"name": chargesName, "value": chargesValue  }
+            }
+            // When discount is added, flip the charges value
+            else if (chargesName === "Discount"){
+                chargesObject = { "chargesId": uuidv4(),"name": chargesName, "value": chargesValue  }
+            }
+            // Add error handling here
+            else {
+                return state;
+            }
+
+            const updatedChargesList = [...state.listOfCharges, chargesObject]
+
+            const updatedItemTotalCost = calculateTotalCost(state.itemSubTotalCost, updatedChargesList)
+
+
+            return {...state, listOfCharges: updatedChargesList, itemTotalCost: updatedItemTotalCost}
+        }
+
+        case "UPDATE_CHARGES_NAME": {
+            const { chargesId, newChargesName } = action.payload;
+
+            const updatedChargesList = state.listOfCharges.map((charges)=>{
+                if(chargesId === charges["chargesId"]) {
+                    return {...charges, name: newChargesName}
+                }
+                else {
+                    return charges
+                }
+            })
+
+            const updatedItemTotalCost = calculateTotalCost(state.itemSubTotalCost, updatedChargesList)
+
+            return {...state, listOfCharges: updatedChargesList, itemTotalCost: updatedItemTotalCost}
+        }
+
+        case "UPDATE_CHARGES_VALUE": {
+            const { chargesId, newChargesValue } = action.payload;
+
+            // const regex = /^$|-?\d+(\.\d+)?/g;
+
+            let tempNewChargesValue = newChargesValue;
+
+            // Cap the maximum charges value to 100
+            if (tempNewChargesValue >= 100) {
+                tempNewChargesValue = 100
+            }
+
+            // Cap the minimum charges value to 0
+            if (tempNewChargesValue <= 0) {
+                tempNewChargesValue = 0
+            }
+
+            const updatedChargesList = state.listOfCharges.map((charges)=>{
+                if(chargesId === charges["chargesId"]) {
+                    return {...charges, value: tempNewChargesValue};
+                }
+                else {
+                    return charges;
+                }
+            })
+
+            const updatedItemTotalCost = calculateTotalCost(state.itemSubTotalCost, updatedChargesList);
+
+            return {...state, listOfCharges: updatedChargesList, itemTotalCost: updatedItemTotalCost};
+        }
+
+        case "REMOVE_CHARGES": {
+            const { chargesId } = action.payload;
+
+            const updatedChargesList = state.listOfCharges.filter((charges)=>{
+                return chargesId !== charges["chargesId"]
+            })
+
+            const updatedItemTotalCost = calculateTotalCost(state.itemSubTotalCost, updatedChargesList)
+
+            return {...state, listOfCharges: updatedChargesList, itemTotalCost: updatedItemTotalCost}
         }
 
         default:
