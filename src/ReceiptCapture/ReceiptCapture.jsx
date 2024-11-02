@@ -6,9 +6,15 @@ import "cropperjs/dist/cropper.css";
 import "./ReceiptCapture.css"; // Assuming you have a CSS file for styling
 import NextButton from "../Button/NextPageButton";
 import ObjectItem from "../ItemList/ObjectItem";
+import ObjectCharges from "../TaxList/ObjectCharges";
 import { useBillContext } from "../Hooks/useBillContext";
 import { isNumber, isValidInput, noWhiteSpace } from "../ErrorHandling";
 import AddButton from "../Button/AddButton";
+
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 // Styling for MUI buttons to upload & capture receipts
 const uploadImageButtonStyles = {
@@ -42,12 +48,15 @@ const cropImageButtonStyles = {
 };
 
 function ReceiptCapture() {
-    const { dispatch, listOfItems } = useBillContext();
+    const { dispatch, listOfItems, listOfCharges, itemSubTotalCost, itemTotalCost } = useBillContext();
 
     const [name, setName] = useState("");
+    const [chargesName, setChargesName] = useState("Service Charges");
+    const [chargesValue, setChargesValue] = useState(null);
     const [originalPrice, setOriginalPrice] = useState("");
     const [quantity, setQuantity] = useState("");
-    const [subTotal, setSubTotal] = useState(0.0);
+
+    const [chargesCategory, setChargesCategory] = useState("");
 
     // Function to handle form submission when the "Add Item" button is clicked.
     const handleSubmit = (e) => {
@@ -65,6 +74,15 @@ function ReceiptCapture() {
         setName("");
         setOriginalPrice("");
         setQuantity("");
+    };
+
+    const handleChargesSubmit = (e) => {
+        e.preventDefault();
+        if (!noWhiteSpace(chargesValue)) {
+            return;
+        }
+
+        dispatch({ type: "ADD_CHARGES", payload: { chargesName: chargesCategory, chargesValue } });
     };
 
     const [image, setImage] = useState(() => {
@@ -97,10 +115,13 @@ function ReceiptCapture() {
         setSubmitFile(true);
     };
 
+    // When user crops the image, extract item and price details from image
     const handleCrop = () => {
         const cropper = cropperRef.current.cropper;
         cropper.getCroppedCanvas().toBlob((blob) => {
             const image = URL.createObjectURL(blob);
+
+            // Empty the list of items before cropping image
             dispatch({ type: "RESET_ITEMS" });
             extractText(image);
         });
@@ -108,28 +129,27 @@ function ReceiptCapture() {
 
     const extractText = (image) => {
         Tesseract.recognize(image, "eng", {
-            logger: (m) => console.log(m),
+            tessedit_pageseg_mode: 6, // Something to do with it being blocks
+            tessedit_ocr_engine_mode: 1,
         }).then(({ data: { text } }) => {
+            // Loop through each text and structure it into items and prices
             let extractedText = text.split("\n");
-
-            const itemNames = [];
-            const itemPrices = [];
-
             extractedText.forEach((item) => {
-                const cleanedItem = item.replace(/[^\w\s.]/g, "");
-
                 // Regular expression to match item name and price
-                const match = cleanedItem.match(/(.+?)\s*(\d+\.\d{1,2})/);
+                // e.g. Pizza £12.55
+                const regexMatches = item.match(/(.+?)\s*(?:\$|RS|Rs|rs|Rupees|rupees|pkr|£|Rp|RP|rp|)\s*?(\d+(?:\.\d{1,2}))/);
 
-                console.log("item :", item, "regex match :", match);
+                // Structure string when item price combination matches regex
+                if (regexMatches) {
+                    const itemName = regexMatches[1].trim();
+                    const itemPrice = regexMatches[2].replace(/[\$£]/g, "").trim();
 
-                if (match) {
-                    const itemName = match[1].trim();
-                    const itemPrice = match[2].replace(/[\$£]/g, "").trim();
-
-                    itemNames.push(itemName);
-                    itemPrices.push(parseFloat(itemPrice));
+                    // Add new item and its price to the list of items in context manager
                     dispatch({ type: "ADD_ITEM", payload: { itemName: itemName, unitPrice: itemPrice, quantity: 1 } });
+                }
+                // When string doesn't match regex and its not an empty white space, then add item with no price
+                else if (item.trim().length > 0) {
+                    dispatch({ type: "ADD_ITEM", payload: { itemName: item, unitPrice: 0.0, quantity: 1 } });
                 }
             });
         });
@@ -250,7 +270,7 @@ function ReceiptCapture() {
                     <div className="receipt-capture__item-sub-total">
                         <p>Sub total: </p>
                         <p>
-                            £{subTotal}
+                            £{itemSubTotalCost}
                             <span style={{ fontSize: "8px", fontWeight: "500" }}> (excl tax)</span>
                         </p>
                     </div>
@@ -261,6 +281,90 @@ function ReceiptCapture() {
                     <ul>
                         {listOfItems.map((item, index) => {
                             return <ObjectItem Item={item} />;
+                        })}
+                    </ul>
+                </div>
+                {/* <NextButton buttonName={"< NEXT PAGE >"} to={"/ObjectItemSelection"} /> */}
+            </div>
+
+            <div className="receipt-capture__tax-container">
+                <h1>TAX & DISCOUNTS</h1>
+                <h5>Add the list of tax charges or discounts.</h5>
+                <div className="receipt-capture__form-container" style={{ display: "flex", flexDirection: "row" }}>
+                    <FormControl
+                        sx={{
+                            m: 1,
+                            minWidth: 180,
+                            backgroundColor: "white",
+                            boxShadow: "none",
+                            ".MuiOutlinedInput-notchedOutline": {
+                                border: "2.5px",
+                                borderColor: "black",
+                                borderStyle: "solid",
+                            },
+                        }}
+                        size="small"
+                    >
+                        <InputLabel id="demo-simple-select-label">Tax/Discounts</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={chargesCategory}
+                            label="Service Charges"
+                            onChange={(e) => {
+                                setChargesCategory(e.target.value);
+                            }}
+                        >
+                            <MenuItem value={"Service Charges"}>Service Charges</MenuItem>
+                            <MenuItem value={"Discount"}>Discount</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <form onSubmit={handleChargesSubmit}>
+                        <div className="receipt-capture__input-form-tax">
+                            <input
+                                className="input-charges-value"
+                                type="text"
+                                inputMode="decimal"
+                                placeholder="12 %"
+                                min={0}
+                                max={100}
+                                step={0.01}
+                                value={chargesValue}
+                                style={{
+                                    width: "45px",
+                                }}
+                                onChange={(e) => {
+                                    setChargesValue(e.target.value);
+                                }}
+                            />
+                        </div>
+                        <AddButton buttonName={"+"} type={"submit"} />
+                    </form>
+                </div>
+                {listOfItems && (
+                    <div className="receipt-capture__item-cost-container">
+                        <div className="receipt-capture__item-charges-sub-total">
+                            <p>Sub total: </p>
+                            <p>
+                                £{itemSubTotalCost}
+                                <span style={{ fontSize: "8px", fontWeight: "500" }}> (excl tax)</span>
+                            </p>
+                        </div>
+                        <div className="receipt-capture__item-charges-total-cost">
+                            <p>Total cost: </p>
+                            <p>
+                                £{itemTotalCost}
+                                <span style={{ fontSize: "8px", fontWeight: "500" }}> (incl tax)</span>
+                            </p>
+                        </div>
+                    </div>
+                )}
+
+                {/* List to display the added items */}
+                <div className="receipt-capture__item-name-list">
+                    <ul>
+                        {listOfCharges.map((charges, index) => {
+                            return <ObjectCharges Charges={charges} />;
                         })}
                     </ul>
                 </div>

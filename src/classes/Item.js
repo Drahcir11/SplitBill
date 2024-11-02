@@ -4,7 +4,7 @@ class Item {
     constructor(name, unitPrice, quantity){
         this.itemId = uuidv4();
         this.name = name;
-        this.unitPrice = unitPrice;
+        this.unitPrice = parseFloat(unitPrice);
         this.quantity = parseInt(quantity);
     }
 }
