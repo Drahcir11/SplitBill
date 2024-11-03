@@ -1,7 +1,7 @@
 import { createContext, useReducer } from "react";
 import Person from "../classes/Person";
 import Item from "../classes/Item";
-import { $, multiply } from 'moneysafe';
+import { $, multiply, add, minus } from 'moneysafe';
 import {$$, subtractPercent, addPercent } from 'moneysafe/ledger';
 import { v4 as uuidv4 } from 'uuid'
 
@@ -37,12 +37,18 @@ const calculateTotalCost = (itemSubTotalCost, listOfCharges) => {
     for(const charges of listOfCharges) {
 
         // Increase total cost when its service charge
-        if(charges["name"] === "Service Charges"){
+        if(charges["name"] === "Tax" && charges["type"] === "Percentage"){
             updatedItemTotalCost = $$($(updatedItemTotalCost), addPercent(charges["value"]))
         }
         // Decrease total cost when its service charge
-        else if(charges["name"] === "Discount"){
+        else if(charges["name"] === "Discount" && charges["type"] === "Percentage"){
             updatedItemTotalCost = $$($(updatedItemTotalCost), subtractPercent(charges["value"]))
+        }
+        else if(charges["name"] === "Tax" && charges["type"] === "Numeric"){
+            updatedItemTotalCost = $(updatedItemTotalCost).add($(charges["value"]))
+        }
+        else if(charges["name"] === "Discount" && charges["type"] === "Numeric"){
+            updatedItemTotalCost = $(updatedItemTotalCost).minus($(charges["value"]))
         }
     }
 
@@ -223,26 +229,19 @@ export const BillContextReducer = (state, action) => {
         }
 
         case "ADD_CHARGES": {
-            const { chargesName, chargesValue } = action.payload;
+            const { chargesCategory, chargesValue, chargesValueType } = action.payload;
 
-            let chargesObject = {}
-            // Add service charges
-            if (chargesName === "Service Charges") {
-                chargesObject = { "chargesId": uuidv4(),"name": chargesName, "value": chargesValue  }
+            // When charge type is empty, then default set into percentage type
+            let tempChargesValueType = chargesValueType;
+            if(tempChargesValueType.trim() === ""){
+                tempChargesValueType = "Percentage"
             }
-            // When discount is added, flip the charges value
-            else if (chargesName === "Discount"){
-                chargesObject = { "chargesId": uuidv4(),"name": chargesName, "value": chargesValue  }
-            }
-            // Add error handling here
-            else {
-                return state;
-            }
+
+            const chargesObject = { "chargesId": uuidv4(),"name": chargesCategory, "type": tempChargesValueType, "value": chargesValue  }
 
             const updatedChargesList = [...state.listOfCharges, chargesObject]
 
             const updatedItemTotalCost = calculateTotalCost(state.itemSubTotalCost, updatedChargesList)
-
 
             return {...state, listOfCharges: updatedChargesList, itemTotalCost: updatedItemTotalCost}
         }
