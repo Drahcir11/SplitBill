@@ -186,6 +186,8 @@ export const BillContextReducer = (state, action) => {
         case "INSERT_ITEM_INTO_FRIEND": {
             const { itemObject, friendId } = action.payload;
 
+            // Loop through each friends and add an object item
+            // into the target friend's list of selected items
             const updatedFriendsList = state.listOfFriends.map((friend)=>{
                 if(friend.personId === friendId){
                     return {...friend, selectedItems: [...friend.selectedItems, itemObject]}
@@ -201,7 +203,9 @@ export const BillContextReducer = (state, action) => {
 
         case "REMOVE_ITEM_FROM_FRIEND": {
             const { targetItemId, friendId } = action.payload;
-
+            
+            // Loop through each friends and remove an object item
+            // from the target friend's list of selected items
             const updatedFriendsList = state.listOfFriends.map((friend)=>{
                 if(friend.personId === friendId){
                     const updatedSelectedItems = friend.selectedItems.filter((itemObject)=>{
@@ -277,6 +281,7 @@ export const BillContextReducer = (state, action) => {
                 tempNewChargesValue = 0
             }
 
+            // Update the new charges value for the target charge
             const updatedChargesList = state.listOfCharges.map((charges)=>{
                 if(chargesId === charges["chargesId"]) {
                     return {...charges, value: tempNewChargesValue};
@@ -286,6 +291,7 @@ export const BillContextReducer = (state, action) => {
                 }
             })
 
+            // Re-calculate item total cost after updating charges's value
             const updatedItemTotalCost = calculateTotalCost(state.itemSubTotalCost, updatedChargesList);
 
             return {...state, listOfCharges: updatedChargesList, itemTotalCost: updatedItemTotalCost};
@@ -294,10 +300,12 @@ export const BillContextReducer = (state, action) => {
         case "REMOVE_CHARGES": {
             const { chargesId } = action.payload;
 
+            // Loop through each charges and remove the target charge
             const updatedChargesList = state.listOfCharges.filter((charges)=>{
                 return chargesId !== charges["chargesId"]
             })
 
+            // Re-calculate the total cost after removing a charge
             const updatedItemTotalCost = calculateTotalCost(state.itemSubTotalCost, updatedChargesList)
 
             return {...state, listOfCharges: updatedChargesList, itemTotalCost: updatedItemTotalCost}
