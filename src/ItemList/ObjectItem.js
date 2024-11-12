@@ -29,8 +29,8 @@ function ObjectItem({ Item }) {
                         borderColor: "transparent",
                     }}
                 />
-                <Stack className="input-item-unit-price" direction="row" alignItems="end" justifyContent="center" textAlign="center">
-                    <span style={{ display:"flex", fontSize: "12px", marginRight:"2.5px", fontWeight: "700" }}>£</span>
+                <Stack className="input-item-unit-price" direction="row" alignItems="baseline">
+                    <span style={{ display:"flex", fontSize: "14px", marginRight:"2.5px", fontWeight: "700" }}>£</span>
                     <AutosizeInput
                         value={Item.unitPrice}
                         onChange={(e) => {
@@ -42,18 +42,18 @@ function ObjectItem({ Item }) {
                         min="0"
                         step="0.01"
                         inputStyle={{
+                            minWidth: "45px",
                             display:"flex",
                             fontWeight: "700",
-                            fontSize: "12px",
+                            fontSize: "14px",
                             marginRight: "0px",
-                            padding: "0px",
-                            border: "0px",
+                            padding: "0px 0px 0px 0px",
+                            border: "none",
                             textAlign: "left",
                             backgroundColor: "transparent",
                             borderColor: "transparent",
                         }}
                     />
-                    <span style={{ fontSize: "8px", fontWeight: "500" }}>per unit</span>
                 </Stack>
             </div>
             <div className="item-editable">
@@ -70,12 +70,12 @@ function ObjectItem({ Item }) {
                                     color: "red",
                                 }}
                             >
-                                <DeleteOutlineIcon sx={{ fontSize: "15px" }} />
+                                <DeleteOutlineIcon sx={{ fontSize: "19px" }} />
                             </IconButton>
                         ) : (
                             <FontAwesomeIcon
                                 icon={faMinus}
-                                size="xs"
+                                size="lg"
                                 onClick={() => {
                                     dispatch({ type: "UPDATE_ITEM_QUANTITY", payload: { itemId: Item.itemId, qtyChange: -1 } });
                                 }}
@@ -86,7 +86,7 @@ function ObjectItem({ Item }) {
                     <div className="icon">
                         <FontAwesomeIcon
                             icon={faPlus}
-                            size="xs"
+                            size="lg"
                             onClick={() => {
                                 dispatch({ type: "UPDATE_ITEM_QUANTITY", payload: { itemId: Item.itemId, qtyChange: 1 } });
                             }}

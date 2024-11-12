@@ -53,10 +53,10 @@
     gap: 8px;
     border: 1.5px solid var(--primary-item-control);
     min-height: 22px;
-    width: 65px;
+    width: 75px;
     border-radius: 10px;
     background-color: var(--parimary-bg-color);
-    font-size: 0.75em;
+    font-size: 0.80em;
     padding: 0px;
 }
 

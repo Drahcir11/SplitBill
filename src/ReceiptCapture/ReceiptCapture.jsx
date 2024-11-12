@@ -56,7 +56,8 @@ function ReceiptCapture() {
     const [originalPrice, setOriginalPrice] = useState("");
     const [quantity, setQuantity] = useState("");
 
-    const [chargesCategory, setChargesCategory] = useState("");
+    const [chargesCategory, setChargesCategory] = useState("Tax");
+    const [chargesValueType, setChargesValueType] = useState("");
 
     // Function to handle form submission when the "Add Item" button is clicked.
     const handleSubmit = (e) => {
@@ -78,11 +79,18 @@ function ReceiptCapture() {
 
     const handleChargesSubmit = (e) => {
         e.preventDefault();
+
+        // Do nothing when charges value not set
+        if(!chargesValue) {
+            return;
+        }
+
+        // Do nothing when charges value is set to empty string
         if (!noWhiteSpace(chargesValue)) {
             return;
         }
 
-        dispatch({ type: "ADD_CHARGES", payload: { chargesName: chargesCategory, chargesValue } });
+        dispatch({ type: "ADD_CHARGES", payload: { chargesCategory, chargesValueType, chargesValue } });
     };
 
     const [image, setImage] = useState(() => {
@@ -286,7 +294,6 @@ function ReceiptCapture() {
                 </div>
                 {/* <NextButton buttonName={"< NEXT PAGE >"} to={"/ObjectItemSelection"} /> */}
             </div>
-
             <div className="receipt-capture__tax-container">
                 <h1>TAX & DISCOUNTS</h1>
                 <h5>Add the list of tax charges or discounts.</h5>
@@ -294,7 +301,7 @@ function ReceiptCapture() {
                     <FormControl
                         sx={{
                             m: 1,
-                            minWidth: 180,
+                            minWidth: 150,
                             backgroundColor: "white",
                             boxShadow: "none",
                             ".MuiOutlinedInput-notchedOutline": {
@@ -305,39 +312,76 @@ function ReceiptCapture() {
                         }}
                         size="small"
                     >
-                        <InputLabel id="demo-simple-select-label">Tax/Discounts</InputLabel>
+                        <InputLabel id="charges-category-label">Tax/Discounts</InputLabel>
                         <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
+                            labelId="charges-category-label"
+                            id="charges-category"
                             value={chargesCategory}
                             label="Service Charges"
+                            sx={{
+                                "& #charges-category": {
+                                    fontSize: "0.8em",
+                                },
+                            }}
                             onChange={(e) => {
                                 setChargesCategory(e.target.value);
                             }}
                         >
-                            <MenuItem value={"Service Charges"}>Service Charges</MenuItem>
+                            <MenuItem value={"Tax"}>
+                                Tax
+                            </MenuItem>
                             <MenuItem value={"Discount"}>Discount</MenuItem>
                         </Select>
                     </FormControl>
                     <form onSubmit={handleChargesSubmit}>
-                        <div className="receipt-capture__input-form-tax">
-                            <input
-                                className="input-charges-value"
-                                type="text"
-                                inputMode="decimal"
-                                placeholder="12 %"
-                                min={0}
-                                max={100}
-                                step={0.01}
-                                value={chargesValue}
-                                style={{
-                                    width: "45px",
+                        <input
+                            className="receipt-capture_input-charges-value"
+                            type="text"
+                            inputMode="decimal"
+                            placeholder="12.5"
+                            min={0}
+                            max={100}
+                            step={0.01}
+                            value={chargesValue}
+                            onChange={(e) => {
+                                setChargesValue(e.target.value);
+                            }}
+                        />
+                        <FormControl
+                            sx={{
+                                m: 1,
+                                minWidth: 70,
+                                backgroundColor: "white",
+                                boxShadow: "none",
+                                ".MuiOutlinedInput-notchedOutline": {
+                                    border: "2.5px",
+                                    borderColor: "black",
+                                    borderStyle: "solid",
+                                },
+                            }}
+                            size="small"
+                        >
+                            {!chargesValueType && <InputLabel id="charges-value-type-select-label">%</InputLabel>}
+                            {chargesValueType && <InputLabel id="charges-value-type-select-label">{chargesValueType}</InputLabel>}
+                            <Select
+                                labelId="charges-value-type-select-label"
+                                id="charges-value-type-select"
+                                value={chargesValueType}
+                                label="Charges Value Type"
+                                inputProps={{ sx: { pr: "12px !important" }, IconComponent: () => null }}
+                                sx={{
+                                    "& #charges-value-type-select": {
+                                        fontSize: "0.8em",
+                                    },
                                 }}
                                 onChange={(e) => {
-                                    setChargesValue(e.target.value);
+                                    setChargesValueType(e.target.value);
                                 }}
-                            />
-                        </div>
+                            >
+                                <MenuItem value={"Percentage"}>%</MenuItem>
+                                <MenuItem value={"Numeric"}>.123</MenuItem>
+                            </Select>
+                        </FormControl>
                         <AddButton buttonName={"+"} type={"submit"} />
                     </form>
                 </div>
@@ -354,7 +398,6 @@ function ReceiptCapture() {
                             <p>Total cost: </p>
                             <p>
                                 £{itemTotalCost}
-                                <span style={{ fontSize: "8px", fontWeight: "500" }}> (incl tax)</span>
                             </p>
                         </div>
                     </div>

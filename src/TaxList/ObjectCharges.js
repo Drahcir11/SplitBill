@@ -1,6 +1,6 @@
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { IconButton, Stack } from "@mui/material";
-import { useState } from "react"
+import { useState } from "react";
 import AutosizeInput from "react-18-input-autosize";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -22,27 +22,35 @@ function ObjectCharges({ Charges }) {
                         minWidth: 180,
                         boxShadow: "none",
                         ".MuiOutlinedInput-notchedOutline": {
-                            border: 0
+                            border: 0,
                         },
                     }}
                     size="small"
                 >
-                    {/* <InputLabel id="demo-simple-select-label">Tax/Discounts</InputLabel> */}
                     <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
+                        labelId="object-charges-value-type-label"
+                        id="object-charges-value-type"
                         value={chargesCategory}
-                        label="Service Charges"
+                        label="Tax"
+                        inputProps={{ sx: { pr: "12px !important" }, IconComponent: () => null }} // This gets rid of dropdown arrow
                         onChange={(e) => {
                             setChargesCategory(e.target.value);
                             dispatch({ type: "UPDATE_CHARGES_NAME", payload: { chargesId: Charges["chargesId"], newChargesName: e.target.value } });
                         }}
                     >
-                        <MenuItem value={"Service Charges"}>Service Charges</MenuItem>
+                        <MenuItem value={"Tax"}>Tax</MenuItem>
                         <MenuItem value={"Discount"}>Discount</MenuItem>
                     </Select>
                 </FormControl>
-                <Stack className="input-item-unit-price" direction="row" alignItems="end" justifyContent="center" textAlign="center">
+                <Stack
+                    className="input-item-unit-price"
+                    direction="row"
+                    alignItems="end"
+                    justifyContent="center"
+                    textAlign="center"
+                    marginRight="16px"
+                >
+                    {Charges["type"] === "Percentage" && <span style={{ fontSize: "12px", fontWeight: "500" }}>%</span>}
                     <AutosizeInput
                         value={Charges["value"]}
                         onChange={(e) => {
@@ -50,39 +58,33 @@ function ObjectCharges({ Charges }) {
                             dispatch({ type: "UPDATE_CHARGES_VALUE", payload: { chargesId: Charges["chargesId"], newChargesValue: e.target.value } });
                         }}
                         inputStyle={{
+                            minWidth: "25px",
                             display: "flex",
                             fontWeight: "700",
                             fontSize: "12px",
                             marginRight: "0px",
                             padding: "0px",
                             border: "0px",
-                            textAlign: "left",
+                            textAlign: "center",
                             backgroundColor: "transparent",
                             borderColor: "transparent",
                         }}
                     />
-                    <span style={{ fontSize: "12px", fontWeight: "500" }}>%</span>
                 </Stack>
             </div>
-            <div className="item-editable">
-                <Stack className="charges-controls" direction="row" alignItems="center" justifyContent="center">
-                    {/* Render minus or trash icon based on the item quantity */}
-                    <div className="icon">
-                        <IconButton
-                            onClick={() => {
-                                dispatch({ type: "REMOVE_CHARGES", payload: { chargesId: Charges["chargesId"] } });
-                            }}
-                            sx={{
-                                padding: "0px",
-                                color: "red",
-                            }}
-                        >
-                            <DeleteOutlineIcon sx={{ fontSize: "15px" }} />
-                        </IconButton>
-                    </div>
-                    {/* <div className="quantity-display">{Item.quantity}</div> */}
-                </Stack>
-            </div>
+            <Stack className="charges-controls" direction="row" alignItems="center" justifyContent="center" sx={{ marginBottom: "16px" }}>
+                <IconButton
+                    onClick={() => {
+                        dispatch({ type: "REMOVE_CHARGES", payload: { chargesId: Charges["chargesId"] } });
+                    }}
+                    sx={{
+                        padding: "0px",
+                        color: "red",
+                    }}
+                >
+                    <DeleteOutlineIcon sx={{ fontSize: "15px" }} />
+                </IconButton>
+            </Stack>
         </div>
     );
 }

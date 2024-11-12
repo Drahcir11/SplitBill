@@ -203,21 +203,16 @@ h1 {
     align-items: center;
 }
 
-.receipt-capture__input-form-tax {
-    text-align: center;
+.receipt-capture_input-charges-value{
+    text-align: left;
     background-color: white;
     border-width: 2.5px;
     border-color: black;
     border-style: solid;
-    height: 2em;
-    margin-right: 10px;
+    height: 42px;
+    font-size: 0.8em;
+    margin-right: 0px;
     border-radius: 8px;
-    box-shadow: 4px 4px;
-    width: 80%;
-}
-
-.receipt-capture__input-form-tax input{
-    outline: none;
-    background-color: transparent;
-    border-color: transparent;
+    padding-left: 8px;
+    width: 5em;
 }

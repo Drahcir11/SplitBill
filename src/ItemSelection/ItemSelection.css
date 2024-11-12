@@ -27,8 +27,8 @@
   font-size: 0.85em;
   padding: 10px;
   margin: 2px;
-  border: 1px solid var(--primary-card-border-color);
-  border-radius: 8px; /* This makes the divs have rounded corners */
+  border: 1px solid black;
+  border-radius: 4px; /* This makes the divs have rounded corners */
   cursor: pointer; /* Changes the mouse cursor to indicate it's clickable */
   user-select: none; /* Prevents text selection */
   display: flex;
@@ -46,9 +46,9 @@
 }
 
 .itemSelection.selected {
-  background-color: var(--primary-card-border-color); /* Blue background for selected items */
+  background-color: #7e2fff; /* Blue background for selected items */
   color: var(--white-bg); /* White text for better contrast on blue background */
-  border-color: var(--white-bg); /* Blue border to match the background */
+  border: 2.5px solid black; /* Blue border to match the background */
 }
 
 .friendName {
