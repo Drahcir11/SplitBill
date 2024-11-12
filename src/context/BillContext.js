@@ -1,7 +1,7 @@
 import { createContext, useReducer } from "react";
 import Person from "../classes/Person";
 import Item from "../classes/Item";
-import { $, multiply, add, minus } from 'moneysafe';
+import { $, multiply, divide, add, minus } from 'moneysafe';
 import {$$, subtractPercent, addPercent } from 'moneysafe/ledger';
 import { v4 as uuidv4 } from 'uuid'
 
@@ -79,8 +79,23 @@ export const BillContextReducer = (state, action) => {
                 return friend.personId !== friendId;
             });
 
+            // Remove friends from items selected by list
+            const updatedItemsList = state.listOfItems.map((item) => {
+
+                // Skip when item hasn't selected by anyone
+                if (item.selectedBy.length < 1) {
+                    return item;
+                }
+
+                const updatedItemsSelectedBy = item.selectedBy.filter((friendObjectId) => {
+                    return friendObjectId !== friendId;
+                })
+
+                return {...item, selectedBy: updatedItemsSelectedBy}
+            })
+
             // Return the updated state with the modified friends list
-            return { ...state, listOfFriends: updatedFriendsList };
+            return { ...state, listOfFriends: updatedFriendsList, listOfItems: updatedItemsList };
         }
 
         case "UPDATE_FRIEND_NAME": {
@@ -103,12 +118,15 @@ export const BillContextReducer = (state, action) => {
         case "ADD_ITEM": {
             const { itemName, unitPrice, quantity } = action.payload;
 
-            const newItemObject = new Item(itemName, unitPrice, quantity);
+            // Construct item class object
+            const totalPrice = multiply($(parseFloat(unitPrice).toFixed(2)), $(quantity))
+            const newItemObject = new Item(itemName, unitPrice, quantity, totalPrice);
 
+            // Add new item class object into an updated list of items
             const updatedItemList = [...state.listOfItems, newItemObject];
 
+            // Re-calculate and update sub total and total cost
             const updatedItemSubTotalCost = calculateSubTotalCost(updatedItemList);
-
             const updatedItemTotalCost = calculateTotalCost(updatedItemSubTotalCost, state.listOfCharges);
 
             return { ...state, listOfItems: updatedItemList, itemSubTotalCost: updatedItemSubTotalCost, itemTotalCost: updatedItemTotalCost };
@@ -133,17 +151,22 @@ export const BillContextReducer = (state, action) => {
         case "UPDATE_ITEM_UNIT_PRICE": {
             const { itemId, newItemUnitPrice } = action.payload;
 
+            // Loop through each item and update the target item's unit price
+            // NOTE: Use ParseFloat and toFixed() to safely pass currency values
             const updatedItemList = state.listOfItems.map((item) => {
                 if (item.itemId === itemId) {
-                    return { ...item, unitPrice: newItemUnitPrice };
+
+                    // Re-calculate the item's new total price
+                    const newTotalPrice = multiply($(parseFloat(newItemUnitPrice).toFixed(2)), $(item.quantity))
+                    return { ...item, unitPrice: parseFloat(newItemUnitPrice), totalPrice: newTotalPrice };
                 }
                 else {
                     return item
                 }
             });
 
+            // Re-calculate and update sub total and total cost
             const updatedItemSubTotalCost = calculateSubTotalCost(updatedItemList);
-
             const updatedItemTotalCost = calculateTotalCost(updatedItemSubTotalCost, state.listOfCharges);
 
             return { ...state, listOfItems: updatedItemList, itemSubTotalCost: updatedItemSubTotalCost, itemTotalCost: updatedItemTotalCost };
@@ -155,14 +178,18 @@ export const BillContextReducer = (state, action) => {
             // Loop through each friends and update the matching item's quantity
             const updatedItemList = state.listOfItems.map((item) => {
                 if (item.itemId === itemId) {
-                    return { ...item, quantity: item.quantity + qtyChange };
+
+                    // Re-calculate the item's new total price
+                    const newQuantity = item.quantity + qtyChange
+                    const newTotalPrice = multiply($(parseFloat(item.unitPrice).toFixed(2)), $(newQuantity))
+                    return { ...item, quantity: newQuantity, totalPrice: newTotalPrice };
                 } else {
                     return item;
                 }
             });
-
+            
+            // Re-calculate and update sub total and total cost
             const updatedItemSubTotalCost = calculateSubTotalCost(updatedItemList);
-
             const updatedItemTotalCost = calculateTotalCost(updatedItemSubTotalCost, state.listOfCharges);
 
             return { ...state, listOfItems: updatedItemList, itemSubTotalCost: updatedItemSubTotalCost, itemTotalCost: updatedItemTotalCost };
@@ -177,45 +204,71 @@ export const BillContextReducer = (state, action) => {
                 return item.itemId !== itemId;
             });
 
-            const updatedItemSubTotalCost = calculateSubTotalCost(updatedItemList);
+            // Remove items from friends selected items list
+            const updatedFriendsList = state.listOfFriends.map((friend) => {
 
+                // Skip when friend hasn't selected any item
+                if (friend.selectedItems.length < 1) {
+                    return friend;
+                }
+
+                const updatedFriendSelectedItems = friend.selectedItems.filter((itemObjectId) => {
+                    return itemObjectId !== itemId;
+                })
+
+                return {...friend, selectedItems: updatedFriendSelectedItems}
+            })
+
+            // Re-calculate and update sub total and total cost
+            const updatedItemSubTotalCost = calculateSubTotalCost(updatedItemList);
             const updatedItemTotalCost = calculateTotalCost(updatedItemSubTotalCost, state.listOfCharges);
 
-            return { ...state, listOfItems: updatedItemList, itemSubTotalCost: updatedItemSubTotalCost, itemTotalCost: updatedItemTotalCost };
+            return { ...state, listOfItems: updatedItemList, listOfFriends: updatedFriendsList, itemSubTotalCost: updatedItemSubTotalCost, itemTotalCost: updatedItemTotalCost };
         }
 
         case "RESET_ITEMS": {
-
+            // Reset data related to items
+            // NOTE: This only happens after re-cropping receipt images
             return {...state, listOfItems: [], itemSubTotalCost: 0.00, itemTotalCost: 0.00}
         }
 
         case "INSERT_ITEM_INTO_FRIEND": {
-            const { itemObject, friendId } = action.payload;
+            const { itemObject, friendObject } = action.payload;
 
-            // Loop through each friends and add an object item
+            // Loop through each friends and add item id
             // into the target friend's list of selected items
             const updatedFriendsList = state.listOfFriends.map((friend)=>{
-                if(friend.personId === friendId){
-                    return {...friend, selectedItems: [...friend.selectedItems, itemObject]}
+                if(friend.personId === friendObject.personId){
+                    return {...friend, selectedItems: [...friend.selectedItems, itemObject.itemId]}
                 }
                 else{
                     return friend
                 }
             })
 
-            return {...state, listOfFriends: updatedFriendsList}
+            // Loop through each item and add friend into the selected item
+            const updatedItemList = state.listOfItems.map((item) => {
+                if(item.itemId === itemObject.itemId){
+                    return {...item, selectedBy: [...item.selectedBy, friendObject.personId]}
+                }
+                else {
+                    return item;
+                }
+            })
+
+            return {...state, listOfFriends: updatedFriendsList, listOfItems: updatedItemList}
 
         }
 
         case "REMOVE_ITEM_FROM_FRIEND": {
-            const { targetItemId, friendId } = action.payload;
+            const { itemObject, friendObject } = action.payload;
             
-            // Loop through each friends and remove an object item
+            // Loop through each friends and remove item id
             // from the target friend's list of selected items
             const updatedFriendsList = state.listOfFriends.map((friend)=>{
-                if(friend.personId === friendId){
-                    const updatedSelectedItems = friend.selectedItems.filter((itemObject)=>{
-                        return itemObject.itemId !== targetItemId
+                if(friend.personId === friendObject.personId){
+                    const updatedSelectedItems = friend.selectedItems.filter((itemObjectId)=>{
+                        return itemObjectId !== itemObject.itemId
                     })
                     return {...friend, selectedItems: updatedSelectedItems}
                 }
@@ -224,7 +277,21 @@ export const BillContextReducer = (state, action) => {
                 }
             })
 
-            return {...state, listOfFriends: updatedFriendsList}
+            // Loop through each items and remove the friend id
+            // from the target item's list of selected by
+            const updatedItemList = state.listOfItems.map((item) => {
+                if(item.itemId === itemObject.itemId){
+                    const updatedSelectedBy = item.selectedBy.filter((selectedByFriendId) =>{
+                        return selectedByFriendId !== friendObject.personId
+                    })
+                    return {...item, selectedBy: updatedSelectedBy}
+                }
+                else {
+                    return item;
+                }
+            })
+
+            return {...state, listOfFriends: updatedFriendsList, listOfItems: updatedItemList}
 
         }
 
@@ -237,8 +304,8 @@ export const BillContextReducer = (state, action) => {
                 tempChargesValueType = "Percentage"
             }
 
+            // Construct new charges objects
             const chargesObject = { "chargesId": uuidv4(),"name": chargesCategory, "type": tempChargesValueType, "value": chargesValue  }
-
             const updatedChargesList = [...state.listOfCharges, chargesObject]
 
             const updatedItemTotalCost = calculateTotalCost(state.itemSubTotalCost, updatedChargesList)
@@ -266,19 +333,29 @@ export const BillContextReducer = (state, action) => {
         case "UPDATE_CHARGES_VALUE": {
             const { chargesId, newChargesValue } = action.payload;
 
-            // const regex = /^$|-?\d+(\.\d+)?/g;
+            // Extract the type of the target charges
+            let chargesType = ""
+            for(const charges of state.listOfCharges){
+                if(chargesId === charges["chargesId"]){
+                    chargesType = charges["type"]
+                }
+            }
 
+            // Only set maximum and minimum values for percentage charges value
             let tempNewChargesValue = newChargesValue;
+            if (chargesType === "Percentage"){
 
-            // Cap the maximum charges value to 100
-            if (tempNewChargesValue >= 100) {
-                tempNewChargesValue = 100
+                // Cap the maximum charges value to 100
+                if (tempNewChargesValue >= 100) {
+                    tempNewChargesValue = 100
+                }
+    
+                // Cap the minimum charges value to 0
+                if (tempNewChargesValue <= 0) {
+                    tempNewChargesValue = 0
+                }
             }
 
-            // Cap the minimum charges value to 0
-            if (tempNewChargesValue <= 0) {
-                tempNewChargesValue = 0
-            }
 
             // Update the new charges value for the target charge
             const updatedChargesList = state.listOfCharges.map((charges)=>{
@@ -308,6 +385,41 @@ export const BillContextReducer = (state, action) => {
             const updatedItemTotalCost = calculateTotalCost(state.itemSubTotalCost, updatedChargesList)
 
             return {...state, listOfCharges: updatedChargesList, itemTotalCost: updatedItemTotalCost}
+        }
+
+        case "SPLIT_BILL": {
+
+            // Do nothing if for whatever reason, sub total and total cost
+            // is zero or less than zero
+            if(state.itemTotalCost <= 0.00 || state.itemSubTotalCost <= 0.00) {
+                return state;
+            }
+
+            const priceMultiplier = divide($(state.itemTotalCost), $(state.itemSubTotalCost))
+
+            // Map and calculate the shared prices of each item as key-value pair
+            const updatedItemSharedPrices = {}
+            for(const item of state.listOfItems) {
+                const totalPriceItem = multiply($(item.unitPrice), $(item.quantity))
+                const sharedPriceItem = divide($(totalPriceItem), $(item.selectedBy.length))
+                updatedItemSharedPrices[item.itemId] = parseFloat(sharedPriceItem.toFixed(2))
+            }
+            
+            // Loop through each items and calculate the total bill
+            const updatedFriendsList = state.listOfFriends.map((friend) =>{
+
+                // Calculate each friend's sub total based on item's shared prices
+                let friendSubTotal = 0.00
+                for(const itemSelectedId of friend.selectedItems){
+                    friendSubTotal = $(updatedItemSharedPrices[itemSelectedId]).add($(friendSubTotal))
+                }
+
+                // Calculate each friend's total bill with price modifier
+                const calculatedTotalBill = multiply($(friendSubTotal),$(priceMultiplier))
+                return {...friend, totalBill: parseFloat(calculatedTotalBill.toFixed(2))}
+            })
+
+            return {...state, listOfFriends: updatedFriendsList};
         }
 
         default:
