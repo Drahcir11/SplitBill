@@ -1,4 +1,4 @@
-import "./Friends.css";
+import "./ObjectFriends.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 

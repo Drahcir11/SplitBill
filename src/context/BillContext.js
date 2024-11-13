@@ -149,7 +149,17 @@ export const BillContextReducer = (state, action) => {
         }
 
         case "UPDATE_ITEM_UNIT_PRICE": {
-            const { itemId, newItemUnitPrice } = action.payload;
+            let { itemId, newItemUnitPrice } = action.payload;
+
+            // Converts values "010" into "10"
+            if (newItemUnitPrice.startsWith("0") && newItemUnitPrice.length > 1){
+                newItemUnitPrice = newItemUnitPrice.substring(1);
+            }
+
+            // When new unit price is an empty string then to 0.00 
+            if (newItemUnitPrice.length < 1 && newItemUnitPrice === ""){
+                newItemUnitPrice = 0.00;
+            }
 
             // Loop through each item and update the target item's unit price
             // NOTE: Use ParseFloat and toFixed() to safely pass currency values
@@ -158,7 +168,7 @@ export const BillContextReducer = (state, action) => {
 
                     // Re-calculate the item's new total price
                     const newTotalPrice = multiply($(parseFloat(newItemUnitPrice).toFixed(2)), $(item.quantity))
-                    return { ...item, unitPrice: parseFloat(newItemUnitPrice), totalPrice: newTotalPrice };
+                    return { ...item, unitPrice: newItemUnitPrice, totalPrice: newTotalPrice };
                 }
                 else {
                     return item
@@ -305,7 +315,7 @@ export const BillContextReducer = (state, action) => {
             }
 
             // Construct new charges objects
-            const chargesObject = { "chargesId": uuidv4(),"name": chargesCategory, "type": tempChargesValueType, "value": chargesValue  }
+            const chargesObject = { "chargesId": uuidv4(),"name": chargesCategory, "type": tempChargesValueType, "value": chargesValue}
             const updatedChargesList = [...state.listOfCharges, chargesObject]
 
             const updatedItemTotalCost = calculateTotalCost(state.itemSubTotalCost, updatedChargesList)
@@ -331,7 +341,15 @@ export const BillContextReducer = (state, action) => {
         }
 
         case "UPDATE_CHARGES_VALUE": {
-            const { chargesId, newChargesValue } = action.payload;
+            let { chargesId, newChargesValue } = action.payload;
+
+            if (newChargesValue.startsWith("0") && newChargesValue.length > 1){
+                newChargesValue = newChargesValue.substring(1);
+            }
+            
+            if (newChargesValue.length < 1 && newChargesValue === ""){
+                newChargesValue = 0.00
+            }
 
             // Extract the type of the target charges
             let chargesType = ""
@@ -342,25 +360,23 @@ export const BillContextReducer = (state, action) => {
             }
 
             // Only set maximum and minimum values for percentage charges value
-            let tempNewChargesValue = newChargesValue;
             if (chargesType === "Percentage"){
 
                 // Cap the maximum charges value to 100
-                if (tempNewChargesValue >= 100) {
-                    tempNewChargesValue = 100
+                if (newChargesValue >= 100) {
+                    newChargesValue = 100
                 }
     
                 // Cap the minimum charges value to 0
-                if (tempNewChargesValue <= 0) {
-                    tempNewChargesValue = 0
+                if (newChargesValue <= 0) {
+                    newChargesValue = 0
                 }
             }
-
 
             // Update the new charges value for the target charge
             const updatedChargesList = state.listOfCharges.map((charges)=>{
                 if(chargesId === charges["chargesId"]) {
-                    return {...charges, value: tempNewChargesValue};
+                    return {...charges, value: newChargesValue};
                 }
                 else {
                     return charges;

@@ -51,8 +51,7 @@ function ReceiptCapture() {
     const { dispatch, listOfItems, listOfCharges, itemSubTotalCost, itemTotalCost } = useBillContext();
 
     const [name, setName] = useState("");
-    const [chargesName, setChargesName] = useState("Service Charges");
-    const [chargesValue, setChargesValue] = useState(null);
+    const [chargesValue, setChargesValue] = useState("");
     const [originalPrice, setOriginalPrice] = useState("");
     const [quantity, setQuantity] = useState("");
 
@@ -288,11 +287,10 @@ function ReceiptCapture() {
                 <div className="receipt-capture__item-name-list">
                     <ul>
                         {listOfItems.map((item, index) => {
-                            return <ObjectItem Item={item} />;
+                            return <ObjectItem key={index} Item={item} />;
                         })}
                     </ul>
                 </div>
-                {/* <NextButton buttonName={"< NEXT PAGE >"} to={"/ObjectItemSelection"} /> */}
             </div>
             <div className="receipt-capture__tax-container">
                 <h1>TAX & DISCOUNTS</h1>
@@ -407,7 +405,7 @@ function ReceiptCapture() {
                 <div className="receipt-capture__item-name-list">
                     <ul>
                         {listOfCharges.map((charges, index) => {
-                            return <ObjectCharges Charges={charges} />;
+                            return <ObjectCharges key={index} Charges={charges} />;
                         })}
                     </ul>
                 </div>

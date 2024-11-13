@@ -1,10 +1,9 @@
-import "./Item.css";
+import "./ObjectItem.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash, faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { IconButton, Stack } from "@mui/material";
 import AutosizeInput from 'react-18-input-autosize';
-
 import { useBillContext } from "../Hooks/useBillContext";
 
 function ObjectItem({ Item }) {

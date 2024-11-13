@@ -1,0 +1,149 @@
+@import url('../global.css');
+
+.item-container h1 {
+    text-align: center;
+    -webkit-text-stroke: 1.5px black;
+  }
+  
+.item-container {
+display: flex;
+flex-direction: column;
+width: 85%;
+max-width: 420px;
+}
+
+.item-list {
+height: 100%;
+min-height: 100vh;
+padding: 0%;
+padding-bottom: 5%;
+display: flex;
+flex-direction: column;
+align-items: center;
+background-color: var(--primary-bg-color);
+}
+
+.item-container form {
+margin-bottom: 10px;
+margin-top: 10px;
+}
+
+.item-container input {
+border-radius: 10px;
+}
+
+.input-item {
+margin-left: 8px;
+align-items: center;
+justify-content: center;
+width: 60%;
+/* width: 10px; */
+}
+
+.input-price {
+width: 25%;
+/* width: 65px; */
+/* max-width: 65px; */
+}
+
+.quantity {
+width: 20%;
+/* width : 45px; */
+margin-right: 0px;
+}
+
+.tax-name-list {
+padding: 5px;
+}
+
+.item-name-list ul{
+display : flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+width: 100%;
+}
+
+.item {
+    border : 2.5px solid  black;
+    border-radius : 16px;
+    padding-right : 10px;
+    padding-left : 10px;
+    width : 100vw;
+    max-width: 357px;
+    height: 6em;
+    display : flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: space-between;
+    margin-bottom : 15px;
+    font-weight: 500;
+    background-color: #fff;
+}
+
+.item-description {
+    display: flex;
+    /* border: solid 2px red; */
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    overflow: hidden;
+}
+
+.item-description .item-name{
+    font-size: 0.7em;
+    font-weight: 700;
+}
+
+.item-description .item-price{
+    font-size: 0.75em;
+    font-weight: 700;
+    color: var(--primary-text-color);
+}
+
+.item-editable{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom : 15px;
+
+}
+
+.item-controls {
+    /* display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center; */
+    gap: 8px;
+    border: 1.5px solid var(--primary-item-control);
+    min-height: 22px;
+    width: 75px;
+    border-radius: 10px;
+    background-color: var(--parimary-bg-color);
+    font-size: 0.80em;
+    padding: 0px;
+}
+
+.icon {
+    width: 20px; /* or any size that fits the design */
+    text-align: center; 
+    display: inline-block; 
+  }
+
+.icon .svg .svg-inline--fa fa-trash fa-24px icon-trash{
+    margin-left: 0px;
+}
+.edit-icon {
+    width: 20px; /* or any size that fits the design */
+    text-align: center; /* ensures the icon is centered within its allocated width */
+    display: inline-block; /* helps in aligning the text and icon properly */
+    color: var(--edit-color);
+  }
+
+.icon-trash {
+    width: 7px; /* or any size that fits the design */
+    text-align: center; /* ensures the icon is centered within its allocated width */
+    display: flex; /* helps in aligning the text and icon properly */
+    margin-left: 0px;
+    color: var(--trash-color);
+}

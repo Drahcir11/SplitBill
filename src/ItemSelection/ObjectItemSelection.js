@@ -1,6 +1,7 @@
 import { useBillContext } from "../Hooks/useBillContext";
 import NextButton from "../Button/NextPageButton";
 import Divider from '@mui/material/Divider';
+import "./ObjectItemSelection.css"
 
 function ObjectItemSelection() {
     const { dispatch, listOfFriends, listOfItems } = useBillContext();

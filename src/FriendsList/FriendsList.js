@@ -2,15 +2,13 @@ import React, { useState } from "react";
 import NextButton from "../Button/NextPageButton";
 import { Link } from "react-router-dom";
 import AddButton from "../Button/AddButton";
-import Friends from "./Friends";
 import ObjectFriend from "./ObjectFriend";
 import "./FriendsList.css";
-import EditFriends from "./EditFriends";
 import { isValidInput, noWhiteSpace } from "../ErrorHandling";
 import { useBillContext } from "../Hooks/useBillContext";
 
 
-function FriendsList({ friends, setFriends }) {
+function FriendsList() {
     const { dispatch, listOfFriends } = useBillContext();
     const [friendName, setFriendName] = useState("");
 
@@ -21,11 +19,7 @@ function FriendsList({ friends, setFriends }) {
         }
 
         dispatch({ type: "ADD_FRIEND", payload: friendName });
-
         setFriendName("");
-        setFriends([...friends, { name: friendName, items: [], total: 0, isEdit: false }]);
-        setFriendName("");
-
     };
 
     return (
@@ -86,20 +80,9 @@ function FriendsList({ friends, setFriends }) {
                         </div>
                     </form>
                     <div className="name-list">
-                        {/* <ol>
-                            {friends.map((friend, index) => {
-                                if (friend.isEdit) {
-                                    return <EditFriends friend={friend} index={index} deleteTodo={deleteTodo} editFriend={editFriendList} />;
-                                } else {
-                                    return <Friends friend={friend} index={index} deleteTodo={deleteTodo} editFriend={editFriend} />;
-                                }
-                            })}
-                        </ol> */}
                         <ol>
                             {listOfFriends.map((friend, index) => {
-
-                                return <ObjectFriend friend={friend} />
-        
+                                return <ObjectFriend key={index} friend={friend} />
                             })}
                         </ol>
                     </div>
