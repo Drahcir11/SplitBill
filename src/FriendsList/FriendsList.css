@@ -1,70 +1,72 @@
 @import url('../global.css');
 
 
-.friends-list {
-  width: 100vh;
+.friends-list__container {
+  width: 90%;
+  max-width: 420px;
   height: 100%;
   min-height: 100vh;
-  padding:  0%;
-  padding-bottom:  5%;
+  margin-bottom: 32px;
   display : flex;
   flex-direction: column;
   align-items: center;
   background-color: var(--primary-bg-color);
-  
 }
 
-.friends-list form{
-  display : flex;
-  margin : 0 auto;
+.friends-list__container form{
+  display: flex;
+  width: 100%;
   margin-bottom: 10px;
   margin-top: 10px;
 }
 
-.friends-list input {
+.friends-list__container input {
   border-radius: 8px;
   height: 3em;
   outline: none;
 }
 
-.input-container {
+.friends-list__input-form {
   align-items: center;
   justify-content: center;
-  width : 95%;
+  width : 100%;
   display : flex;
 }
 
-.button-container {
+.friends-list__input-form input{
+  padding-left: 8px;
+  box-shadow: 4px 4px;
+  border-color: black;
+}
+
+.friends-list__button-container {
   align-items: center;
   justify-content: center;
   display : flex;
+  flex-direction: column;
+  font-size: 10px;
 }
 
-.name-list {
-  width : 90%;
+.friends-list__friends-name {
+  width : 100%;
   margin-top : 32px;
   display : flex;
   font-size : 14px;
   
 }
 
-.name-list ol {
-  padding: 0; /* Remove default padding from the ordered list */
-  margin: 0; /* Remove default margin from the ordered list */
-  margin-left : 5px;
-  list-style-type: none; /* Remove the default numbering */
+.friends-list__friends-name ol {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
   width: 100%;
 }
 
-.name-list li {
-  margin-bottom: 5px; /* Add some spacing between the list items */
+.friends-list__text-content {
+  text-align: center;
 }
 
-.friends-list li{
-  list-style-type: none;
-}
-
-.heading h1{
+.friends-list__title {
   font-style: sans-serif;
   text-shadow: 2px 2px black;
   -webkit-text-stroke: 1.5px black;
@@ -73,4 +75,16 @@
   margin-block-end: 0px; 
   margin-block-start: 32px; 
   color: white;
+}
+
+.friends-list__heading {
+  margin-top: 4px; 
+  margin-bottom: 24px;
+  font-style: sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  margin-block-start: 8px;
+  margin-block-end: 8px;
+  color: black;
+  text-align: center;
 }
