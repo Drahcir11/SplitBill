@@ -13,21 +13,29 @@ function EachOwed() {
 
   return (
     <div className="each-owed">
-      <h2> Share Amount</h2>
+      <h1
+      style={{
+        fontSize: "36px",
+        fontWeight: "1000",
+        marginBlockEnd: "0px",
+        marginBlockStart: "48px",
+        color: "white",
+        textShadow: "2px 2px black",
+      }}
+      > SPLIT BILL</h1>
       <div className="friendsOwe">
         <ul>
           {listOfFriends.map((friend, index) => (
-            <div>
+            <div className="each-owed__friends-list">
               <li style={{display:"flex", flexDirection:"row", justifyContent:"space-between", border: "1px", borderColor:"white"}} key={index}>
                 <p> {friend.name}  </p>
                 <p> £ {friend.totalBill.toFixed(2)}</p>
               </li>
-              <Divider/>
             </div>
           ))}
         </ul>
-        <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
-          <p style={{fontWeight: "bold"}}>Total Bill </p>
+        <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", fontWeight: "700"}}>
+          <p style={{fontWeight: "700"}}>Total Bill </p>
           <p>£{itemTotalCost}</p>
         </div>
 

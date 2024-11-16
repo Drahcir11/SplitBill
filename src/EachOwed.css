@@ -1,3 +1,6 @@
+@import url('./global.css');
+
+
 .each-owed {
   /* border : 2px solid yellow; */
   width: 100vh;
@@ -10,7 +13,7 @@
   flex-direction: column;
   padding: 20px;
   align-items: center;
-  background-color: #CAD3E4;
+  background-color: var(--primary-bg-color);
 }
 
 .friendsOwe{
@@ -19,4 +22,15 @@
 
 ul {
   list-style-type: none;
+}
+
+.each-owed__friends-list{
+  padding: 0px 10px 0px 10px;
+  border: 2px solid black;
+  border-radius: 8px;
+  background-color: white;
+  font-weight: 700;
+  margin-bottom: 16px;
+  font-size: 0.9em;
+  
 }
