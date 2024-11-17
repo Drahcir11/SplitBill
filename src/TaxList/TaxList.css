@@ -22,23 +22,11 @@
     color: black
 }
 
-.receipt-capture__tax-container form {
+.receipt-capture__form-container form{
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-}
-
-.receipt-capture__form-container {
-    display: flex;
-    flex-direction: row;
-}
-
-.receipt-capture__form-control-charges-category {
-    margin: 8px;
-    min-width: 150px;
-    background-color: white;
-    box-shadow: none;
 }
 
 .receipt-capture__form-control-charges-category .MuiOutlinedInput-notchedOutline {
@@ -56,14 +44,7 @@
     margin-right: 0px;
     border-radius: 8px;
     padding-left: 8px;
-    width: 5em;
-}
-
-.receipt-capture__form-control-charges-value-type {
-    margin: 8px;
-    min-width: 70px;
-    background-color: white;
-    box-shadow: none;
+    width: 70px;
 }
 
 .receipt-capture__form-control-charges-value-type .MuiOutlinedInput-notchedOutline {

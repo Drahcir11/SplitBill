@@ -13,8 +13,7 @@ import { useBillContext } from "../Hooks/useBillContext";
 import { noWhiteSpace } from "../ErrorHandling";
 
 function TaxList() {
-
-    const {dispatch, listOfCharges, itemSubTotalCost, itemTotalCost} = useBillContext();
+    const { dispatch, listOfCharges, itemSubTotalCost, itemTotalCost } = useBillContext();
 
     const [chargesValue, setChargesValue] = useState("");
     const [chargesCategory, setChargesCategory] = useState("Tax");
@@ -24,7 +23,7 @@ function TaxList() {
         e.preventDefault();
 
         // Do nothing when charges value not set
-        if(!chargesValue) {
+        if (!chargesValue) {
             return;
         }
 
@@ -41,27 +40,32 @@ function TaxList() {
             <h1>TAX & DISCOUNTS</h1>
             <h5>Add the list of tax charges or discounts.</h5>
             <div className="receipt-capture__form-container">
-                <FormControl className="receipt-capture__form-control-charges-category" size="small">
-                    <InputLabel id="charges-category-label">Tax/Discounts</InputLabel>
-                    <Select
-                        labelId="charges-category-label"
-                        id="charges-category"
-                        value={chargesCategory}
-                        label="Service Charges"
-                        sx={{
-                            "& #charges-category": {
-                                fontSize: "0.8em",
-                            },
-                        }}
-                        onChange={(e) => {
-                            setChargesCategory(e.target.value);
-                        }}
-                    >
-                        <MenuItem value={"Tax"}>Tax</MenuItem>
-                        <MenuItem value={"Discount"}>Discount</MenuItem>
-                    </Select>
-                </FormControl>
                 <form onSubmit={handleChargesSubmit}>
+                    <FormControl className="receipt-capture__form-control-charges-category" 
+
+                        // inline css here since having difficulties putting it in actual css file
+                        sx={{minWidth: "100px", margin:"8px", backgroundColor: "white"}} 
+                        size="small"
+                    >
+                        <InputLabel id="charges-category-label">Tax/Discounts</InputLabel>
+                        <Select
+                            labelId="charges-category-label"
+                            id="charges-category"
+                            value={chargesCategory}
+                            label="Service Charges"
+                            sx={{
+                                "& #charges-category": {
+                                    fontSize: "0.8em",
+                                },
+                            }}
+                            onChange={(e) => {
+                                setChargesCategory(e.target.value);
+                            }}
+                        >
+                            <MenuItem value={"Tax"}>Tax</MenuItem>
+                            <MenuItem value={"Discount"}>Discount</MenuItem>
+                        </Select>
+                    </FormControl>
                     <input
                         className="receipt-capture_input-charges-value"
                         type="text"
@@ -75,7 +79,10 @@ function TaxList() {
                             setChargesValue(e.target.value);
                         }}
                     />
-                    <FormControl className="receipt-capture__form-control-charges-value-type" size="small">
+                    <FormControl className="receipt-capture__form-control-charges-value-type" 
+                        sx={{ margin: "8px", minWidth: "70px", backgroundColor: "white"}}
+                        size="small"
+                    >
                         {!chargesValueType && <InputLabel id="charges-value-type-select-label">%</InputLabel>}
                         {chargesValueType && <InputLabel id="charges-value-type-select-label">{chargesValueType}</InputLabel>}
                         <Select
