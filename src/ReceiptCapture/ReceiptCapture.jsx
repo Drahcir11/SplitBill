@@ -16,6 +16,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
+import ItemsList from "../ItemList/ItemsList";
+
 // Styling for MUI buttons to upload & capture receipts
 const uploadImageButtonStyles = {
     textTransform: "none",
@@ -50,31 +52,10 @@ const cropImageButtonStyles = {
 function ReceiptCapture() {
     const { dispatch, listOfItems, listOfCharges, itemSubTotalCost, itemTotalCost } = useBillContext();
 
-    const [name, setName] = useState("");
     const [chargesValue, setChargesValue] = useState("");
-    const [originalPrice, setOriginalPrice] = useState("");
-    const [quantity, setQuantity] = useState("");
 
     const [chargesCategory, setChargesCategory] = useState("Tax");
     const [chargesValueType, setChargesValueType] = useState("");
-
-    // Function to handle form submission when the "Add Item" button is clicked.
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (!noWhiteSpace(name) || !noWhiteSpace(originalPrice)) {
-            return;
-        }
-        if (!quantity) {
-            dispatch({ type: "ADD_ITEM", payload: { itemName: name, unitPrice: originalPrice, quantity: 1 } });
-        } else {
-            dispatch({ type: "ADD_ITEM", payload: { itemName: name, unitPrice: originalPrice, quantity: quantity } });
-        }
-
-        // Reset the "name" and "originalPrice" state variables to empty strings after adding the item.
-        setName("");
-        setOriginalPrice("");
-        setQuantity("");
-    };
 
     const handleChargesSubmit = (e) => {
         e.preventDefault();
@@ -223,75 +204,7 @@ function ReceiptCapture() {
                     </div>
                 )}
             </div>
-            <div className="receipt-capture__item-container">
-                <h1>ITEMS</h1>
-                <h5>Add the list of purchased food items per unit price.</h5>
-                <form onSubmit={handleSubmit}>
-                    <div className="receipt-capture__input-form-item">
-                        {/* Input field for entering the item's name */}
-                        <input
-                            className="input-item"
-                            type="text"
-                            placeholder="e.g. Salmon Sashimi"
-                            value={name}
-                            maxLength="28"
-                            onChange={(e) => {
-                                if (isValidInput(e.target.value)) {
-                                    setName(e.target.value);
-                                }
-                            }}
-                        />
-                        {/* Input field for entering the item's originalPrice */}
-                        <input
-                            className="input-price"
-                            type="text"
-                            inputMode="decimal"
-                            placeholder="£ 12.50"
-                            min="0"
-                            step="0.01"
-                            value={originalPrice}
-                            onChange={(e) => {
-                                if (isNumber(e.target.value)) {
-                                    setOriginalPrice(e.target.value);
-                                }
-                            }}
-                        />
-                        <input
-                            className="quantity"
-                            type="text"
-                            inputMode="numeric"
-                            placeholder="qty"
-                            min="0"
-                            step="1"
-                            value={quantity}
-                            onChange={(e) => {
-                                if (isNumber(e.target.value)) {
-                                    setQuantity(e.target.value);
-                                }
-                            }}
-                        />
-                    </div>
-                    <AddButton buttonName={"+"} type={"submit"} />
-                </form>
-                {listOfItems && (
-                    <div className="receipt-capture__item-sub-total">
-                        <p>Sub total: </p>
-                        <p>
-                            £{itemSubTotalCost}
-                            <span style={{ fontSize: "8px", fontWeight: "500" }}> (excl tax)</span>
-                        </p>
-                    </div>
-                )}
-
-                {/* List to display the added items */}
-                <div className="receipt-capture__item-name-list">
-                    <ul>
-                        {listOfItems.map((item, index) => {
-                            return <ObjectItem key={index} Item={item} />;
-                        })}
-                    </ul>
-                </div>
-            </div>
+            <ItemsList/>
             <div className="receipt-capture__tax-container">
                 <h1>TAX & DISCOUNTS</h1>
                 <h5>Add the list of tax charges or discounts.</h5>
