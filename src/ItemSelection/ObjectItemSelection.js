@@ -28,22 +28,25 @@ function ObjectItemSelection() {
     };
 
     return (
-        <div style={{ display:"flex", flexDirection: "column", alignItems: "center"}}>
-            <h1
-                style={{
-                    fontSize: "36px",
-                    fontWeight: "1000",
-                    marginBlockEnd: "0px",
-                    marginBlockStart: "48px",
-                    color: "white",
-                    textShadow: "2px 2px black",
-                }}
-            >
-                SELECT ITEMS
-            </h1>
-            <h5 style={{ fontWeight: "700", fontSize: "12px", marginBlockStart: "0px", marginBlockEnd: "24px", color: "black" }}>
-                Be honest and select items that you ate.
-            </h5>
+        <div className="item-selection">
+            <div>
+                <h1
+                    style={{
+                        fontSize: "36px",
+                        fontWeight: "1000",
+                        marginBlockEnd: "0px",
+                        marginBlockStart: "32px",
+                        color: "white",
+                        textShadow: "2px 2px black",
+                    }}
+                >
+                    SELECT ITEMS
+                </h1>
+                <h5 style={{ fontWeight: "700", fontSize: "12px", marginBlockStart: "0px", marginBlockEnd: "24px", color: "black" }}>
+                    Be honest and select items that you ate.
+                </h5>
+
+            </div>
             <form className="friends-items">
                 {/* Map through the "bills" array to display each friend's bill */}
                 {listOfFriends.map((friend, friendIndex) => (
