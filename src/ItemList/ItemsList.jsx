@@ -1,6 +1,6 @@
 import "./ItemsList.css";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useBillContext } from "../Hooks/useBillContext";
 import { isNumber, isValidInput, noWhiteSpace } from "../ErrorHandling";
 import ObjectItem from "./ObjectItem";
