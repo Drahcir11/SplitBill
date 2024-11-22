@@ -1,7 +1,6 @@
-import NextButton from "./Button/NextPageButton";
+import NextButton from "../Button/NextPageButton";
 import "./EachOwed.css";
-import Divider from '@mui/material/Divider';
-import { useBillContext } from "./Hooks/useBillContext";
+import { useBillContext } from "../Hooks/useBillContext";
 
 function EachOwed() {
 

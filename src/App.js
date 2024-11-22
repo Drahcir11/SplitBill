@@ -1,5 +1,5 @@
 import FriendsList from "./FriendsList/FriendsList";
-import EachOwed from "./EachOwed";
+import EachOwed from "./EachOwed/EachOwed";
 import NavBar from "./NavBar/NavBar";
 import About from "./About/About";
 import HowTo from "./HowTo/HowTo";
