@@ -96,7 +96,7 @@ function ObjectItemSelection() {
                                         }}
                                     >
                                         <div className="item-selection__item-name-container">
-                                            <p class="item-selection__item-name-paragraph"> {item.name}</p>
+                                            <p className="item-selection__item-name-paragraph"> {item.name}</p>
                                         </div>
                                         <Divider orientation="vertical" variant="middle" flexItem />
                                         <div className="item-selection__item-quantity">
@@ -104,7 +104,7 @@ function ObjectItemSelection() {
                                         </div>
                                         <Divider orientation="vertical" variant="middle" flexItem />
                                         <div className="item-selection__item-unit-price-container">
-                                            <p class="item-selection__item-unit-price-paragraph"> {currency}{item.unitPrice}</p>
+                                            <p className="item-selection__item-unit-price-paragraph"> {currency}{item.unitPrice}</p>
                                         </div>
                                     </div>
                                 );

@@ -69,10 +69,7 @@ body {
   align-items: center;
 }
 
-/* .non-logo {
-  display:"flex"
+.currency-dropdown {
+  border: none;
+  outline: none;
 }
-
-.non-logo li {
-  justify-content: end;
-} */

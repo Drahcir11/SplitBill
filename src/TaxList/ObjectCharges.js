@@ -9,7 +9,7 @@ import Select from "@mui/material/Select";
 import { useBillContext } from "../Hooks/useBillContext";
 
 function ObjectCharges({ Charges }) {
-    const { dispatch } = useBillContext();
+    const { dispatch, currency } = useBillContext();
     const [chargesCategory, setChargesCategory] = useState(Charges["name"]);
 
     return (
@@ -50,6 +50,7 @@ function ObjectCharges({ Charges }) {
                     marginRight="16px"
                 >
                     {Charges["type"] === "Percentage" && <span style={{ fontSize: "12px", fontWeight: "500" }}>%</span>}
+                    {Charges["type"] === "Numeric" && <span style={{ fontSize: "12px", fontWeight: "500" }}>{currency}</span>}
                     <AutosizeInput
                         value={Charges["value"]}
                         onChange={(e) => {

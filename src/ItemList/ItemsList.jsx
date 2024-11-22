@@ -7,7 +7,9 @@ import ObjectItem from "./ObjectItem";
 import AddButton from "../Button/AddButton";
 
 function ItemsList() {
-    const { dispatch, listOfItems, itemSubTotalCost } = useBillContext();
+    const { dispatch, listOfItems, itemSubTotalCost, currency } = useBillContext();
+
+    const itemEntryPlaceholder = ` ${currency} 12.50`
 
     const [itemName, setItemName] = useState("");
     const [itemUnitPrice, setItemUnitPrice] = useState("");
@@ -58,7 +60,7 @@ function ItemsList() {
                         className="items-list__input-item-unit-price"
                         type="text"
                         inputMode="decimal"
-                        placeholder="£ 12.50"
+                        placeholder= {itemEntryPlaceholder}
                         min="0"
                         step="0.01"
                         value={itemUnitPrice}
@@ -89,7 +91,7 @@ function ItemsList() {
             <div className="items-list__item-sub-total">
                 <p>Sub total: </p>
                 <p>
-                    £{itemSubTotalCost}
+                    {currency}{itemSubTotalCost}
                     <span style={{ fontSize: "8px", fontWeight: "500" }}> (excl tax)</span>
                 </p>
             </div>

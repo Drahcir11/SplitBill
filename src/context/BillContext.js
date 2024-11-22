@@ -12,7 +12,8 @@ const initialState = {
     listOfItems: [],
     listOfCharges: [],
     itemSubTotalCost: 0.00,
-    itemTotalCost: 0.00
+    itemTotalCost: 0.00,
+    currency: "£"
 };
 
 const calculateSubTotalCost = (listOfItems) => {
@@ -57,6 +58,13 @@ const calculateTotalCost = (itemSubTotalCost, listOfCharges) => {
 
 export const BillContextReducer = (state, action) => {
     switch (action.type) {
+
+        case "UPDATE_CURRENCY": {
+            const { newCurrency } = action.payload;
+
+            return {...state, currency: newCurrency}
+        }
+
         case "ADD_FRIEND": {
             // Extract friend's name
             const friendName = action.payload;
@@ -436,6 +444,10 @@ export const BillContextReducer = (state, action) => {
             })
 
             return {...state, listOfFriends: updatedFriendsList};
+        }
+
+        case "RESTART_ALL": {
+            return {...state, listOfFriends: [], listOfItems: [], listOfCharges: [], itemSubTotalCost: 0.00, itemTotalCost: 0.00, currency: "£"}
         }
 
         default:

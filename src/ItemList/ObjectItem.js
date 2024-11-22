@@ -7,7 +7,7 @@ import AutosizeInput from 'react-18-input-autosize';
 import { useBillContext } from "../Hooks/useBillContext";
 
 function ObjectItem({ Item }) {
-    const { dispatch } = useBillContext();
+    const { dispatch, currency } = useBillContext();
 
     return (
         <div className="item">
@@ -29,7 +29,7 @@ function ObjectItem({ Item }) {
                     }}
                 />
                 <Stack className="input-item-unit-price" direction="row" alignItems="baseline">
-                    <span style={{ display:"flex", fontSize: "14px", marginRight:"2.5px", fontWeight: "700" }}>£</span>
+                    <span style={{ display:"flex", fontSize: "14px", marginRight:"2.5px", fontWeight: "700" }}>{currency}</span>
                     <AutosizeInput
                         value={Item.unitPrice}
                         onChange={(e) => {
