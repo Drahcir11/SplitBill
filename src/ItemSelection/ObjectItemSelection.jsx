@@ -4,7 +4,7 @@ import Divider from '@mui/material/Divider';
 import "./ObjectItemSelection.css"
 
 function ObjectItemSelection() {
-    const { dispatch, listOfFriends, listOfItems } = useBillContext();
+    const { dispatch, listOfFriends, listOfItems, currency } = useBillContext();
 
     const handleClick = (e, friend, item) => {
         e.preventDefault();
@@ -89,16 +89,23 @@ function ObjectItemSelection() {
                                         style={{
                                             fontSize: "12px",
                                             display: "flex",
+                                            flexDirection: "row",
                                             justifyContent: "space-between",
                                             paddingTop: "0px",
                                             paddingBottom: "0px",
                                         }}
                                     >
-                                        <p> {item.name}</p>
+                                        <div className="item-selection__item-name-container">
+                                            <p class="item-selection__item-name-paragraph"> {item.name}</p>
+                                        </div>
                                         <Divider orientation="vertical" variant="middle" flexItem />
-                                        <p> {item.quantity} <span style={{ fontSize: "0.7em"}}> pcs </span></p>
+                                        <div className="item-selection__item-quantity">
+                                            <p> {item.quantity} <span style={{ fontSize: "0.7em"}}>pcs</span></p>
+                                        </div>
                                         <Divider orientation="vertical" variant="middle" flexItem />
-                                        <p> £{item.unitPrice}</p>
+                                        <div className="item-selection__item-unit-price-container">
+                                            <p class="item-selection__item-unit-price-paragraph"> {currency}{item.unitPrice}</p>
+                                        </div>
                                     </div>
                                 );
                             })}
