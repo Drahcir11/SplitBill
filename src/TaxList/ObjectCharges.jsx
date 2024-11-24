@@ -1,3 +1,5 @@
+import "./ObjectCharges.css"
+
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { IconButton, Stack } from "@mui/material";
 import { useState } from "react";
@@ -13,8 +15,8 @@ function ObjectCharges({ Charges }) {
     const [chargesCategory, setChargesCategory] = useState(Charges["name"]);
 
     return (
-        <div className="item">
-            <div className="item-description">
+        <div className="charges">
+            <div className="charges-description">
                 <FormControl
                     sx={{
                         m: 1,
@@ -42,7 +44,7 @@ function ObjectCharges({ Charges }) {
                     </Select>
                 </FormControl>
                 <Stack
-                    className="input-item-unit-price"
+                    className="input-charges-unit-price"
                     direction="row"
                     alignItems="end"
                     justifyContent="center"

@@ -1,10 +1,11 @@
 import "./ObjectItem.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrash, faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { IconButton, Stack } from "@mui/material";
 import AutosizeInput from 'react-18-input-autosize';
 import { useBillContext } from "../Hooks/useBillContext";
+import { isNumber } from "../ErrorHandling";
 
 function ObjectItem({ Item }) {
     const { dispatch, currency } = useBillContext();
@@ -12,7 +13,6 @@ function ObjectItem({ Item }) {
     return (
         <div className="item">
             <div className="item-description">
-                {/* <p className="item-name">OBJECT - {Item.name}</p> */}
                 <input
                     value={Item.name}
                     onChange={(e) => {
@@ -34,7 +34,9 @@ function ObjectItem({ Item }) {
                         value={Item.unitPrice}
                         onChange={(e) => {
                             e.preventDefault();
-                            dispatch({ type: "UPDATE_ITEM_UNIT_PRICE", payload: { itemId: Item.itemId, newItemUnitPrice: e.target.value } });
+                            if(isNumber(e.target.value)){
+                                dispatch({ type: "UPDATE_ITEM_UNIT_PRICE", payload: { itemId: Item.itemId, newItemUnitPrice: e.target.value } });
+                            }
                         }}
                         type="text"
                         inputMode="decimal"

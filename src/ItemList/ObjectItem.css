@@ -3,7 +3,7 @@
 .item-container h1 {
     text-align: center;
     -webkit-text-stroke: 1.5px black;
-  }
+}
   
 .item-container {
 display: flex;
