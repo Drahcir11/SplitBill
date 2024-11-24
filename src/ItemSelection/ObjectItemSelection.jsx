@@ -81,7 +81,7 @@ function ObjectItemSelection() {
 
                                 return (
                                     <div
-                                        key={item.name}
+                                        key={item.itemId}
                                         className={`itemSelection ${isItemChecked ? "selected" : ""}`}
                                         onClick={(e) => {
                                             handleClick(e, friend, item);
