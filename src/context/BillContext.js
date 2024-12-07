@@ -128,7 +128,7 @@ export const BillContextReducer = (state, action) => {
 
             // Construct item class object
             const totalPrice = multiply($(parseFloat(unitPrice).toFixed(2)), $(quantity))
-            const newItemObject = new Item(itemName, unitPrice, quantity, totalPrice);
+            const newItemObject = new Item(itemName, unitPrice, quantity, parseFloat(totalPrice.toFixed(2)));
 
             // Add new item class object into an updated list of items
             const updatedItemList = [...state.listOfItems, newItemObject];
@@ -176,7 +176,7 @@ export const BillContextReducer = (state, action) => {
 
                     // Re-calculate the item's new total price
                     const newTotalPrice = multiply($(parseFloat(newItemUnitPrice).toFixed(2)), $(item.quantity))
-                    return { ...item, unitPrice: newItemUnitPrice, totalPrice: newTotalPrice };
+                    return { ...item, unitPrice: newItemUnitPrice, totalPrice: parseFloat(newTotalPrice.toFixed(2)) };
                 }
                 else {
                     return item
@@ -200,7 +200,7 @@ export const BillContextReducer = (state, action) => {
                     // Re-calculate the item's new total price
                     const newQuantity = item.quantity + qtyChange
                     const newTotalPrice = multiply($(parseFloat(item.unitPrice).toFixed(2)), $(newQuantity))
-                    return { ...item, quantity: newQuantity, totalPrice: newTotalPrice };
+                    return { ...item, quantity: newQuantity, totalPrice: parseFloat(newTotalPrice.toFixed(2)) };
                 } else {
                     return item;
                 }
@@ -428,6 +428,10 @@ export const BillContextReducer = (state, action) => {
                 const sharedPriceItem = divide($(totalPriceItem), $(item.selectedBy.length))
                 updatedItemSharedPrices[item.itemId] = parseFloat(sharedPriceItem.toFixed(2))
             }
+
+            const updatedItemsList = state.listOfItems.map((item) =>{
+                return {...item, sharedUnitPrice: updatedItemSharedPrices[item.itemId]}
+            })
             
             // Loop through each items and calculate the total bill
             const updatedFriendsList = state.listOfFriends.map((friend) =>{
@@ -440,10 +444,19 @@ export const BillContextReducer = (state, action) => {
 
                 // Calculate each friend's total bill with price modifier
                 const calculatedTotalBill = multiply($(friendSubTotal),$(priceMultiplier))
-                return {...friend, totalBill: parseFloat(calculatedTotalBill.toFixed(2))}
+                const percentageCharges = $(priceMultiplier).minus($(1.00))
+                const calculatedCharges = multiply($(percentageCharges), $(friendSubTotal))
+                console.log(calculatedTotalBill.toFixed(2), percentageCharges.toFixed(2), calculatedCharges.toFixed(2))
+                return {
+                        ...friend, 
+                        subTotal: parseFloat(friendSubTotal.toFixed(2)), 
+                        totalBill: parseFloat(calculatedTotalBill.toFixed(2)), 
+                        chargesValue: parseFloat(calculatedCharges.toFixed(2)),
+                        chargesPercentage: parseFloat(percentageCharges.toFixed(2))
+                    }
             })
 
-            return {...state, listOfFriends: updatedFriendsList};
+            return {...state, listOfFriends: updatedFriendsList, listOfItems: updatedItemsList};
         }
 
         case "RESTART_ALL": {

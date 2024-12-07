@@ -1,14 +1,14 @@
-import NextButton from "../Button/NextPageButton";
 import "./EachOwed.css";
+import NextButton from "../Button/NextPageButton";
 import { useBillContext } from "../Hooks/useBillContext";
+import TableItems from "./TableItems";
 
 function EachOwed() {
 
-  const { dispatch, listOfFriends, itemTotalCost, currency } = useBillContext();
+  const { dispatch, listOfFriends, listOfItems, itemTotalCost, currency } = useBillContext();
 
   // On clicking restart, clear out local storage of item and friends data
   const handleRestart = () => {
-
     dispatch({type: "RESTART_ALL"})
   };
 
@@ -28,10 +28,11 @@ function EachOwed() {
         <ul>
           {listOfFriends.map((friend, index) => (
             <div className="each-owed__friends-list" key={index}>
-              <li style={{display:"flex", flexDirection:"row", justifyContent:"space-between", border: "1px", borderColor:"white"}} >
+              <li style={{display:"flex", flexDirection:"row", justifyContent:"space-between", border: "1px", borderColor:"white", padding: "0px 10px 0px 10px"}} >
                 <p> {friend.name}  </p>
                 <p> {currency} {friend.totalBill.toFixed(2)}</p>
               </li>
+              <TableItems friend={friend}/>
             </div>
           ))}
         </ul>
