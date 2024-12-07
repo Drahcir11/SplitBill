@@ -52,8 +52,8 @@ function ObjectCharges({ Charges }) {
                     textAlign="center"
                     marginRight="16px"
                 >
-                    {Charges["type"] === "Percentage" && <span style={{ fontSize: "12px", fontWeight: "700" }}>%</span>}
-                    {Charges["type"] === "Numeric" && <span style={{ fontSize: "12px", fontWeight: "700" }}>{currency}</span>}
+                    {Charges["type"] === "Percentage" && <span style={{ fontSize: "14px", fontWeight: "700" }}>%</span>}
+                    {Charges["type"] === "Numeric" && <span style={{ fontSize: "14px", fontWeight: "700" }}>{currency}</span>}
                     <AutosizeInput
                         value={Charges["value"]}
                         onChange={(e) => {
@@ -64,7 +64,7 @@ function ObjectCharges({ Charges }) {
                             minWidth: "25px",
                             display: "flex",
                             fontWeight: "700",
-                            fontSize: "12px",
+                            fontSize: "14px",
                             marginRight: "0px",
                             padding: "0px",
                             border: "0px",

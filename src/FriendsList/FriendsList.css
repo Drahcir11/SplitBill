@@ -23,6 +23,7 @@
 .friends-list__container input {
   border-radius: 8px;
   height: 3em;
+  font-size: 14px;
   outline: none;
 }
 

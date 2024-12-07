@@ -45,6 +45,10 @@
     box-shadow: 4px 4px;
 }
 
+.items-list__input-form-item input{
+    font-size: 14px;
+}
+
 .items-list__input-item-name {
     margin-left: 8px;
     width: 60%;
