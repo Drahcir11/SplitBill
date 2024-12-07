@@ -1,4 +1,4 @@
-import "./ObjectCharges.css"
+import "./ObjectCharges.css";
 
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { IconButton, Stack } from "@mui/material";
@@ -15,8 +15,8 @@ function ObjectCharges({ Charges }) {
     const [chargesCategory, setChargesCategory] = useState(Charges["name"]);
 
     return (
-        <div className="charges">
-            <div className="charges-description">
+        <div className="object-charges__container">
+            <div className="object-charges__description ">
                 <FormControl
                     sx={{
                         m: 1,
@@ -34,6 +34,7 @@ function ObjectCharges({ Charges }) {
                         value={chargesCategory}
                         label="Tax"
                         inputProps={{ sx: { pr: "12px !important" }, IconComponent: () => null }} // This gets rid of dropdown arrow
+                        sx={{ fontWeight: "700" }}
                         onChange={(e) => {
                             setChargesCategory(e.target.value);
                             dispatch({ type: "UPDATE_CHARGES_NAME", payload: { chargesId: Charges["chargesId"], newChargesName: e.target.value } });
@@ -44,15 +45,15 @@ function ObjectCharges({ Charges }) {
                     </Select>
                 </FormControl>
                 <Stack
-                    className="input-charges-unit-price"
+                    className="object-charges__input-value-type"
                     direction="row"
                     alignItems="end"
                     justifyContent="center"
                     textAlign="center"
                     marginRight="16px"
                 >
-                    {Charges["type"] === "Percentage" && <span style={{ fontSize: "12px", fontWeight: "500" }}>%</span>}
-                    {Charges["type"] === "Numeric" && <span style={{ fontSize: "12px", fontWeight: "500" }}>{currency}</span>}
+                    {Charges["type"] === "Percentage" && <span style={{ fontSize: "12px", fontWeight: "700" }}>%</span>}
+                    {Charges["type"] === "Numeric" && <span style={{ fontSize: "12px", fontWeight: "700" }}>{currency}</span>}
                     <AutosizeInput
                         value={Charges["value"]}
                         onChange={(e) => {

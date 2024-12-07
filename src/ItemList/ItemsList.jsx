@@ -78,6 +78,7 @@ function ItemsList() {
                         placeholder="qty"
                         min="0"
                         step="1"
+                        maxLength={3}
                         value={itemQuantity}
                         onChange={(e) => {
                             if (isNumber(e.target.value)) {

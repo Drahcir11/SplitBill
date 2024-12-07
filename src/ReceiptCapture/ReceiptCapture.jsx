@@ -44,23 +44,19 @@ const cropImageButtonStyles = {
 function ReceiptCapture() {
     const {dispatch} = useBillContext();
 
-    const [image, setImage] = useState(() => {
-        const storedReceiptImage = sessionStorage.getItem("my-receipt-image");
-        return storedReceiptImage ? storedReceiptImage : null;
-    });
+    // const [image, setImage] = useState(() => {
+    //     const storedReceiptImage = sessionStorage.getItem("my-receipt-image");
+    //     return storedReceiptImage ? storedReceiptImage : null;
+    // });
+    
+    const [image, setImage] = useState(null);
 
-    useEffect(() => {
-        sessionStorage.setItem("my-receipt-image", image);
-    }, [image]);
-
-    const [submitFile, setSubmitFile] = useState(() => {
-        const storedSubmitFile = sessionStorage.getItem("my-submit-file");
-        return storedSubmitFile ? storedSubmitFile : false;
-    });
-
-    useEffect(() => {
-        sessionStorage.setItem("my-submit-file", submitFile);
-    }, [submitFile]);
+    // const [submitFile, setSubmitFile] = useState(() => {
+    //     const storedSubmitFile = sessionStorage.getItem("my-submit-file");
+    //     return storedSubmitFile ? storedSubmitFile : false;
+    // });
+    
+    const [submitFile, setSubmitFile] = useState(false);
 
     const cropperRef = useRef(null);
 

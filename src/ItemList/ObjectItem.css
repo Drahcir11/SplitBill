@@ -70,7 +70,7 @@ width: 100%;
     padding-right : 10px;
     padding-left : 10px;
     width : 100vw;
-    max-width: 357px;
+    max-width: 324px;
     height: 6em;
     display : flex;
     flex-direction: column;
@@ -83,7 +83,6 @@ width: 100%;
 
 .item-description {
     display: flex;
-    /* border: solid 2px red; */
     justify-content: space-between;
     align-items: center;
     padding: 5px;

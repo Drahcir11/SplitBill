@@ -89,3 +89,15 @@
     justify-content: space-between;
 }
 
+.receipt-capture__object-charges-list {
+    max-width: 357px;
+    width: 100%;
+}
+
+.receipt-capture__object-charges-list ul {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+}
+

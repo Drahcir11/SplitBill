@@ -43,7 +43,6 @@
     margin-right: 10px;
     border-radius: 8px;
     box-shadow: 4px 4px;
-    width: 80%;
 }
 
 .items-list__input-item-name {
@@ -75,7 +74,7 @@
     background-color: #fff;
     font-size: 12px;
     width: 100%;
-    max-width: 357px;
+    max-width: 324px;
     display: flex;
     flex-direction: row;
     padding-left: 16px;

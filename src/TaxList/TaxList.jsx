@@ -122,7 +122,7 @@ function TaxList() {
             </div>
 
             {/* List to display the added items */}
-            <div className="receipt-capture__item-name-list">
+            <div className="receipt-capture__object-charges-list">
                 <ul>
                     {listOfCharges.map((charges, index) => {
                         return <ObjectCharges key={index} Charges={charges} />;

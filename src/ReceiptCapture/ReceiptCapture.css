@@ -18,7 +18,8 @@ h1 {
 
 .receipt-capture__container {
     margin-bottom: 48px;
-    max-width: 480px;
+    width: 90vw;
+    max-width: 420px;
 }
 
 .receipt-capture__text-content {
@@ -53,6 +54,7 @@ h1 {
 }
 
 .receipt-capture__image-content {
+    width: 90%;
     border-width: 8px;
     border-style: solid;
     border-color: white;
