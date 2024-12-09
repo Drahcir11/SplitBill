@@ -14,7 +14,7 @@ function NavBar() {
             <div className="nav">
                 <ul>
                     <a href="/" className="logo">
-                        <img src="./sssam_split_no_bg.png" alt="bear logo" />
+                        <img  style={{height:"2em", marginLeft: "1em"}}src="./receipt.svg" alt="bear logo" />
                     </a>
                     {/* <h1 className="logo">Logo</h1> */}
                     <div className="non-logo">

@@ -18,8 +18,8 @@ body {
 }
 
 .nav {
-  background-color: var(--nav-bg-color);
-  /* background-color: white; */
+  /* background-color: var(--nav-bg-color); */
+  background-color: white;
   color: var(--primary-text-color);
   display:flex;
   font-family: sans-serif;
@@ -49,24 +49,24 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.25rem;
-  font-size: 12px;
+  /* padding: 0.25rem;
+  font-size: 12px; */
 }
 
 
 .nav img {
   /* width: 90px; */
-  height: 40px;
+  /* height: 40px;
   margin-top: 0px;
-  margin-bottom: 4px;
+  margin-bottom: 4px; */
   /* margin-left: 10px; */
   
 }
 
 .logo {
-  display: flex;
+  /* display: flex; */
   /* margin-right: 150px; */
-  align-items: center;
+  /* align-items: center; */
 }
 
 .currency-dropdown {

@@ -87,7 +87,7 @@ export default function TableItems({ friend }) {
                             </TableRow>
                             <TableRow>
                                 <TableCell>Tax/Discount</TableCell>
-                                <TableCell align="right">({`${(friend.chargesPercentage * 100).toFixed(0)} %`}) &nbsp; {currency} {friend.chargesValue}</TableCell>
+                                <TableCell align="right">({`${(friend.chargesPercentage * 100).toFixed(0)} %`}) <br/> {currency} {friend.chargesValue}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>Total</TableCell>

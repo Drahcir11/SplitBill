@@ -68,6 +68,7 @@ function ReceiptCapture() {
         };
         reader.readAsDataURL(file);
         setSubmitFile(true);
+        console.log("handle file change success")
     };
 
     // When user crops the image, extract item and price details from image
@@ -80,6 +81,7 @@ function ReceiptCapture() {
             dispatch({ type: "RESET_ITEMS" });
             extractText(image);
         });
+        console.log("handle crop success")
     };
 
     const extractText = (image) => {
@@ -91,7 +93,11 @@ function ReceiptCapture() {
             let extractedText = text.split("\n");
             extractedText.forEach((item) => {
                 // Regular expression to match item name and price
-                // e.g. Pizza £12.55
+                // e.g below:
+                //      Pizza £12.55
+                //      Burger 20.10
+                //      Chicken Steak 500g 9.99
+                console.log("item :", item)
                 const regexMatches = item.match(/(.+?)\s*(?:\$|RS|Rs|rs|Rupees|rupees|pkr|£|Rp|RP|rp|)\s*?(\d+(?:\.\d{1,2}))/);
 
                 // Structure string when item price combination matches regex
