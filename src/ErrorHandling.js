@@ -10,6 +10,6 @@ export const isValidInput = (name => {
 
 export const isNumber = (number => {
     // Restricts User name input to 50 characters
-    const regex = /^[0-9.]{0,5}$/;
+    const regex = /^[0-9.]{0,7}$/;
     return regex.test(number);
 })
