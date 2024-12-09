@@ -1,0 +1,88 @@
+@import url('../global.css');
+
+.item-selection {
+  width: 90vw;
+  max-width: 420px;
+  height: 100%;
+  min-height: 100vh;
+  padding: 0%;
+  padding-bottom: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--primary-bg-color);
+}
+
+.items-per-friend {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.friends-items {
+  padding: 15px;
+  width: 100%;
+  max-width: 357px;
+}
+
+
+.itemSelection {
+  font-size: 0.85em;
+  padding: 10px;
+  margin: 2px;
+  border: 1px solid black;
+  border-radius: 4px;
+  cursor: pointer; /* Changes the mouse cursor to indicate it's clickable */
+  user-select: none; /* Prevents text selection */
+  display: flex;
+}
+
+.friend-container {
+  border: 2px solid black;
+  margin-bottom: 15px;
+  width: 100%;
+  padding: 10px;
+  padding-bottom: 24px;
+  border-radius: 10px;
+}
+
+.itemSelection.selected {
+  background-color: #7e2fff;
+  color: var(--white-bg);
+  border: 2.5px solid black;
+}
+
+.friendName {
+  display:flex;
+}
+
+.item-selection__item-name-container {
+  min-width: 155px;
+  text-align: left;
+  margin-right: 4px;
+  white-space: nowrap;
+}
+
+.item-selection__item-name-paragraph {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-selection__item-quantity {
+  min-width: 35px;
+  text-align: center;
+  margin-left: 1px;
+  margin-right: 1px;
+}
+
+.item-selection__item-unit-price-container {
+  margin-left: 4px;
+  min-width: 80px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.item-selection__item-unit-price-paragraph {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
