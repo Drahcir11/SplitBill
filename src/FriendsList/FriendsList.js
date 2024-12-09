@@ -55,12 +55,12 @@ function FriendsList() {
                 </div>
                 <div className="friends-list__button-container">
                     <NextButton buttonName={"< NEXT PAGE >"} to={"/ReceiptCapture"} />
-                    <p>
+                    {/* <p>
                         Manually add items
                         <Link to="/item">
                             <span style={{ textDecoration: "underline" }}> click here </span>
                         </Link>
-                    </p>
+                    </p> */}
                 </div>
         </div>
     );
