@@ -157,10 +157,17 @@ function ReceiptCapture() {
                 </Button>
             </div>
             <div className="receipt-capture__image-container">
-                {image && (
+                {image ? (
                     <div className="receipt-capture__image-content">
                         <Cropper src={image} initialAspectRatio={1} guides={false} ref={cropperRef} dragMode={"none"} />
                     </div>
+                ):(
+                        <div style={{width:"90%", height:"380px", border:"2px solid black", 
+                        borderRadius:"16px", backgroundColor:"white", display:"flex",
+                        alignItems:"center", justifyContent:"center",
+                        }}>
+                                <p style={{margin:0, opacity:"30%"}}>RECEIPT IMAGE</p>
+                        </div>
                 )}
                 {submitFile && (
                     <div className="receipt-capture__crop-image-button-container">
