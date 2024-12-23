@@ -53,7 +53,7 @@ function ObjectItemSelection() {
                     <div
                         className="friend-container"
                         key={friendIndex}
-                        style={{ backgroundColor: "White", display: "flex", flexDirection: "column", boxShadow: "4px 2px black" }}
+                        style={{ backgroundColor: "White", display: "flex", flexDirection: "column", boxShadow: "4px 2px black", marginBottom:"32px" }}
                     >
                         <div style={{ display: "flex", justifyContent: "center" }}>
                             {/* Display the friend's name as the subheading */}
