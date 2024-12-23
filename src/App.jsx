@@ -13,10 +13,10 @@ function App() {
     return (
         <div className="container">
             <Router>
-                <div className="nav-app">
+                <div className="nav-app" style={{ position: "fixed", top: "0", width: "100%", zIndex:"1"}}>
                     <NavBar />
                 </div>
-                <div className="App">
+                <div className="App" style={{ marginTop: "50px"}}>
                     <Routes>
                         <Route path="/about" element={<About />} />
                         <Route path="/howto" element={<HowTo />} />
