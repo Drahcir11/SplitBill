@@ -27,14 +27,11 @@
 
 
 .itemSelection {
-  font-size: 0.85em;
-  padding: 10px;
-  margin: 2px;
+  padding: 4px;
   border: 1px solid black;
   border-radius: 4px;
   cursor: pointer; /* Changes the mouse cursor to indicate it's clickable */
   user-select: none; /* Prevents text selection */
-  display: flex;
 }
 
 .friend-container {
@@ -50,6 +47,7 @@
   background-color: #7e2fff;
   color: var(--white-bg);
   border: 2.5px solid black;
+  font-weight: 500;
 }
 
 .friendName {
@@ -57,10 +55,16 @@
 }
 
 .item-selection__item-name-container {
-  min-width: 155px;
+  width: 155px;
   text-align: left;
-  margin-right: 4px;
+  margin-right: 0px;
   white-space: nowrap;
+}
+
+@media (max-width: 365px){
+  .item-selection__item-name-container{
+    width: 140px;
+  }
 }
 
 .item-selection__item-name-paragraph {
@@ -69,14 +73,12 @@
 }
 
 .item-selection__item-quantity {
-  min-width: 35px;
+  width: 22px;
   text-align: center;
-  margin-left: 1px;
-  margin-right: 1px;
 }
 
 .item-selection__item-unit-price-container {
-  margin-left: 4px;
+  margin-left: 0px;
   min-width: 80px;
   text-align: right;
   white-space: nowrap;
