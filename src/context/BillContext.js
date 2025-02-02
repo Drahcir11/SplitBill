@@ -16,7 +16,7 @@ const initialState = {
     currency: "£"
 };
 
-const calculateSubTotalCost = (listOfItems) => {
+export const calculateSubTotalCost = (listOfItems) => {
 
     // Loop through each items and calculate item sub total cost
     let updatedItemSubTotalCost = 0.00
@@ -27,11 +27,11 @@ const calculateSubTotalCost = (listOfItems) => {
     return updatedItemSubTotalCost.toFixed(2);
 }
 
-const calculateTotalCost = (itemSubTotalCost, listOfCharges) => {
+export const calculateTotalCost = (itemSubTotalCost, listOfCharges) => {
 
     if (listOfCharges.length < 1) {
         return itemSubTotalCost
-    }
+    };
 
     // Loop through the list of charges/discounts
     let updatedItemTotalCost = itemSubTotalCost
@@ -124,7 +124,13 @@ export const BillContextReducer = (state, action) => {
         }
 
         case "ADD_ITEM": {
-            const { itemName, unitPrice, quantity } = action.payload;
+            let { itemName, unitPrice, quantity } = action.payload;
+
+            if(typeof unitPrice === "number"){
+                return state;
+            }
+
+            unitPrice = unitPrice.replace(",", "")
 
             // Construct item class object
             const totalPrice = multiply($(parseFloat(unitPrice).toFixed(2)), $(quantity))
@@ -412,21 +418,32 @@ export const BillContextReducer = (state, action) => {
         }
 
         case "SPLIT_BILL": {
-
+            
             // Do nothing if for whatever reason, sub total and total cost
             // is zero or less than zero
-            if(state.itemTotalCost <= 0.00 || state.itemSubTotalCost <= 0.00) {
+            const numericItemTotalCost = Number(state.itemTotalCost);
+            const numericItemSubTotalCost = Number(state.itemSubTotalCost);
+            if( numericItemTotalCost <= 0.00 || numericItemSubTotalCost <= 0.00|| isNaN(numericItemTotalCost) || isNaN(numericItemSubTotalCost)) {
                 return state;
             }
 
-            const priceMultiplier = divide($(state.itemTotalCost), $(state.itemSubTotalCost))
+            const priceMultiplier = parseFloat(state.itemTotalCost/state.itemSubTotalCost).toFixed(12);
 
             // Map and calculate the shared prices of each item as key-value pair
             const updatedItemSharedPrices = {}
             for(const item of state.listOfItems) {
                 const totalPriceItem = multiply($(item.unitPrice), $(item.quantity))
-                const sharedPriceItem = divide($(totalPriceItem), $(item.selectedBy.length))
-                updatedItemSharedPrices[item.itemId] = parseFloat(sharedPriceItem.toFixed(2))
+
+                // Set shared price item to zero when no one selected the item
+                let sharedPriceItem
+                if(item.selectedBy.length < 1){
+                    sharedPriceItem = "0.00"
+                }
+                else {
+
+                    sharedPriceItem = parseFloat( divide($(totalPriceItem), $(item.selectedBy.length)) ).toFixed(2);
+                }
+                updatedItemSharedPrices[item.itemId] = sharedPriceItem
             }
 
             const updatedItemsList = state.listOfItems.map((item) =>{
@@ -443,16 +460,16 @@ export const BillContextReducer = (state, action) => {
                 }
 
                 // Calculate each friend's total bill with price modifier
-                const calculatedTotalBill = multiply($(friendSubTotal),$(priceMultiplier))
-                const percentageCharges = $(priceMultiplier).minus($(1.00))
-                const calculatedCharges = multiply($(percentageCharges), $(friendSubTotal))
-                console.log(calculatedTotalBill.toFixed(2), percentageCharges.toFixed(2), calculatedCharges.toFixed(2))
+                const calculatedTotalBill = parseFloat(friendSubTotal * priceMultiplier).toFixed(12);
+                const percentageCharges = parseFloat(priceMultiplier - 1.00).toFixed(12);
+                const calculatedCharges = parseFloat(percentageCharges * friendSubTotal).toFixed(12);
+                // console.log(calculatedTotalBill.toFixed(2), percentageCharges.toFixed(2), calculatedCharges.toFixed(2))
                 return {
                         ...friend, 
-                        subTotal: parseFloat(friendSubTotal.toFixed(2)), 
-                        totalBill: parseFloat(calculatedTotalBill.toFixed(2)), 
-                        chargesValue: parseFloat(calculatedCharges.toFixed(2)),
-                        chargesPercentage: parseFloat(percentageCharges.toFixed(2))
+                        subTotal: parseFloat(friendSubTotal).toFixed(2), 
+                        totalBill: parseFloat(calculatedTotalBill).toFixed(2), 
+                        chargesValue: parseFloat(calculatedCharges).toFixed(2),
+                        chargesPercentage: percentageCharges
                     }
             })
 
