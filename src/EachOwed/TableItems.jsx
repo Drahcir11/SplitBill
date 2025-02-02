@@ -13,21 +13,14 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 import { useBillContext } from "../Hooks/useBillContext";
+import formatMoney from "../utils/FormatMoney";
 
 function createData(name, originalPrice, sharedPrice) {
-    return { name, originalPrice, sharedPrice };
+    return { name, originalPrice: formatMoney(originalPrice), sharedPrice: formatMoney(sharedPrice) };
 }
 
-const rows = [
-    createData("Frozen yoghurt", 10, 5.0),
-    createData("Ice cream sandwich", 237, 9.0),
-    createData("Eclair", 262, 16.0),
-    createData("Cupcake", 305, 3.7),
-    createData("Gingerbread", 356, 16.0),
-];
-
 export default function TableItems({ friend }) {
-    const { dispatch, listOfFriends, listOfItems, currency } = useBillContext();
+    const { listOfItems, currency } = useBillContext();
     const [showTable, setShowTable] = useState(false);
     const [tableRows, setTableRows] = useState([]);
 
@@ -56,7 +49,17 @@ export default function TableItems({ friend }) {
             <Button onClick={handleToggleTable}>{showTable ? <ArrowDropUpIcon sx={{color: "black"}}/> : <ArrowDropDownIcon sx={{color: "black"}}/>}</Button>
             <Collapse in={showTable}>
                 <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 320 }} aria-label="a dense table">
+                    <Table sx={{ minWidth: 320, 
+                        "& .MuiTableCell-root": {
+                            "@media (max-width: 450px)": {
+                                fontSize: "12px",
+                            },
+                            "@media (max-width: 365px)": {
+                                fontSize: "10px", // Font size for screens below 365px
+                            },
+                            padding: "8px"
+                        },
+                    }} aria-label="a dense table">
                         <TableHead>
                             <TableRow>
                                 <TableCell>Name</TableCell>
@@ -82,16 +85,16 @@ export default function TableItems({ friend }) {
                                 <TableCell rowSpan={3} />
                                 <TableCell colSpan={1}>Subtotal</TableCell>
                                 <TableCell align="right">
-                                    {currency} {friend.subTotal}
+                                    {currency} {formatMoney(friend.subTotal)}
                                 </TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>Tax/Discount</TableCell>
-                                <TableCell align="right">({`${(friend.chargesPercentage * 100).toFixed(0)} %`}) <br/> {currency} {friend.chargesValue}</TableCell>
+                                <TableCell align="right">({`${(friend.chargesPercentage * 100).toFixed(0)} %`}) <br/> {currency} {formatMoney(friend.chargesValue)}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>Total</TableCell>
-                                <TableCell align="right">{currency} {friend.totalBill}</TableCell>
+                                <TableCell align="right">{currency} {formatMoney(friend.totalBill)}</TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>

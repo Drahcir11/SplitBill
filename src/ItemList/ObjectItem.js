@@ -22,14 +22,14 @@ function ObjectItem({ Item }) {
                     type="text"
                     style={{
                         fontWeight: "700",
-                        fontSize: "14px",
+                        fontSize: "0.8em",
                         outline: "none",
                         backgroundColor: "transparent",
                         borderColor: "transparent",
                     }}
                 />
                 <Stack className="input-item-unit-price" direction="row" alignItems="baseline">
-                    <span style={{ display:"flex", fontSize: "14px", marginRight:"2.5px", fontWeight: "700" }}>{currency}</span>
+                    <span style={{ display:"flex", fontSize: "0.8em", marginRight:"2.5px", fontWeight: "700" }}>{currency}</span>
                     <AutosizeInput
                         value={Item.unitPrice}
                         onChange={(e) => {
