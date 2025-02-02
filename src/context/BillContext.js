@@ -441,9 +441,9 @@ export const BillContextReducer = (state, action) => {
                 }
                 else {
 
-                    sharedPriceItem = parseFloat( divide($(totalPriceItem), $(item.selectedBy.length)) ).toFixed(2);
+                    sharedPriceItem = parseFloat(divide($(totalPriceItem), $(item.selectedBy.length))).toFixed(2);
                 }
-                updatedItemSharedPrices[item.itemId] = sharedPriceItem
+                updatedItemSharedPrices[item.itemId] = sharedPriceItem;
             }
 
             const updatedItemsList = state.listOfItems.map((item) =>{
@@ -460,15 +460,14 @@ export const BillContextReducer = (state, action) => {
                 }
 
                 // Calculate each friend's total bill with price modifier
-                const calculatedTotalBill = parseFloat(friendSubTotal * priceMultiplier).toFixed(12);
+                const calculatedTotalBill = parseFloat(friendSubTotal * priceMultiplier).toFixed(2);
                 const percentageCharges = parseFloat(priceMultiplier - 1.00).toFixed(12);
-                const calculatedCharges = parseFloat(percentageCharges * friendSubTotal).toFixed(12);
-                // console.log(calculatedTotalBill.toFixed(2), percentageCharges.toFixed(2), calculatedCharges.toFixed(2))
+                const calculatedCharges = parseFloat(percentageCharges * friendSubTotal).toFixed(2);
                 return {
                         ...friend, 
                         subTotal: parseFloat(friendSubTotal).toFixed(2), 
-                        totalBill: parseFloat(calculatedTotalBill).toFixed(2), 
-                        chargesValue: parseFloat(calculatedCharges).toFixed(2),
+                        totalBill: calculatedTotalBill, 
+                        chargesValue: calculatedCharges,
                         chargesPercentage: percentageCharges
                     }
             })
