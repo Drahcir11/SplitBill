@@ -2,6 +2,7 @@ import { useBillContext } from "../Hooks/useBillContext";
 import NextButton from "../Button/NextPageButton";
 import Divider from '@mui/material/Divider';
 import "./ObjectItemSelection.css"
+import formatMoney from "../utils/FormatMoney";
 
 function ObjectItemSelection() {
     const { dispatch, listOfFriends, listOfItems, currency } = useBillContext();
@@ -100,11 +101,13 @@ function ObjectItemSelection() {
                                         </div>
                                         <Divider orientation="vertical" variant="middle" flexItem />
                                         <div className="item-selection__item-quantity">
-                                            <p> {item.quantity} <span style={{ fontSize: "0.7em"}}>pcs</span></p>
+                                            <p> {item.quantity} <span style={{ fontSize: "0.7em"}}>pc</span></p>
                                         </div>
                                         <Divider orientation="vertical" variant="middle" flexItem />
                                         <div className="item-selection__item-unit-price-container">
-                                            <p className="item-selection__item-unit-price-paragraph"> {currency}{item.unitPrice}</p>
+                                            <p className="item-selection__item-unit-price-paragraph">
+                                                {currency}{formatMoney(item.unitPrice)}
+                                            </p>
                                         </div>
                                     </div>
                                 );

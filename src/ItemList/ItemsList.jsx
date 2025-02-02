@@ -3,6 +3,7 @@ import "./ItemsList.css";
 import { useState } from "react";
 import { useBillContext } from "../Hooks/useBillContext";
 import { isNumber, isValidInput, noWhiteSpace } from "../ErrorHandling";
+import formatMoney from "../utils/FormatMoney";
 import ObjectItem from "./ObjectItem";
 import AddButton from "../Button/AddButton";
 
@@ -92,7 +93,7 @@ function ItemsList() {
             <div className="items-list__item-sub-total">
                 <p>Sub total: </p>
                 <p>
-                    {currency}{itemSubTotalCost}
+                    {currency}{formatMoney(itemSubTotalCost)}
                     <span style={{ fontSize: "8px", fontWeight: "500" }}> (excl tax)</span>
                 </p>
             </div>

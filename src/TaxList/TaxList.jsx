@@ -11,6 +11,7 @@ import AddButton from "../Button/AddButton";
 import ObjectCharges from "./ObjectCharges";
 import { useBillContext } from "../Hooks/useBillContext";
 import { noWhiteSpace } from "../ErrorHandling";
+import formatMoney from "../utils/FormatMoney";
 
 function TaxList() {
     const { dispatch, listOfCharges, itemSubTotalCost, itemTotalCost, currency } = useBillContext();
@@ -111,13 +112,13 @@ function TaxList() {
                 <div className="receipt-capture__item-charges-sub-total">
                     <p>Sub total: </p>
                     <p>
-                        {currency}{itemSubTotalCost}
+                        {currency}{formatMoney(itemSubTotalCost)}
                         <span style={{ fontSize: "8px", fontWeight: "500" }}> (excl tax)</span>
                     </p>
                 </div>
                 <div className="receipt-capture__item-charges-total-cost">
                     <p>Total cost: </p>
-                    <p>{currency}{itemTotalCost}</p>
+                    <p>{currency}{formatMoney(itemTotalCost)}</p>
                 </div>
             </div>
 

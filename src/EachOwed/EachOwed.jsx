@@ -2,6 +2,7 @@ import "./EachOwed.css";
 import NextButton from "../Button/NextPageButton";
 import { useBillContext } from "../Hooks/useBillContext";
 import TableItems from "./TableItems";
+import formatMoney from "../utils/FormatMoney";
 
 function EachOwed() {
 
@@ -30,7 +31,7 @@ function EachOwed() {
             <div className="each-owed__friends-list" key={index}>
               <li style={{display:"flex", flexDirection:"row", justifyContent:"space-between", border: "1px", borderColor:"white", padding: "0px 10px 0px 10px"}} >
                 <p> {friend.name}  </p>
-                <p> {currency} {friend.totalBill.toFixed(2)}</p>
+                <p> {currency} {formatMoney(friend.totalBill)}</p>
               </li>
               <TableItems friend={friend}/>
             </div>
@@ -38,7 +39,7 @@ function EachOwed() {
         </ul>
         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", fontWeight: "700"}}>
           <p style={{fontWeight: "700"}}>Total Bill </p>
-          <p>{currency}{itemTotalCost}</p>
+          <p>{currency} {formatMoney(itemTotalCost)}</p>
         </div>
 
       </div>
