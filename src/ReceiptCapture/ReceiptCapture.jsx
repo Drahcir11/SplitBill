@@ -97,8 +97,9 @@ function ReceiptCapture() {
                 //      Pizza £12.55
                 //      Burger 20.10
                 //      Chicken Steak 500g 9.99
-                console.log("item :", item)
+
                 const regexMatches = item.match(/(.+?)\s*(?:\$|RS|Rs|rs|Rupees|rupees|pkr|£|Rp|RP|rp|)\s*?(\d+(?:\.\d{1,2}))/);
+                const rupiahRegexMatches = item.match(/^(.*?)\s*(?:\$|RS|Rs|rs|Rupees|rupees|pkr|£|Rp|RP|rp|)?\s*(\d+(?:[.,]\d+)*)$/);
 
                 // Structure string when item price combination matches regex
                 if (regexMatches) {
@@ -108,9 +109,14 @@ function ReceiptCapture() {
                     // Add new item and its price to the list of items in context manager
                     dispatch({ type: "ADD_ITEM", payload: { itemName: itemName, unitPrice: itemPrice, quantity: 1 } });
                 }
+                else if (rupiahRegexMatches){
+                    const itemName = rupiahRegexMatches[1].trim();
+                    const itemPrice = String(rupiahRegexMatches[2].replace(/[\Rp]/g, "").trim());
+                    dispatch({ type: "ADD_ITEM", payload: { itemName: itemName, unitPrice: itemPrice, quantity: 1 } });
+                }
                 // When string doesn't match regex and its not an empty white space, then add item with no price
                 else if (item.trim().length > 0) {
-                    dispatch({ type: "ADD_ITEM", payload: { itemName: item, unitPrice: 0.0, quantity: 1 } });
+                    dispatch({ type: "ADD_ITEM", payload: { itemName: item, unitPrice: "0", quantity: 1 } });
                 }
             });
         });
